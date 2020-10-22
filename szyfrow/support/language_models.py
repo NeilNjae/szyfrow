@@ -5,13 +5,20 @@ import itertools
 from math import log10
 import os 
 
+import importlib.resources as pkg_resources
+
 import szyfrow.support.norms
 from szyfrow.support.utilities import sanitise
+
+
+from szyfrow import language_model_files
+
 
 def datafile(name, sep='\t'):
     """Read key,value pairs from file.
     """
-    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), name), 'r') as f:
+    with pkg_resources.open_text(language_model_files, name) as f:
+    # with open(p name), 'r') as f:
         for line in f:
             splits = line.split(sep)
             yield [splits[0], int(splits[1])]
@@ -25,7 +32,7 @@ normalised_english_bigram_counts = szyfrow.support.norms.normalise(english_bigra
 english_trigram_counts = collections.Counter(dict(datafile('count_3l.txt')))
 normalised_english_trigram_counts = szyfrow.support.norms.normalise(english_trigram_counts)
 
-with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'words.txt'), 'r') as f:
+with pkg_resources.open_text(language_model_files, 'words.txt') as f:
     keywords = [line.rstrip() for line in f]
 
 

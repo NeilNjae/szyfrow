@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="szyfrow",
-    version="0.0.2",
+    version="0.0.3",
     author="Neil Smith",
     author_email="neil.szyfrow@njae.me.uk",
     description="Tools for using and breaking simple ciphers",
