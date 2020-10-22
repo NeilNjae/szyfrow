@@ -2,11 +2,9 @@ import multiprocessing
 import numpy as np
 from numpy import matrix
 from numpy import linalg
-from support.utilities import *
-from support.language_models import *
-from cipher.affine import modular_division_table
-
-from logger import logger
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
+from szyfrow.affine import modular_division_table
 
 
 def hill_encipher(matrix, message_letters, fillvalue='a'):
@@ -72,9 +70,6 @@ def hill_break(message, matrix_size=2, fitness=Pletters,
 def hill_break_worker(message, matrix, fitness):
     plaintext = hill_decipher(matrix, message)
     fit = fitness(plaintext)
-    logger.debug('Hill cipher break attempt using key {0} gives fit of '
-                 '{1} and decrypt starting: {2}'.format(matrix, 
-                     fit, sanitise(plaintext)[:50]))
     return matrix, fit
 
 if __name__ == "__main__":

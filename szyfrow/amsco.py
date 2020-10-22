@@ -2,11 +2,9 @@ from enum import Enum
 import multiprocessing 
 import itertools
 
-from support.utilities import *
-from support.language_models import *
-from cipher.column_transposition import transpositions, transpositions_of
-
-from logger import logger
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
+from szyfrow.column_transposition import transpositions, transpositions_of
 
 # Where each piece of text ends up in the AMSCO transpositon cipher.
 # 'index' shows where the slice appears in the plaintext, with the slice
@@ -193,11 +191,6 @@ def amsco_break_worker(message, transposition,
     plaintext = amsco_transposition_decipher(message, transposition,
         fillpattern=pattern, fillstyle=fillstyle)
     fit = fitness(sanitise(plaintext))
-    logger.debug('AMSCO transposition break attempt using key {0} and pattern'
-                         '{1} ({2}) gives fit of {3} and decrypt starting: '
-                         '{4}'.format(
-                             transposition, pattern, fillstyle, fit, 
-                             sanitise(plaintext)[:50]))
     return (transposition, pattern, fillstyle), fit
 
 if __name__ == "__main__":

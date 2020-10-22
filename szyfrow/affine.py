@@ -1,7 +1,5 @@
-from support.utilities import *
-from support.language_models import *
-from logger import logger
-
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
 
 modular_division_table = {
     (multiplier, (multiplier * plaintext) % 26): plaintext
@@ -106,18 +104,10 @@ def affine_break(message, fitness=Pletters):
                 plaintext = affine_decipher(sanitised_message,
                                             multiplier, adder, one_based)
                 fit = fitness(plaintext)
-                logger.debug('Affine break attempt using key {0}x+{1} ({2}) '
-                             'gives fit of {3} and decrypt starting: {4}'.
-                             format(multiplier, adder, one_based, fit,
-                                    plaintext[:50]))
                 if fit > best_fit:
                     best_fit = fit
                     best_multiplier = multiplier
                     best_adder = adder
                     best_one_based = one_based
-    logger.info('Affine break best fit with key {0}x+{1} ({2}) gives fit of '
-                '{3} and decrypt starting: {4}'.format(
-                    best_multiplier, best_adder, best_one_based, best_fit,
-                    affine_decipher(sanitised_message, best_multiplier,
-                                    best_adder, best_one_based)[:50]))
+
     return (best_multiplier, best_adder, best_one_based), best_fit

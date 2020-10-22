@@ -16,21 +16,6 @@ import string
 import collections
 import multiprocessing
 import itertools
-import logging
-
-logger = logging.getLogger('engima')
-logger.setLevel(logging.WARNING)
-# logger.setLevel(logging.INFO)
-# logger.setLevel(logging.DEBUG)
-
-# create the logging file handler
-fh = logging.FileHandler("enigma.log")
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-fh.setFormatter(formatter)
-
-# add handler to logger object
-logger.addHandler(fh)
-
 
 # Some convenience functions
 

@@ -1,10 +1,8 @@
 import math
 import multiprocessing 
-from support.utilities import *
-from support.language_models import *
-from cipher.caesar import caesar_encipher_letter, caesar_decipher_letter
-
-from logger import logger
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
+from szyfrow.caesar import caesar_encipher_letter, caesar_decipher_letter
 
 
 def autokey_encipher(message, keyword):
@@ -92,13 +90,6 @@ def autokey_sa_break_worker(message, key,
             # print('exception triggered: new_fit {}, current_fit {}, temp {}'.format(new_fitness, current_fitness, temperature))
             sa_chance = 0
         if (new_fitness > current_fitness or random.random() < sa_chance):
-            # logger.debug('Simulated annealing: iteration {}, temperature {}, '
-            #     'current alphabet {}, current_fitness {}, '
-            #     'best_plaintext {}'.format(i, temperature, current_alphabet, 
-            #     current_fitness, best_plaintext[:50]))
-
-            # logger.debug('new_fit {}, current_fit {}, temp {}, sa_chance {}'.format(new_fitness, current_fitness, temperature, sa_chance))
-#             print(new_fitness, new_key, plaintext[:100])
             current_fitness = new_fitness
             current_key = new_key
             
@@ -106,11 +97,7 @@ def autokey_sa_break_worker(message, key,
             best_key = current_key
             best_fitness = current_fitness
             best_plaintext = plaintext
-        if i % 500 == 0:
-            logger.debug('Simulated annealing: iteration {}, temperature {}, '
-                'current key {}, current_fitness {}, '
-                'best_plaintext {}'.format(i, temperature, current_key, 
-                current_fitness, plaintext[:50]))
+
         temperature = max(temperature - dt, 0.001)
         
 #     print(best_key, best_fitness, best_plaintext[:70])

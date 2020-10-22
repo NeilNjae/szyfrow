@@ -1,10 +1,9 @@
 from itertools import chain
 import multiprocessing
-from support.utilities import *
-from support.language_models import *
-from cipher.column_transposition import transpositions_of
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
+from szyfrow.column_transposition import transpositions_of
 
-from logger import logger
 
 def make_cadenus_keycolumn(doubled_letters = 'vw', start='a', reverse=False):
     """Makes the key column for a Cadenus cipher (the column down between the

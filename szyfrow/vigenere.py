@@ -1,11 +1,9 @@
 from enum import Enum
 from itertools import starmap, cycle
 import multiprocessing
-from cipher.caesar import *
-from support.utilities import *
-from support.language_models import *
-
-from logger import logger
+from szyfrow.caesar import *
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
 
 def vigenere_encipher(message, keyword):
     """Vigenere encipher
@@ -76,9 +74,6 @@ vigenere_keyword_break = vigenere_keyword_break_mp
 def vigenere_keyword_break_worker(message, keyword, fitness):
     plaintext = vigenere_decipher(message, keyword)
     fit = fitness(plaintext)
-    logger.debug('Vigenere keyword break attempt using key {0} gives fit of '
-                 '{1} and decrypt starting: {2}'.format(keyword,
-                     fit, sanitise(plaintext)[:50]))
     return keyword, fit
 
 
@@ -121,15 +116,9 @@ def beaufort_sub_break(message, fitness=Pletters):
     for key in range(26):
         plaintext = [unpos(key - pos(l)) for l in message]
         fit = fitness(plaintext)
-        logger.debug('Beaufort sub break attempt using key {0} gives fit of {1} '
-                     'and decrypt starting: {2}'.format(key, fit,
-                                                        plaintext[:50]))
         if fit > best_fit:
             best_fit = fit
             best_key = key
-    logger.info('Beaufort sub break best fit: key {0} gives fit of {1} and '
-                'decrypt starting: {2}'.format(best_key, best_fit, 
-                    cat([unpos(best_key - pos(l)) for l in message[:50]])))
     return best_key, best_fit
 
 

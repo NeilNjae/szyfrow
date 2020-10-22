@@ -1,11 +1,9 @@
 import math
 from enum import Enum
 from itertools import starmap, zip_longest
-from support.utilities import *
-from support.language_models import *
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
 
-
-from logger import logger
 
 def railfence_encipher(message, height, fillvalue=''):
     """Railfence cipher.

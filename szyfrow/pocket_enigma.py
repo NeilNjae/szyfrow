@@ -1,7 +1,5 @@
-from support.utilities import *
-from support.language_models import *
-
-from logger import logger
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
 
 
 class PocketEnigma(object):

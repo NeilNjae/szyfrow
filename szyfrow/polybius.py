@@ -1,9 +1,7 @@
 import multiprocessing 
-from support.utilities import *
-from support.language_models import *
-from cipher.keyword_cipher import KeywordWrapAlphabet, keyword_cipher_alphabet_of
-
-from logger import logger
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
+from szyfrow.keyword_cipher import KeywordWrapAlphabet, keyword_cipher_alphabet_of
 
 def polybius_grid(keyword, column_order, row_order, letters_to_merge=None,
                   wrap_alphabet=KeywordWrapAlphabet.from_a):
@@ -172,12 +170,6 @@ def polybius_break_worker(message, keyword, wrap_alphabet,
         fit = fitness(plaintext)
     else:
         fit = float('-inf')
-    logger.debug('Polybius break attempt using key {0} (wrap={1}, merging {2}), '
-                 'columns as {3}, rows as {4} (column_first={5}) '
-                 'gives fit of {6} and decrypt starting: '
-                 '{7}'.format(keyword, wrap_alphabet, letters_to_merge,
-                              column_order, row_order, column_first,
-                              fit, sanitise(plaintext)[:50]))
     return (keyword, wrap_alphabet, column_order, row_order, column_first), fit
 
 if __name__ == "__main__":

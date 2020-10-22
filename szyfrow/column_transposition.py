@@ -1,10 +1,8 @@
 import math
 import multiprocessing 
 from itertools import chain
-from support.utilities import *
-from support.language_models import *
-
-from logger import logger
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
 
 def transpositions_of(keyword):
     """Finds the transpostions given by a keyword. For instance, the keyword
@@ -223,10 +221,6 @@ def column_transposition_break_worker(message, transposition,
     plaintext = column_transposition_decipher(message, transposition,
         fillcolumnwise=fillcolumnwise, emptycolumnwise=emptycolumnwise)
     fit = fitness(sanitise(plaintext))
-    logger.debug('Column transposition break attempt using key {0} '
-                         'gives fit of {1} and decrypt starting: {2}'.format(
-                             transposition, fit, 
-                             sanitise(plaintext)[:50]))
     return (transposition, fillcolumnwise, emptycolumnwise), fit
 
 

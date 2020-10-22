@@ -1,10 +1,8 @@
-from support.utilities import *
-from support.language_models import *
-from cipher.keyword_cipher import KeywordWrapAlphabet, keyword_cipher_alphabet_of
-from cipher.polybius import polybius_grid
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
+from szyfrow.keyword_cipher import KeywordWrapAlphabet, keyword_cipher_alphabet_of
+from szyfrow.polybius import polybius_grid
 import multiprocessing
-
-from logger import logger
 
 def playfair_wrap(n, lowest, highest):
     skip = highest - lowest + 1
@@ -142,11 +140,6 @@ def playfair_break_worker(message, keyword, wrap,
         fit = fitness(plaintext)
     else:
         fit = float('-inf')
-    logger.debug('Playfair break attempt using key {0} (wrap={1}, merging {2}, '
-                 'pad replaces={3}), '
-                 'gives fit of {4} and decrypt starting: '
-                 '{5}'.format(keyword, wrap, letters_to_merge, pad_replace,
-                              fit, sanitise(plaintext)[:50]))
     return (keyword, wrap, letters_to_merge, padding_letter, pad_replace), fit
 
 def playfair_simulated_annealing_break(message, workers=10, 
@@ -262,12 +255,6 @@ def playfair_simulated_annealing_break_worker(message, plain_alphabet, cipher_al
             # print('exception triggered: new_fit {}, current_fit {}, temp {}'.format(new_fitness, current_fitness, temperature))
             sa_chance = 0
         if (new_fitness > current_fitness or random.random() < sa_chance):
-            # logger.debug('Simulated annealing: iteration {}, temperature {}, '
-            #     'current alphabet {}, current_fitness {}, '
-            #     'best_plaintext {}'.format(i, temperature, current_alphabet, 
-            #     current_fitness, best_plaintext[:50]))
-
-            # logger.debug('new_fit {}, current_fit {}, temp {}, sa_chance {}'.format(new_fitness, current_fitness, temperature, sa_chance))
             current_fitness = new_fitness
             current_alphabet = alphabet
             current_wrap = wrap
@@ -283,11 +270,6 @@ def playfair_simulated_annealing_break_worker(message, plain_alphabet, cipher_al
             best_padding_letter = current_padding_letter
             best_fitness = current_fitness
             best_plaintext = plaintext
-        if i % 500 == 0:
-            logger.debug('Simulated annealing: iteration {}, temperature {}, '
-                'current alphabet {}, current_fitness {}, '
-                'best_plaintext {}'.format(i, temperature, current_alphabet, 
-                current_fitness, plaintext[:50]))
         temperature = max(temperature - dt, 0.001)
 
     return { 'alphabet': best_alphabet

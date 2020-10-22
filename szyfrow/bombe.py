@@ -4,21 +4,8 @@ import multiprocessing
 import itertools
 import logging
 
-from cipher.enigma import *
+from szyfrow.enigma import *
 
-
-logger = logging.getLogger('bombe')
-# logger.setLevel(logging.WARNING)
-# logger.setLevel(logging.INFO)
-logger.setLevel(logging.DEBUG)
-
-# create the logging file handler
-fh = logging.FileHandler("enigma.log")
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-fh.setFormatter(formatter)
-
-# add handler to logger object
-logger.addHandler(fh)
 
 ##################################
 # # Bombe
@@ -150,7 +137,6 @@ class Bombe(object):
         while self.pending:
             current = self.pending[0]
             # print("processing", current)
-            logger.debug("Propogater processing {}".format(current))
             self.pending = self.pending[1:]
             if not self.banks[current.bank][current.wire]:
                 self.banks[current.bank][current.wire] = True
@@ -161,7 +147,6 @@ class Bombe(object):
                         other_bank = [b for b in c.banks if b != current.bank][0]
                         other_wire = c.scrambler.lookup(current.wire)
                         # print("  adding", other_bank, other_wire, "because", c.banks)
-                        logger.debug("Propogator adding {0} {1} because {2}".format(other_bank, other_wire, c.banks))
                         self.pending += [Signal(other_bank, other_wire)]
     
     def run(self, run_start=None, wheel1_pos='a', wheel2_pos='a', wheel3_pos='a', use_diagonal_board=True):

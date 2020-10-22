@@ -2,12 +2,8 @@ from enum import Enum
 # from itertools import starmap
 import multiprocessing
 import math
-from support.utilities import *
-from support.language_models import *
-
-from logger import logger
-import logging
-# logger.setLevel(logging.DEBUG)
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
 
 
 class KeywordWrapAlphabet(Enum):
@@ -106,19 +102,10 @@ def keyword_break(message, wordlist=keywords, fitness=Pletters):
         for keyword in wordlist:
             plaintext = keyword_decipher(message, keyword, wrap_alphabet)
             fit = fitness(plaintext)
-            logger.debug('Keyword break attempt using key {0} (wrap={1}) '
-                         'gives fit of {2} and decrypt starting: {3}'.format(
-                             keyword, wrap_alphabet, fit,
-                             sanitise(plaintext)[:50]))
             if fit > best_fit:
                 best_fit = fit
                 best_keyword = keyword
                 best_wrap_alphabet = wrap_alphabet
-    logger.info('Keyword break best fit with key {0} (wrap={1}) gives fit of '
-                '{2} and decrypt starting: {3}'.format(best_keyword,
-                    best_wrap_alphabet, best_fit, sanitise(
-                        keyword_decipher(message, best_keyword,
-                                         best_wrap_alphabet))[:50]))
     return (best_keyword, best_wrap_alphabet), best_fit
 
 def keyword_break_mp(message, wordlist=keywords, fitness=Pletters,
@@ -152,9 +139,6 @@ def keyword_break_mp(message, wordlist=keywords, fitness=Pletters,
 def keyword_break_worker(message, keyword, wrap_alphabet, fitness):
     plaintext = keyword_decipher(message, keyword, wrap_alphabet)
     fit = fitness(plaintext)
-    logger.debug('Keyword break attempt using key {0} (wrap={1}) gives fit of '
-                 '{2} and decrypt starting: {3}'.format(keyword, 
-                     wrap_alphabet, fit, sanitise(plaintext)[:50]))
     return (keyword, wrap_alphabet), fit
 
 
@@ -278,12 +262,6 @@ def simulated_annealing_break_worker(message, plain_alphabet, cipher_alphabet,
             # print('exception triggered: new_fit {}, current_fit {}, temp {}'.format(new_fitness, current_fitness, temperature))
             sa_chance = 0
         if (new_fitness > current_fitness or random.random() < sa_chance):
-            # logger.debug('Simulated annealing: iteration {}, temperature {}, '
-            #     'current alphabet {}, current_fitness {}, '
-            #     'best_plaintext {}'.format(i, temperature, current_alphabet, 
-            #     current_fitness, best_plaintext[:50]))
-
-            # logger.debug('new_fit {}, current_fit {}, temp {}, sa_chance {}'.format(new_fitness, current_fitness, temperature, sa_chance))
             current_fitness = new_fitness
             current_alphabet = alphabet
             
@@ -291,11 +269,7 @@ def simulated_annealing_break_worker(message, plain_alphabet, cipher_alphabet,
             best_alphabet = current_alphabet
             best_fitness = current_fitness
             best_plaintext = plaintext
-        if i % 500 == 0:
-            logger.debug('Simulated annealing worker {}: iteration {}, temperature {}, '
-                'current alphabet {}, plain alphabet {}, current_fitness {}, '
-                'best_plaintext {}'.format(logID, i, temperature, current_alphabet, plain_alphabet,
-                current_fitness, plaintext[:50]))
+
         temperature = max(temperature - dt, 0.001)
 
     return best_alphabet, best_fitness # current_alphabet, current_fitness

@@ -1,7 +1,5 @@
-from support.utilities import *
-from support.language_models import *
-
-from logger import logger
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
 
 def caesar_encipher_letter(accented_letter, shift):
     """Encipher a letter, given a shift amount
@@ -109,13 +107,9 @@ def caesar_break(message, fitness=Pletters):
     for shift in range(26):
         plaintext = caesar_decipher(sanitised_message, shift)
         fit = fitness(plaintext)
-        logger.debug('Caesar break attempt using key {0} gives fit of {1} '
-                     'and decrypt starting: {2}'.format(shift, fit,
-                                                        plaintext[:50]))
+
         if fit > best_fit:
             best_fit = fit
             best_shift = shift
-    logger.info('Caesar break best fit: key {0} gives fit of {1} and '
-                'decrypt starting: {2}'.format(best_shift, best_fit, 
-                    caesar_decipher(sanitised_message, best_shift)[:50]))
+
     return best_shift, best_fit

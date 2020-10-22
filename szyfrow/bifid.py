@@ -1,9 +1,7 @@
 import multiprocessing 
-from support.utilities import *
-from support.language_models import *
-from cipher.keyword_cipher import KeywordWrapAlphabet, keyword_cipher_alphabet_of
-
-from logger import logger
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
+from szyfrow.keyword_cipher import KeywordWrapAlphabet, keyword_cipher_alphabet_of
 
 def bifid_grid(keyword, wrap_alphabet, letter_mapping):
     """Create the grids for a Bifid cipher
@@ -114,9 +112,6 @@ def bifid_break_mp(message, wordlist=keywords, fitness=Pletters, max_period=10,
 def bifid_break_worker(message, keyword, wrap_alphabet, period, fitness):
     plaintext = bifid_decipher(message, keyword, wrap_alphabet, period=period)
     fit = fitness(plaintext)
-    logger.debug('Keyword break attempt using key {0} (wrap={1}) gives fit of '
-                 '{2} and decrypt starting: {3}'.format(keyword, 
-                     wrap_alphabet, fit, sanitise(plaintext)[:50]))
     return (keyword, wrap_alphabet, period), fit
 
 if __name__ == "__main__":
