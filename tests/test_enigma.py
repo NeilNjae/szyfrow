@@ -2,8 +2,7 @@ import unittest
 import collections
 import string
 
-from cipher.enigma import *
-# from ciphers import enigma
+from szyfrow.enigma import *
 
 class LetterTransformerTest(unittest.TestCase):
 
