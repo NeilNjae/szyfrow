@@ -1,3 +1,8 @@
+"""Setments a string of characters into words, following a language model.
+
+Implementation taken from [Peter Norvig](https://norvig.com/ngrams/ch14.pdf)
+"""
+
 import sys
 from functools import lru_cache
 from szyfrow.support.language_models import Pwords

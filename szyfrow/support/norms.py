@@ -1,6 +1,9 @@
+"""Various norms, for calcuating the distances between two frequency
+profiles.
+"""
+
 import collections
 from math import log10
-
 
 def lp(v1, v2=None, p=2):
     """Find the L_p norm. If passed one vector, find the length of that vector.
@@ -10,7 +13,7 @@ def lp(v1, v2=None, p=2):
         vec = {k: abs(v1[k] - v2[k]) for k in (v1.keys() | v2.keys())}
     else:
         vec = v1
-    return sum(v ** p for v in vec.values()) ** (1.0 / p)
+        return sum(v ** p for v in vec.values()) ** (1.0 / p)
 
 def l1(v1, v2=None):
     """Finds the distances between two frequency profiles, expressed as 
@@ -69,12 +72,14 @@ def l3(v1, v2=None):
     """
     return lp(v1, v2, 3)
 
-def linf(v1, v2=None):    
+def linf(v1, v2=None):   
+    """Finds the distances between two frequency profiles, expressed as 
+    dictionaries. Assumes every key in frequencies1 is also in frequencies2"""
     if v2:
         vec = {k: abs(v1[k] - v2[k]) for k in (v1.keys() | v2.keys())}
     else:
         vec = v1
-    return max(v for v in vec.values())
+        return max(v for v in vec.values())
 
 
 def scale(frequencies, norm=l2):

@@ -1,3 +1,21 @@
+"""Enciphering and deciphering using the [affine cipher](https://en.wikipedia.org/wiki/Affine_cipher). 
+Also attempts to break messages that use an affine cipher.
+
+The affine cipher operates one letter at a time. It converts each letter to a 
+number, then enciphers that number using a multiplier and a number. The result 
+is taken mod 26 and converted back into a letter.
+
+For a multiplier _m_ and adder _a_, a letter converted to number _x_ is 
+enciphered as _E(x)_ = (_m_ _x_ + _a_) mod 26. Deciphering uses the modular 
+inverse of _m_, _m_⁻¹, so that _D(x)_ = _m_⁻¹ (_x_ - _a_) mod 26.
+
+If `one_based` is `True`, the conversion between letters and numbers maps 
+'a' → 1, 'b' → 2, … 'z'→ 26 and the `mod` function is adjusted to keep 
+numbers in this range during enciphering and deciphering. If `one_based` is 
+`False`, the conversion maps 'a' → 0, 'b' → 1, … 'z'→ 25 and `mod` behaves
+normally.
+"""
+
 from szyfrow.support.utilities import *
 from szyfrow.support.language_models import *
 
@@ -9,7 +27,10 @@ modular_division_table = {
 
 
 def affine_encipher_letter(accented_letter, multiplier=1, adder=0, one_based=True):
-    """Encipher a letter, given a multiplier and adder
+    """Encipher a letter, given a multiplier and adder.
+
+    Accented version of latin letters (such as é and ö) are converted to their
+    non-accented versions before encryption.
     
     >>> cat(affine_encipher_letter(l, 3, 5, True) \
             for l in string.ascii_letters)
@@ -44,9 +65,6 @@ def affine_decipher_letter(letter, multiplier=1, adder=0, one_based=True):
     if letter in string.ascii_letters:
         cipher_number = pos(letter)
         if one_based: cipher_number += 1
-        # plaintext_number = ( 
-        #     modular_division_table[multiplier]
-        #                           [(cipher_number - adder) % 26])
         plaintext_number = ( 
             modular_division_table[multiplier, (cipher_number - adder) % 26]
             )
@@ -83,7 +101,11 @@ def affine_decipher(message, multiplier=1, adder=0, one_based=True):
 
 
 def affine_break(message, fitness=Pletters):
-    """Breaks an affine cipher using frequency analysis
+    """Breaks an affine cipher using frequency analysis.
+
+    It tries all possible combinations of multiplier, adder, and one_based,
+    scores the fitness of the text decipherd with each combination, and returns
+    the key that produces the most fit deciphered text.
 
     >>> affine_break('lmyfu bkuusd dyfaxw claol psfaom jfasd snsfg jfaoe ls ' \
           'omytd jlaxe mh jm bfmibj umis hfsul axubafkjamx. ls kffkxwsd jls ' \

@@ -1,54 +1,26 @@
+"""Enciphering and deciphering using the [Column transposition cipher](https://en.wikipedia.org/wiki/Bifid_cipher). 
+Also attempts to break messages that use a column transpositon cipher.
+
+A grid is layed out, with one column for each distinct letter in the keyword.
+The grid is filled by the plaintext, one letter per cell, either in rows or
+columns. The columns are rearranged so the keyword's letters are in alphabetical
+order, then the ciphertext is read from the rearranged grid, either in rows
+or columns. 
+
+The Scytale cipher is a column cipher with an identity transposition, where the 
+message is written in rows and read in columns. 
+
+Messages that do not fill the grid are padded with fillvalue. Note that 
+`szyfrow.support.utilities.pad` allows a callable, so that the message can be 
+padded by random letters, for instance by calling 
+`szyfrow.support.language_models.random_english_letter`.
+"""
+
 import math
 import multiprocessing 
 from itertools import chain
 from szyfrow.support.utilities import *
 from szyfrow.support.language_models import *
-
-# def transpositions_of(keyword):
-#     """Finds the transpostions given by a keyword. For instance, the keyword
-#     'clever' rearranges to 'celrv', so the first column (0) stays first, the
-#     second column (1) moves to third, the third column (2) moves to second, 
-#     and so on.
-
-#     If passed a tuple, assume it's already a transposition and just return it.
-
-#     >>> transpositions_of('clever')
-#     (0, 2, 1, 4, 3)
-#     >>> transpositions_of('fred')
-#     (3, 2, 0, 1)
-#     >>> transpositions_of((3, 2, 0, 1))
-#     (3, 2, 0, 1)
-#     """
-#     if isinstance(keyword, tuple):
-#         return keyword
-#     else:
-#         key = deduplicate(keyword)
-#         transpositions = tuple(key.index(l) for l in sorted(key))
-#         return transpositions
-
-
-# transpositions = collections.defaultdict(list)
-# for word in keywords:
-#     transpositions[transpositions_of(word)] += [word]
-
-
-# def pad(message_len, group_len, fillvalue):
-#     """Return the padding needed to extend a message to a multiple of group_len
-#     in length.
-
-#     fillvalue can be a function or a literal value. If a function, it is called
-#     once for each padded character. Use this will fillvalue=random_english_letter
-#     to pad a message with random letters.
-#     """
-#     padding_length = group_len - message_len % group_len
-#     if padding_length == group_len: padding_length = 0
-#     padding = ''
-#     for i in range(padding_length):
-#         if callable(fillvalue):
-#             padding += fillvalue()
-#         else:
-#             padding += fillvalue
-#     return padding
 
 def column_transposition_encipher(message, keyword, fillvalue=' ', 
       fillcolumnwise=False,
@@ -105,6 +77,10 @@ def column_transposition_decipher(message, keyword, fillvalue=' ',
     """Deciphers using the column transposition cipher.
     Message is padded to allow all rows to be the same length.
 
+    Note that `fillcolumnwise` and `emptycolumnwise` refer to how the message
+    is enciphered. To decipher a message, the operations are performed as an 
+    inverse-empty, then inverse-transposition, then inverse-fill.
+
     >>> column_transposition_decipher('hellothere', 'abcde', fillcolumnwise=True, emptycolumnwise=True)
     'hellothere'
     >>> column_transposition_decipher('hlohreltee', 'abcde', fillcolumnwise=True, emptycolumnwise=False)
@@ -135,8 +111,14 @@ def column_transposition_decipher(message, keyword, fillvalue=' ',
         return cat(chain(*untransposed))
 
 def scytale_encipher(message, rows, fillvalue=' '):
-    """Enciphers using the scytale transposition cipher.
+    """Enciphers using the scytale transposition cipher. `rows` is the 
+    circumference of the rod. The message is fitted inot columns so that
+    all rows are used.
+    
     Message is padded with spaces to allow all rows to be the same length.
+
+    For ease of implementation, the cipher is performed on the transpose
+    of the grid
 
     >>> scytale_encipher('thequickbrownfox', 3)
     'tcnhkfeboqrxuo iw '
@@ -179,15 +161,18 @@ def scytale_decipher(message, rows):
         fillcolumnwise=True, emptycolumnwise=False)
 
 
-def column_transposition_break_mp(message, translist=transpositions,
+def column_transposition_break(message, translist=None,
                                   fitness=Pbigrams, chunksize=500):
     """Breaks a column transposition cipher using a dictionary and
     n-gram frequency analysis
 
+    If `translist` is not specified, use 
+    [`szyfrow.support.langauge_models.transpositions`](support/language_models.html#szyfrow.support.language_models.transpositions).
+
     >>> len(keywords)
     20
 
-    >>> column_transposition_break_mp(column_transposition_encipher(sanitise( \
+    >>> column_transposition_break(column_transposition_encipher(sanitise( \
             "It is a truth universally acknowledged, that a single man in \
              possession of a good fortune, must be in want of a wife. However \
              little known the feelings or views of such a man may be on his \
@@ -199,7 +184,7 @@ def column_transposition_break_mp(message, translist=transpositions,
                    (5, 0, 6, 1, 3, 4, 2): ['fourteen'], \
                    (6, 1, 0, 4, 5, 3, 2): ['keyword']}) # doctest: +ELLIPSIS
     (((2, 0, 5, 3, 1, 4, 6), False, False), -709.4646722...)
-    >>> column_transposition_break_mp(column_transposition_encipher(sanitise( \
+    >>> column_transposition_break(column_transposition_encipher(sanitise( \
             "It is a truth universally acknowledged, that a single man in \
              possession of a good fortune, must be in want of a wife. However \
              little known the feelings or views of such a man may be on his \
@@ -213,6 +198,9 @@ def column_transposition_break_mp(message, translist=transpositions,
         fitness=Ptrigrams) # doctest: +ELLIPSIS
     (((2, 0, 5, 3, 1, 4, 6), False, False), -997.0129085...)
     """
+    if translist is None:
+        translist = transpositions
+
     with multiprocessing.Pool() as pool:
         helper_args = [(message, trans, fillcolumnwise, emptycolumnwise,
                         fitness)
@@ -224,7 +212,6 @@ def column_transposition_break_mp(message, translist=transpositions,
         breaks = pool.starmap(column_transposition_break_worker,
                               helper_args, chunksize) 
         return max(breaks, key=lambda k: k[1])
-column_transposition_break = column_transposition_break_mp
 
 def column_transposition_break_worker(message, transposition,
         fillcolumnwise, emptycolumnwise, fitness):
@@ -234,12 +221,12 @@ def column_transposition_break_worker(message, transposition,
     return (transposition, fillcolumnwise, emptycolumnwise), fit
 
 
-def scytale_break_mp(message, max_key_length=20,
+def scytale_break(message, max_key_length=20,
                      fitness=Pbigrams, chunksize=500):
     """Breaks a scytale cipher using a range of lengths and
     n-gram frequency analysis
 
-    >>> scytale_break_mp(scytale_encipher(sanitise( \
+    >>> scytale_break(scytale_encipher(sanitise( \
             "It is a truth universally acknowledged, that a single man in \
              possession of a good fortune, must be in want of a wife. However \
              little known the feelings or views of such a man may be on his \
@@ -248,7 +235,7 @@ def scytale_break_mp(message, max_key_length=20,
              rightful property of some one or other of their daughters."), \
         5)) # doctest: +ELLIPSIS
     (5, -709.4646722...)
-    >>> scytale_break_mp(scytale_encipher(sanitise( \
+    >>> scytale_break(scytale_encipher(sanitise( \
             "It is a truth universally acknowledged, that a single man in \
              possession of a good fortune, must be in want of a wife. However \
              little known the feelings or views of such a man may be on his \
@@ -270,7 +257,6 @@ def scytale_break_mp(message, max_key_length=20,
                               helper_args, chunksize)
         best = max(breaks, key=lambda k: k[1])
         return math.trunc(len(message) / len(best[0][0])), best[1]
-scytale_break = scytale_break_mp
 
 if __name__ == "__main__":
     import doctest

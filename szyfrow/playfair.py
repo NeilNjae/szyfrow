@@ -1,3 +1,6 @@
+"""Enciphering and deciphering using the [Playfair cipher](https://en.wikipedia.org/wiki/Playfair_cipher). 
+Also attempts to break messages that use a Playfair cipher.
+"""
 from szyfrow.support.utilities import *
 from szyfrow.support.language_models import *
 from szyfrow.keyword_cipher import KeywordWrapAlphabet, keyword_cipher_alphabet_of
@@ -5,6 +8,8 @@ from szyfrow.polybius import polybius_grid
 import multiprocessing
 
 def playfair_wrap(n, lowest, highest):
+    """Ensures _n_ is between _lowest_ and _highest_ (inclusive at both ends).
+    """
     skip = highest - lowest + 1
     while n > highest or n < lowest:
         if n > highest:
@@ -14,6 +19,7 @@ def playfair_wrap(n, lowest, highest):
     return n
 
 def playfair_encipher_bigram(ab, grid, padding_letter='x'):
+    """Encipher a single pair of letters using the Playfair method."""
     a, b = ab
     max_row = max(c[0] for c in grid.values())
     max_col = max(c[1] for c in grid.values())
@@ -35,6 +41,7 @@ def playfair_encipher_bigram(ab, grid, padding_letter='x'):
     return c + d
 
 def playfair_decipher_bigram(ab, grid, padding_letter='x'):
+    """Decipher a single pair of letters using the Playfair method."""
     a, b = ab
     max_row = max(c[0] for c in grid.values())
     max_col = max(c[1] for c in grid.values())
@@ -56,6 +63,14 @@ def playfair_decipher_bigram(ab, grid, padding_letter='x'):
     return c + d
 
 def playfair_bigrams(text, padding_letter='x', padding_replaces_repeat=True):
+    """Find all the bigrams in a method to be enciphered. 
+
+    If both letters are the same, the `padding_letter` is used instead of the
+    second letter. If `padding_replaces_repeat` is `True`, the `padding_letter`
+    replaces the second letter of the bigram. If `padding_replaces_repeat` is
+    `False`, the second letter of this bigram becomes the first letter of the 
+    next, effectively lengthening the message by one letter.
+    """
     i = 0
     bigrams = []
     while i < len(text):
@@ -78,6 +93,7 @@ def playfair_bigrams(text, padding_letter='x', padding_replaces_repeat=True):
 def playfair_encipher(message, keyword, padding_letter='x',
                       padding_replaces_repeat=False, letters_to_merge=None, 
                       wrap_alphabet=KeywordWrapAlphabet.from_a):
+    """Encipher a message using the Playfair cipher."""
     column_order = list(range(5))
     row_order = list(range(5))
     if letters_to_merge is None: 
@@ -94,6 +110,7 @@ def playfair_encipher(message, keyword, padding_letter='x',
 def playfair_decipher(message, keyword, padding_letter='x',
                       padding_replaces_repeat=False, letters_to_merge=None, 
                       wrap_alphabet=KeywordWrapAlphabet.from_a):
+    """Decipher a message using the Playfair cipher."""
     column_order = list(range(5))
     row_order = list(range(5))
     if letters_to_merge is None: 
@@ -111,6 +128,13 @@ def playfair_break(message,
                       letters_to_merge=None, padding_letter='x',
                       wordlist=keywords, fitness=Pletters,
                       number_of_solutions=1, chunksize=500):
+    """Break a message enciphered using the Playfair cipher, using a dictionary
+    of keywords and frequency analysis. 
+
+    If `wordlist` is not specified, use 
+    [`szyfrow.support.langauge_models.keywords`](support/language_models.html#szyfrow.support.language_models.keywords).
+    """
+
     if letters_to_merge is None: 
         letters_to_merge = {'j': 'i'}   
 
@@ -150,6 +174,14 @@ def playfair_simulated_annealing_break(message, workers=10,
                               plain_alphabet=None, 
                               cipher_alphabet=None, 
                               fitness=Pletters, chunksize=1):
+    """Break a message enciphered using the Playfair cipher, using simulated
+    annealing to determine the keyword.  This function just sets up a stable 
+    of workers who     do the actual work, implemented as 
+    `szyfrow.playfair.playfair_simulated_annealing_break_worker`.
+
+    See a [post on simulated annealing](https://work.njae.me.uk/2019/07/08/simulated-annealing-and-breaking-substitution-ciphers/)
+    for detail on how this works.
+    """
     worker_args = []
     ciphertext = sanitise(message)
     for i in range(workers):
@@ -173,6 +205,10 @@ def playfair_simulated_annealing_break(message, workers=10,
 
 def playfair_simulated_annealing_break_worker(message, plain_alphabet, cipher_alphabet, 
                                      t0, max_iterations, fitness):
+    """One thread of a simulated annealing run. 
+    See a [post on simulated annealing](https://work.njae.me.uk/2019/07/08/simulated-annealing-and-breaking-substitution-ciphers/)
+    for detail on how this works.
+    """
     def swap(letters, i, j):
         if i > j:
             i, j = j, i

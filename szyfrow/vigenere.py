@@ -1,3 +1,9 @@
+"""[Vigenère polyalphabetic substitution ciphers](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher), 
+mainly done by keyword. Also does Beaufort ciphers and Variant Beaufort
+ciphers.
+
+Enciphering and deciphering, and a couple of ways to break these ciphers.
+"""
 from enum import Enum
 from itertools import starmap, cycle
 import multiprocessing
@@ -27,7 +33,8 @@ def vigenere_decipher(message, keyword):
 
 
 def beaufort_encipher(message, keyword):
-    """Beaufort encipher
+    """Beaufort encipher. A symmetrical cipher, so enciphering and deciphering
+    follow the same procedure.
 
     >>> beaufort_encipher('inhisjournaldatedtheidesofoctober', 'arcanaimperii')
     'sevsvrusyrrxfayyxuteemazudmpjmmwr'
@@ -52,11 +59,11 @@ def index_of_coincidence_scan(text, max_key_length=20):
         iocs[i] = mean_ioc
     return iocs
 
-def vigenere_keyword_break_mp(message, wordlist=keywords, fitness=Pletters,
+def vigenere_keyword_break(message, wordlist=keywords, fitness=Pletters,
                               chunksize=500):
     """Breaks a vigenere cipher using a dictionary and frequency analysis.
 
-    >>> vigenere_keyword_break_mp(vigenere_encipher(sanitise('this is a test ' \
+    >>> vigenere_keyword_break(vigenere_encipher(sanitise('this is a test ' \
              'message for the vigenere decipherment'), 'cat'), \
              wordlist=['cat', 'elephant', 'kangaroo']) # doctest: +ELLIPSIS
     ('cat', -52.9472712...)
@@ -69,7 +76,6 @@ def vigenere_keyword_break_mp(message, wordlist=keywords, fitness=Pletters,
         breaks = pool.starmap(vigenere_keyword_break_worker, helper_args,
                               chunksize)
         return max(breaks, key=lambda k: k[1])
-vigenere_keyword_break = vigenere_keyword_break_mp
 
 def vigenere_keyword_break_worker(message, keyword, fitness):
     plaintext = vigenere_decipher(message, keyword)

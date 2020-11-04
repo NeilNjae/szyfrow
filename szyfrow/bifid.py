@@ -1,3 +1,6 @@
+"""Enciphering and deciphering using the [Bifid cipher](https://en.wikipedia.org/wiki/Bifid_cipher). 
+Also attempts to break messages that use a Bifid cipher.
+"""
 import multiprocessing 
 from szyfrow.support.utilities import *
 from szyfrow.support.language_models import *
@@ -99,22 +102,28 @@ def bifid_decipher(message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a,
     return cat(r_grid[p] for p in pairs1) 
 
 
-def bifid_break(message, wordlist=keywords, fitness=Pletters, max_period=10,
+def bifid_break(message, wordlist=None, fitness=Pletters, max_period=10,
                      number_of_solutions=1, chunksize=500):
     """Breaks a keyword substitution cipher using a dictionary and
     frequency analysis
 
-    >>> bifid_break_mp(bifid_encipher('this is a test message for the ' \
+    If `wordlist` is not specified, use 
+    [`szyfrow.support.langauge_models.keywords`](support/language_models.html#szyfrow.support.language_models.keywords).
+
+    >>> bifid_break(bifid_encipher('this is a test message for the ' \
           'keyword decipherment', 'elephant', wrap_alphabet=KeywordWrapAlphabet.from_last), \
           wordlist=['cat', 'elephant', 'kangaroo']) # doctest: +ELLIPSIS
     (('elephant', <KeywordWrapAlphabet.from_last: 2>, 0), -52.834575011...)
-    >>> bifid_break_mp(bifid_encipher('this is a test message for the ' \
+    >>> bifid_break(bifid_encipher('this is a test message for the ' \
           'keyword decipherment', 'elephant', wrap_alphabet=KeywordWrapAlphabet.from_last), \
           wordlist=['cat', 'elephant', 'kangaroo'], \
           number_of_solutions=2) # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
     [(('elephant', <KeywordWrapAlphabet.from_last: 2>, 0), -52.834575011...), 
     (('elephant', <KeywordWrapAlphabet.from_largest: 3>, 0), -52.834575011...)]
     """
+    if wordlist is None:
+        wordlist = keywords
+
     with multiprocessing.Pool() as pool:
         helper_args = [(message, word, wrap, period, fitness)
                        for word in wordlist

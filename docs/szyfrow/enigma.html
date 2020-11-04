@@ -1,0 +1,1496 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>szyfrow.enigma API documentation</title>
+<meta name="description" content="A simulator for Enigma machines …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>szyfrow.enigma</code></h1>
+</header>
+<section id="section-intro">
+<p>A simulator for Enigma machines.</p>
+<p>See <code><a title="szyfrow.bombe.Bombe" href="bombe.html#szyfrow.bombe.Bombe">Bombe</a></code> for an implementation of the Bombe to break Enigma
+messages.</p>
+<p>Specification from <a href="http://www.codesandciphers.org.uk/enigma/rotorspec.htm">Codes and Ciphers</a> page.</p>
+<p>Example Enigma machines from <a href="http://enigma.louisedade.co.uk/enigma.html">Louise Dale</a> (full simulation) and <a href="http://enigmaco.de/enigma/enigma.html">EnigmaCo</a> (good animation of the wheels, but no ring settings).</p>
+<p>There's also the nice Enigma simulator for Android by <a href="https://franklinheath.co.uk/2012/02/04/our-first-app-published-enigma-simulator/">Franklin Heath</a>, available on the <a href="https://play.google.com/store/apps/details?id=uk.co.franklinheath.enigmasim&amp;hl=en_GB">Google Play store</a>.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;A simulator for Enigma machines.
+
+See `szyfrow.bombe.Bombe` for an implementation of the Bombe to break Enigma
+messages.
+
+Specification from [Codes and Ciphers](http://www.codesandciphers.org.uk/enigma/rotorspec.htm) page.
+
+Example Enigma machines from [Louise Dale](http://enigma.louisedade.co.uk/enigma.html) (full simulation) and [EnigmaCo](http://enigmaco.de/enigma/enigma.html) (good animation of the wheels, but no ring settings).
+
+There&#39;s also the nice Enigma simulator for Android by [Franklin Heath](https://franklinheath.co.uk/2012/02/04/our-first-app-published-enigma-simulator/), available on the [Google Play store](https://play.google.com/store/apps/details?id=uk.co.franklinheath.enigmasim&amp;hl=en_GB).
+&#34;&#34;&#34;
+
+import string
+import collections
+import multiprocessing
+import itertools
+
+from szyfrow.support.utilities import *
+
+# # Some convenience functions
+
+# cat = &#39;&#39;.join
+
+# def clean(text): return cat(l.lower() for l in text if l in string.ascii_letters)
+
+# def pos(letter): 
+#     if letter in string.ascii_lowercase:
+#         return ord(letter) - ord(&#39;a&#39;)
+#     elif letter in string.ascii_uppercase:
+#         return ord(letter) - ord(&#39;A&#39;)
+#     else:
+#         return &#39;&#39;
+    
+# def unpos(number): return chr(number % 26 + ord(&#39;a&#39;))
+
+
+wheel_i_spec = &#39;ekmflgdqvzntowyhxuspaibrcj&#39;
+wheel_ii_spec = &#39;ajdksiruxblhwtmcqgznpyfvoe&#39;
+wheel_iii_spec = &#39;bdfhjlcprtxvznyeiwgakmusqo&#39;
+wheel_iv_spec = &#39;esovpzjayquirhxlnftgkdcmwb&#39;
+wheel_v_spec = &#39;vzbrgityupsdnhlxawmjqofeck&#39;
+wheel_vi_spec = &#39;jpgvoumfyqbenhzrdkasxlictw&#39;
+wheel_vii_spec = &#39;nzjhgrcxmyswboufaivlpekqdt&#39;
+wheel_viii_spec = &#39;fkqhtlxocbjspdzramewniuygv&#39;
+beta_wheel_spec = &#39;leyjvcnixwpbqmdrtakzgfuhos&#39;
+gamma_wheel_spec = &#39;fsokanuerhmbtiycwlqpzxvgjd&#39;
+
+wheel_i_notches = [&#39;q&#39;]
+wheel_ii_notches = [&#39;e&#39;]
+wheel_iii_notches = [&#39;v&#39;]
+wheel_iv_notches = [&#39;j&#39;]
+wheel_v_notches = [&#39;z&#39;]
+wheel_vi_notches = [&#39;z&#39;, &#39;m&#39;]
+wheel_vii_notches = [&#39;z&#39;, &#39;m&#39;]
+wheel_viii_notches = [&#39;z&#39;, &#39;m&#39;]
+
+reflector_b_spec = &#39;ay br cu dh eq fs gl ip jx kn mo tz vw&#39;
+reflector_c_spec = &#39;af bv cp dj ei go hy kr lz mx nw tq su&#39;
+
+
+
+class LetterTransformer(object):
+    &#34;&#34;&#34;A generic substitution cipher, that has different transforms in the 
+    forward and backward directions. It requires that the transforms for all
+    letters by provided.
+
+    A `transform` is a list of letter pairs, like `[(&#39;a&#39;, &#39;b&#39;), (&#39;c&#39;, &#39;d&#39;)]`.
+    That would say that, in the forward direction `a` goes to `b` and 
+    `c` goes to `d`. In the backward direction, `b` goes to `a` and `d` goes
+    to `c`. 
+    &#34;&#34;&#34;
+    def __init__(self, specification, raw_transform=False):
+        &#34;&#34;&#34;Validate and create a new transformer. The transform is parsed by
+        `LetterTransformer.parse_specification` unless `raw_transform` is `True`
+        &#34;&#34;&#34;
+        if raw_transform:
+            transform = specification
+        else:
+            transform = self.parse_specification(specification)
+        self.validate_transform(transform)
+        self.make_transform_map(transform)
+    
+    def parse_specification(self, specification):
+        &#34;&#34;&#34;Turn a `specification` string into a transform, by zipping it
+        with ASCII lowercase letters to generate the pairs. This assumes that
+        the `specification` defines the destination of the forward transform.
+        &#34;&#34;&#34;
+        return list(zip(string.ascii_lowercase, sanitise(specification)))
+        # return specification
+    
+    def validate_transform(self, transform):
+        &#34;&#34;&#34;Checks that a transform is valid (every letter is mapped to 
+        exactly one other letter, in both directions).
+        &#34;&#34;&#34;
+        if len(transform) != 26:
+            raise ValueError(&#34;Transform specification has {} pairs, requires 26&#34;.
+                format(len(transform)))
+        for p in transform:
+            if len(p) != 2:
+                raise ValueError(&#34;Not all mappings in transform &#34;
+                    &#34;have two elements&#34;)
+        if len(set([p[0] for p in transform])) != 26:
+            raise ValueError(&#34;Transform specification must list 26 origin letters&#34;) 
+        if len(set([p[1] for p in transform])) != 26:
+            raise ValueError(&#34;Transform specification must list 26 destination letters&#34;) 
+
+    def make_empty_transform(self):
+        &#34;&#34;&#34;An empty transform is one that maps every letter to &#39;a&#39;.
+        &#34;&#34;&#34;
+        self.forward_map = [0] * 26
+        self.backward_map = [0] * 26
+            
+    def make_transform_map(self, transform):
+        &#34;&#34;&#34;Create `forward_map` and `backward_map` from `transform`. The maps
+        work on letter positions, not letter values. This makes the arithmetic
+        for wheels much easier.
+        &#34;&#34;&#34;
+        self.make_empty_transform()
+        for p in transform:
+            self.forward_map[pos(p[0])] = pos(p[1])
+            self.backward_map[pos(p[1])] = pos(p[0])
+        return self.forward_map, self.backward_map
+    
+    def forward(self, letter):
+        &#34;&#34;&#34;Apply a map in the forward direction.
+        &#34;&#34;&#34;
+        if letter in string.ascii_lowercase:
+            return unpos(self.forward_map[pos(letter)])
+        else:
+            return &#39;&#39;
+                
+    def backward(self, letter):
+        &#34;&#34;&#34;Apply a map in the backward direction.
+        &#34;&#34;&#34;
+        if letter in string.ascii_lowercase:
+            return unpos(self.backward_map[pos(letter)])
+        else:
+            return &#39;&#39;
+
+
+class Plugboard(LetterTransformer):
+    &#34;&#34;&#34;A plugboard, a type of letter transformer where forward and backward
+    transforms are the same. If a letter isn&#39;t explicitly transformed, it is 
+    kept as it is.
+    &#34;&#34;&#34;
+
+    def parse_specification(self, specification):
+        &#34;&#34;&#34;Convert a specification into a transform. The specification is
+        given as a list of letter pairs.
+        &#34;&#34;&#34;
+        return [tuple(sanitise(p)) for p in specification.split()]
+    
+    def validate_transform(self, transform):
+        &#34;&#34;&#34;A set of pairs, of from-to. Does not require all 26 letters
+        are in the transform.
+        &#34;&#34;&#34;
+        for p in transform:
+            if len(p) != 2:
+                raise ValueError(&#34;Not all mappings in transform&#34;
+                    &#34;have two elements&#34;)
+    
+    def make_empty_transform(self):
+        &#34;&#34;&#34;An empty transform maps every letter to itself.
+        &#34;&#34;&#34;
+        self.forward_map = list(range(26))
+        self.backward_map = list(range(26))
+        
+    def make_transform_map(self, transform):
+        &#34;&#34;&#34;Makes the maps for a plugboard. Ensures that if the pair (&#39;a&#39;, &#39;b&#39;)
+        is in the specification, the pair (&#39;b&#39;, &#39;a&#39;) is also present.
+        &#34;&#34;&#34;
+        expanded_transform = transform + [tuple(reversed(p)) for p in transform]
+        return super(Plugboard, self).make_transform_map(expanded_transform)
+
+
+
+
+class Reflector(Plugboard):
+    &#34;&#34;&#34;A reflector is a plugboard that requires 13 transforms.
+    The &#39;plugboard&#39; superclass ensures that all 13 transforms are also applied
+    in reverse, making 26 transforms in all.
+    &#34;&#34;&#34;
+    def validate_transform(self, transform):
+        if len(transform) != 13:
+            raise ValueError(&#34;Reflector specification has {} pairs, requires 13&#34;.
+                format(len(transform)))
+        if len(set([p[0] for p in transform] + 
+                    [p[1] for p in transform])) != 26:
+            raise ValueError(&#34;Reflector specification does not contain 26 letters&#34;)
+        try:
+            super(Reflector, self).validate_transform(transform)
+        except ValueError as v:
+            raise ValueError(&#34;Not all mappings in reflector have two elements&#34;)
+
+
+
+
+class SimpleWheel(LetterTransformer):
+    &#34;&#34;&#34;A wheel is a transform that rotates.
+
+    Looking from the right, letters go in sequence a-b-c clockwise around the 
+    wheel. 
+
+    The position of the wheel is the number of spaces anticlockwise the wheel
+    has turned.
+
+    Letter inputs and outputs are given relative to the frame holding the wheel,
+    so if the wheel is advanced three places, an input of &#39;p&#39; will enter the 
+    wheel on the position under the wheel&#39;s &#39;s&#39; label.
+    &#34;&#34;&#34;
+    def __init__(self, transform, position=&#39;a&#39;, raw_transform=False):
+        super(SimpleWheel, self).__init__(transform, raw_transform)
+        self.set_position(position)
+        
+    def __getattribute__(self,name):
+        if name==&#39;position_l&#39;:
+            return unpos(self.position)
+        else:
+            return object.__getattribute__(self, name)
+    
+    def set_position(self, position):
+        &#34;&#34;&#34;Sets a wheel&#39;s position. If the `position` is a string, convert it
+        to a number and set the position.
+        &#34;&#34;&#34;
+        if isinstance(position, str):
+            self.position = pos(position)
+        else:
+            self.position = position
+    
+    def forward(self, letter):
+        &#34;&#34;&#34;Give the transformed letter in the forward direction, accounting
+        for the position of the wheel.
+        &#34;&#34;&#34;
+        if letter in string.ascii_lowercase:
+            return unpos((self.forward_map[(pos(letter) + self.position) % 26] - self.position))
+        else:
+            return &#39;&#39;
+                
+    def backward(self, letter):
+        &#34;&#34;&#34;Give the transformed letter in the backward direction, accounting
+        for the position of the wheel.
+        &#34;&#34;&#34;
+        if letter in string.ascii_lowercase:
+            return unpos((self.backward_map[(pos(letter) + self.position) % 26] - self.position))
+        else:
+            return &#39;&#39;
+        
+    def advance(self):
+        &#34;&#34;&#34;Advance a wheel one position.&#34;&#34;&#34;
+        self.position = (self.position + 1) % 26
+
+
+
+class Wheel(SimpleWheel):
+    &#34;&#34;&#34;A wheel with a movable ring.
+
+    The ring holds the letters and the notches that turn other wheels. The core
+    holds the wiring that does the transformation.
+
+    The ring position is how many steps the core is turned relative to the ring.
+    This is one-based, so a ring setting of 1 means the core and ring are 
+    aligned.
+
+    The position of the wheel is the position of the core (the transforms) 
+    relative to the neutral position. 
+
+    The position_l is the position of the ring, or what would be observed
+    by the user of the Enigma machine. 
+
+    The notch_positions are the number of advances of this wheel before it will 
+    advance the next wheel.
+    &#34;&#34;&#34;
+    def __init__(self, transform, ring_notch_letters, ring_setting=1, 
+            position=&#39;a&#39;, raw_transform=False):
+        self.ring_notch_letters = ring_notch_letters
+        self.ring_setting = ring_setting
+        super(Wheel, self).__init__(transform, position=position, 
+            raw_transform=raw_transform)
+        self.set_position(position)
+        
+    def __getattribute__(self,name):
+        if name==&#39;position_l&#39;:
+            return unpos(self.position + self.ring_setting - 1)
+        else:
+            return object.__getattribute__(self, name)
+
+    def set_position(self, position):
+        if isinstance(position, str):
+            self.position = (pos(position) - self.ring_setting + 1) % 26
+        else:
+            self.position = (position - self.ring_setting) % 26
+        # # self.notch_positions = [(pos(p) - pos(position)) % 26  for p in self.ring_notch_letters]
+        # self.notch_positions = [(pos(p) - (self.position + self.ring_setting - 1)) % 26  for p in self.ring_notch_letters]
+        self.notch_positions = [(self.position + self.ring_setting - 1 - pos(p)) % 26  for p in self.ring_notch_letters]
+        
+    def advance(self):
+        &#34;&#34;&#34;Advance a wheel&#39;s core, then advance the ring position to match.
+        &#34;&#34;&#34;
+        super(Wheel, self).advance()
+        self.notch_positions = [(p + 1) % 26 for p in self.notch_positions]
+        return self.position
+
+
+class Enigma(object):
+    &#34;&#34;&#34;An Enigma machine.
+
+
+    &#34;&#34;&#34;
+    def __init__(self, reflector_spec,
+                 left_wheel_spec, left_wheel_notches,
+                 middle_wheel_spec, middle_wheel_notches,
+                 right_wheel_spec, right_wheel_notches,
+                 left_ring_setting, middle_ring_setting, right_ring_setting,
+                 plugboard_setting):
+        self.reflector = Reflector(reflector_spec)
+        self.left_wheel = Wheel(left_wheel_spec, left_wheel_notches, 
+            ring_setting=left_ring_setting)
+        self.middle_wheel = Wheel(middle_wheel_spec, middle_wheel_notches, 
+            ring_setting=middle_ring_setting)
+        self.right_wheel = Wheel(right_wheel_spec, right_wheel_notches, 
+            ring_setting=right_ring_setting)
+        self.plugboard = Plugboard(plugboard_setting)
+        
+    def __getattribute__(self,name):
+        if name==&#39;wheel_positions&#39;:
+            return (self.left_wheel.position, 
+                    self.middle_wheel.position, 
+                    self.right_wheel.position
+                    )
+        elif name==&#39;wheel_positions_l&#39;:
+            return (self.left_wheel.position_l, 
+                    self.middle_wheel.position_l, 
+                    self.right_wheel.position_l
+                    )
+        elif name==&#39;notch_positions&#39;:
+            return (self.left_wheel.notch_positions, 
+                    self.middle_wheel.notch_positions, 
+                    self.right_wheel.notch_positions
+                    )
+        else:
+            return object.__getattribute__(self, name)
+
+    def set_wheels(self, left_wheel_position, middle_wheel_position, 
+            right_wheel_position):
+        &#34;&#34;&#34;Set the Enigma&#39;s wheels to the specified positions.
+        &#34;&#34;&#34;
+        self.left_wheel.set_position(left_wheel_position)
+        self.middle_wheel.set_position(middle_wheel_position)
+        self.right_wheel.set_position(right_wheel_position)
+        
+    def lookup(self, letter):
+        &#34;&#34;&#34;Lookup the enciphering of a letter, without advancing any wheels
+        &#34;&#34;&#34;
+        a = self.plugboard.forward(letter)
+        b = self.right_wheel.forward(a)
+        c = self.middle_wheel.forward(b)
+        d = self.left_wheel.forward(c)
+        e = self.reflector.forward(d)
+        f = self.left_wheel.backward(e)
+        g = self.middle_wheel.backward(f)
+        h = self.right_wheel.backward(g)
+        i = self.plugboard.backward(h)
+        return i
+    
+    def advance(self):
+        &#34;&#34;&#34;Advance the Enigma&#39;s wheels one step. The right wheel always
+        advances. The middle and right wheels may advance if the notches
+        line up correctly.
+        &#34;&#34;&#34;
+        advance_middle = False
+        advance_left = False
+        if 0 in self.right_wheel.notch_positions:
+            advance_middle = True
+        if 0 in self.middle_wheel.notch_positions:
+            advance_left = True
+            advance_middle = True
+        self.right_wheel.advance()
+        if advance_middle: self.middle_wheel.advance()
+        if advance_left: self.left_wheel.advance()
+            
+    def encipher_letter(self, letter):
+        &#34;&#34;&#34;Encipher a letter. Advance the Enigma machine, then lookup the
+        encryption of a letter.
+        &#34;&#34;&#34;
+        self.advance()
+        return self.lookup(letter)
+    
+    def encipher(self, message):
+        &#34;&#34;&#34;Encipher a message.&#34;&#34;&#34;
+        enciphered = &#39;&#39;
+        for letter in sanitise(message):
+            enciphered += self.encipher_letter(letter)
+        return enciphered
+
+    decipher = encipher
+
+
+# for i in range(26):
+#     enigma.advance()
+#     print(&#39;enigma.advance()&#39;)
+#     print(&#34;assert(enigma.wheel_positions == {})&#34;.format(enigma.wheel_positions))
+#     print(&#34;assert(cat(enigma.wheel_positions_l) == &#39;{}&#39;)&#34;.format(cat(enigma.wheel_positions_l)))
+#     print(&#34;assert(enigma.notch_positions == {})&#34;.format(enigma.notch_positions))
+#     print(&#34;assert(cat(enigma.lookup(l) for l in string.ascii_lowercase) == &#39;{}&#39;)&#34;.format(cat(enigma.lookup(l) for l in string.ascii_lowercase)))
+#     print()
+
+
+if __name__ == &#34;__main__&#34;:
+    import doctest
+    # doctest.testmod(extraglobs={&#39;lt&#39;: LetterTransformer(1, &#39;a&#39;)})
+    doctest.testmod()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="szyfrow.enigma.cat"><code class="name flex">
+<span>def <span class="ident">cat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+<dt id="szyfrow.enigma.lcat"><code class="name flex">
+<span>def <span class="ident">lcat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+<dt id="szyfrow.enigma.wcat"><code class="name flex">
+<span>def <span class="ident">wcat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="szyfrow.enigma.Enigma"><code class="flex name class">
+<span>class <span class="ident">Enigma</span></span>
+<span>(</span><span>reflector_spec, left_wheel_spec, left_wheel_notches, middle_wheel_spec, middle_wheel_notches, right_wheel_spec, right_wheel_notches, left_ring_setting, middle_ring_setting, right_ring_setting, plugboard_setting)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>An Enigma machine.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Enigma(object):
+    &#34;&#34;&#34;An Enigma machine.
+
+
+    &#34;&#34;&#34;
+    def __init__(self, reflector_spec,
+                 left_wheel_spec, left_wheel_notches,
+                 middle_wheel_spec, middle_wheel_notches,
+                 right_wheel_spec, right_wheel_notches,
+                 left_ring_setting, middle_ring_setting, right_ring_setting,
+                 plugboard_setting):
+        self.reflector = Reflector(reflector_spec)
+        self.left_wheel = Wheel(left_wheel_spec, left_wheel_notches, 
+            ring_setting=left_ring_setting)
+        self.middle_wheel = Wheel(middle_wheel_spec, middle_wheel_notches, 
+            ring_setting=middle_ring_setting)
+        self.right_wheel = Wheel(right_wheel_spec, right_wheel_notches, 
+            ring_setting=right_ring_setting)
+        self.plugboard = Plugboard(plugboard_setting)
+        
+    def __getattribute__(self,name):
+        if name==&#39;wheel_positions&#39;:
+            return (self.left_wheel.position, 
+                    self.middle_wheel.position, 
+                    self.right_wheel.position
+                    )
+        elif name==&#39;wheel_positions_l&#39;:
+            return (self.left_wheel.position_l, 
+                    self.middle_wheel.position_l, 
+                    self.right_wheel.position_l
+                    )
+        elif name==&#39;notch_positions&#39;:
+            return (self.left_wheel.notch_positions, 
+                    self.middle_wheel.notch_positions, 
+                    self.right_wheel.notch_positions
+                    )
+        else:
+            return object.__getattribute__(self, name)
+
+    def set_wheels(self, left_wheel_position, middle_wheel_position, 
+            right_wheel_position):
+        &#34;&#34;&#34;Set the Enigma&#39;s wheels to the specified positions.
+        &#34;&#34;&#34;
+        self.left_wheel.set_position(left_wheel_position)
+        self.middle_wheel.set_position(middle_wheel_position)
+        self.right_wheel.set_position(right_wheel_position)
+        
+    def lookup(self, letter):
+        &#34;&#34;&#34;Lookup the enciphering of a letter, without advancing any wheels
+        &#34;&#34;&#34;
+        a = self.plugboard.forward(letter)
+        b = self.right_wheel.forward(a)
+        c = self.middle_wheel.forward(b)
+        d = self.left_wheel.forward(c)
+        e = self.reflector.forward(d)
+        f = self.left_wheel.backward(e)
+        g = self.middle_wheel.backward(f)
+        h = self.right_wheel.backward(g)
+        i = self.plugboard.backward(h)
+        return i
+    
+    def advance(self):
+        &#34;&#34;&#34;Advance the Enigma&#39;s wheels one step. The right wheel always
+        advances. The middle and right wheels may advance if the notches
+        line up correctly.
+        &#34;&#34;&#34;
+        advance_middle = False
+        advance_left = False
+        if 0 in self.right_wheel.notch_positions:
+            advance_middle = True
+        if 0 in self.middle_wheel.notch_positions:
+            advance_left = True
+            advance_middle = True
+        self.right_wheel.advance()
+        if advance_middle: self.middle_wheel.advance()
+        if advance_left: self.left_wheel.advance()
+            
+    def encipher_letter(self, letter):
+        &#34;&#34;&#34;Encipher a letter. Advance the Enigma machine, then lookup the
+        encryption of a letter.
+        &#34;&#34;&#34;
+        self.advance()
+        return self.lookup(letter)
+    
+    def encipher(self, message):
+        &#34;&#34;&#34;Encipher a message.&#34;&#34;&#34;
+        enciphered = &#39;&#39;
+        for letter in sanitise(message):
+            enciphered += self.encipher_letter(letter)
+        return enciphered
+
+    decipher = encipher</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="szyfrow.enigma.Enigma.advance"><code class="name flex">
+<span>def <span class="ident">advance</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Advance the Enigma's wheels one step. The right wheel always
+advances. The middle and right wheels may advance if the notches
+line up correctly.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def advance(self):
+    &#34;&#34;&#34;Advance the Enigma&#39;s wheels one step. The right wheel always
+    advances. The middle and right wheels may advance if the notches
+    line up correctly.
+    &#34;&#34;&#34;
+    advance_middle = False
+    advance_left = False
+    if 0 in self.right_wheel.notch_positions:
+        advance_middle = True
+    if 0 in self.middle_wheel.notch_positions:
+        advance_left = True
+        advance_middle = True
+    self.right_wheel.advance()
+    if advance_middle: self.middle_wheel.advance()
+    if advance_left: self.left_wheel.advance()</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.Enigma.decipher"><code class="name flex">
+<span>def <span class="ident">decipher</span></span>(<span>self, message)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Encipher a message.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def encipher(self, message):
+    &#34;&#34;&#34;Encipher a message.&#34;&#34;&#34;
+    enciphered = &#39;&#39;
+    for letter in sanitise(message):
+        enciphered += self.encipher_letter(letter)
+    return enciphered</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.Enigma.encipher"><code class="name flex">
+<span>def <span class="ident">encipher</span></span>(<span>self, message)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Encipher a message.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def encipher(self, message):
+    &#34;&#34;&#34;Encipher a message.&#34;&#34;&#34;
+    enciphered = &#39;&#39;
+    for letter in sanitise(message):
+        enciphered += self.encipher_letter(letter)
+    return enciphered</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.Enigma.encipher_letter"><code class="name flex">
+<span>def <span class="ident">encipher_letter</span></span>(<span>self, letter)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Encipher a letter. Advance the Enigma machine, then lookup the
+encryption of a letter.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def encipher_letter(self, letter):
+    &#34;&#34;&#34;Encipher a letter. Advance the Enigma machine, then lookup the
+    encryption of a letter.
+    &#34;&#34;&#34;
+    self.advance()
+    return self.lookup(letter)</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.Enigma.lookup"><code class="name flex">
+<span>def <span class="ident">lookup</span></span>(<span>self, letter)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Lookup the enciphering of a letter, without advancing any wheels</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def lookup(self, letter):
+    &#34;&#34;&#34;Lookup the enciphering of a letter, without advancing any wheels
+    &#34;&#34;&#34;
+    a = self.plugboard.forward(letter)
+    b = self.right_wheel.forward(a)
+    c = self.middle_wheel.forward(b)
+    d = self.left_wheel.forward(c)
+    e = self.reflector.forward(d)
+    f = self.left_wheel.backward(e)
+    g = self.middle_wheel.backward(f)
+    h = self.right_wheel.backward(g)
+    i = self.plugboard.backward(h)
+    return i</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.Enigma.set_wheels"><code class="name flex">
+<span>def <span class="ident">set_wheels</span></span>(<span>self, left_wheel_position, middle_wheel_position, right_wheel_position)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set the Enigma's wheels to the specified positions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_wheels(self, left_wheel_position, middle_wheel_position, 
+        right_wheel_position):
+    &#34;&#34;&#34;Set the Enigma&#39;s wheels to the specified positions.
+    &#34;&#34;&#34;
+    self.left_wheel.set_position(left_wheel_position)
+    self.middle_wheel.set_position(middle_wheel_position)
+    self.right_wheel.set_position(right_wheel_position)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="szyfrow.enigma.LetterTransformer"><code class="flex name class">
+<span>class <span class="ident">LetterTransformer</span></span>
+<span>(</span><span>specification, raw_transform=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A generic substitution cipher, that has different transforms in the
+forward and backward directions. It requires that the transforms for all
+letters by provided.</p>
+<p>A <code>transform</code> is a list of letter pairs, like <code>[('a', 'b'), ('c', 'd')]</code>.
+That would say that, in the forward direction <code>a</code> goes to <code>b</code> and
+<code>c</code> goes to <code>d</code>. In the backward direction, <code>b</code> goes to <code>a</code> and <code>d</code> goes
+to <code>c</code>. </p>
+<p>Validate and create a new transformer. The transform is parsed by
+<code><a title="szyfrow.enigma.LetterTransformer.parse_specification" href="#szyfrow.enigma.LetterTransformer.parse_specification">LetterTransformer.parse_specification()</a></code> unless <code>raw_transform</code> is <code>True</code></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LetterTransformer(object):
+    &#34;&#34;&#34;A generic substitution cipher, that has different transforms in the 
+    forward and backward directions. It requires that the transforms for all
+    letters by provided.
+
+    A `transform` is a list of letter pairs, like `[(&#39;a&#39;, &#39;b&#39;), (&#39;c&#39;, &#39;d&#39;)]`.
+    That would say that, in the forward direction `a` goes to `b` and 
+    `c` goes to `d`. In the backward direction, `b` goes to `a` and `d` goes
+    to `c`. 
+    &#34;&#34;&#34;
+    def __init__(self, specification, raw_transform=False):
+        &#34;&#34;&#34;Validate and create a new transformer. The transform is parsed by
+        `LetterTransformer.parse_specification` unless `raw_transform` is `True`
+        &#34;&#34;&#34;
+        if raw_transform:
+            transform = specification
+        else:
+            transform = self.parse_specification(specification)
+        self.validate_transform(transform)
+        self.make_transform_map(transform)
+    
+    def parse_specification(self, specification):
+        &#34;&#34;&#34;Turn a `specification` string into a transform, by zipping it
+        with ASCII lowercase letters to generate the pairs. This assumes that
+        the `specification` defines the destination of the forward transform.
+        &#34;&#34;&#34;
+        return list(zip(string.ascii_lowercase, sanitise(specification)))
+        # return specification
+    
+    def validate_transform(self, transform):
+        &#34;&#34;&#34;Checks that a transform is valid (every letter is mapped to 
+        exactly one other letter, in both directions).
+        &#34;&#34;&#34;
+        if len(transform) != 26:
+            raise ValueError(&#34;Transform specification has {} pairs, requires 26&#34;.
+                format(len(transform)))
+        for p in transform:
+            if len(p) != 2:
+                raise ValueError(&#34;Not all mappings in transform &#34;
+                    &#34;have two elements&#34;)
+        if len(set([p[0] for p in transform])) != 26:
+            raise ValueError(&#34;Transform specification must list 26 origin letters&#34;) 
+        if len(set([p[1] for p in transform])) != 26:
+            raise ValueError(&#34;Transform specification must list 26 destination letters&#34;) 
+
+    def make_empty_transform(self):
+        &#34;&#34;&#34;An empty transform is one that maps every letter to &#39;a&#39;.
+        &#34;&#34;&#34;
+        self.forward_map = [0] * 26
+        self.backward_map = [0] * 26
+            
+    def make_transform_map(self, transform):
+        &#34;&#34;&#34;Create `forward_map` and `backward_map` from `transform`. The maps
+        work on letter positions, not letter values. This makes the arithmetic
+        for wheels much easier.
+        &#34;&#34;&#34;
+        self.make_empty_transform()
+        for p in transform:
+            self.forward_map[pos(p[0])] = pos(p[1])
+            self.backward_map[pos(p[1])] = pos(p[0])
+        return self.forward_map, self.backward_map
+    
+    def forward(self, letter):
+        &#34;&#34;&#34;Apply a map in the forward direction.
+        &#34;&#34;&#34;
+        if letter in string.ascii_lowercase:
+            return unpos(self.forward_map[pos(letter)])
+        else:
+            return &#39;&#39;
+                
+    def backward(self, letter):
+        &#34;&#34;&#34;Apply a map in the backward direction.
+        &#34;&#34;&#34;
+        if letter in string.ascii_lowercase:
+            return unpos(self.backward_map[pos(letter)])
+        else:
+            return &#39;&#39;</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="szyfrow.enigma.Plugboard" href="#szyfrow.enigma.Plugboard">Plugboard</a></li>
+<li><a title="szyfrow.enigma.SimpleWheel" href="#szyfrow.enigma.SimpleWheel">SimpleWheel</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="szyfrow.enigma.LetterTransformer.backward"><code class="name flex">
+<span>def <span class="ident">backward</span></span>(<span>self, letter)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Apply a map in the backward direction.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def backward(self, letter):
+    &#34;&#34;&#34;Apply a map in the backward direction.
+    &#34;&#34;&#34;
+    if letter in string.ascii_lowercase:
+        return unpos(self.backward_map[pos(letter)])
+    else:
+        return &#39;&#39;</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.LetterTransformer.forward"><code class="name flex">
+<span>def <span class="ident">forward</span></span>(<span>self, letter)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Apply a map in the forward direction.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def forward(self, letter):
+    &#34;&#34;&#34;Apply a map in the forward direction.
+    &#34;&#34;&#34;
+    if letter in string.ascii_lowercase:
+        return unpos(self.forward_map[pos(letter)])
+    else:
+        return &#39;&#39;</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.LetterTransformer.make_empty_transform"><code class="name flex">
+<span>def <span class="ident">make_empty_transform</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>An empty transform is one that maps every letter to 'a'.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_empty_transform(self):
+    &#34;&#34;&#34;An empty transform is one that maps every letter to &#39;a&#39;.
+    &#34;&#34;&#34;
+    self.forward_map = [0] * 26
+    self.backward_map = [0] * 26</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.LetterTransformer.make_transform_map"><code class="name flex">
+<span>def <span class="ident">make_transform_map</span></span>(<span>self, transform)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create <code>forward_map</code> and <code>backward_map</code> from <code>transform</code>. The maps
+work on letter positions, not letter values. This makes the arithmetic
+for wheels much easier.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_transform_map(self, transform):
+    &#34;&#34;&#34;Create `forward_map` and `backward_map` from `transform`. The maps
+    work on letter positions, not letter values. This makes the arithmetic
+    for wheels much easier.
+    &#34;&#34;&#34;
+    self.make_empty_transform()
+    for p in transform:
+        self.forward_map[pos(p[0])] = pos(p[1])
+        self.backward_map[pos(p[1])] = pos(p[0])
+    return self.forward_map, self.backward_map</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.LetterTransformer.parse_specification"><code class="name flex">
+<span>def <span class="ident">parse_specification</span></span>(<span>self, specification)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Turn a <code>specification</code> string into a transform, by zipping it
+with ASCII lowercase letters to generate the pairs. This assumes that
+the <code>specification</code> defines the destination of the forward transform.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def parse_specification(self, specification):
+    &#34;&#34;&#34;Turn a `specification` string into a transform, by zipping it
+    with ASCII lowercase letters to generate the pairs. This assumes that
+    the `specification` defines the destination of the forward transform.
+    &#34;&#34;&#34;
+    return list(zip(string.ascii_lowercase, sanitise(specification)))
+    # return specification</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.LetterTransformer.validate_transform"><code class="name flex">
+<span>def <span class="ident">validate_transform</span></span>(<span>self, transform)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks that a transform is valid (every letter is mapped to
+exactly one other letter, in both directions).</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def validate_transform(self, transform):
+    &#34;&#34;&#34;Checks that a transform is valid (every letter is mapped to 
+    exactly one other letter, in both directions).
+    &#34;&#34;&#34;
+    if len(transform) != 26:
+        raise ValueError(&#34;Transform specification has {} pairs, requires 26&#34;.
+            format(len(transform)))
+    for p in transform:
+        if len(p) != 2:
+            raise ValueError(&#34;Not all mappings in transform &#34;
+                &#34;have two elements&#34;)
+    if len(set([p[0] for p in transform])) != 26:
+        raise ValueError(&#34;Transform specification must list 26 origin letters&#34;) 
+    if len(set([p[1] for p in transform])) != 26:
+        raise ValueError(&#34;Transform specification must list 26 destination letters&#34;) </code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="szyfrow.enigma.Plugboard"><code class="flex name class">
+<span>class <span class="ident">Plugboard</span></span>
+<span>(</span><span>specification, raw_transform=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A plugboard, a type of letter transformer where forward and backward
+transforms are the same. If a letter isn't explicitly transformed, it is
+kept as it is.</p>
+<p>Validate and create a new transformer. The transform is parsed by
+<code><a title="szyfrow.enigma.LetterTransformer.parse_specification" href="#szyfrow.enigma.LetterTransformer.parse_specification">LetterTransformer.parse_specification()</a></code> unless <code>raw_transform</code> is <code>True</code></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Plugboard(LetterTransformer):
+    &#34;&#34;&#34;A plugboard, a type of letter transformer where forward and backward
+    transforms are the same. If a letter isn&#39;t explicitly transformed, it is 
+    kept as it is.
+    &#34;&#34;&#34;
+
+    def parse_specification(self, specification):
+        &#34;&#34;&#34;Convert a specification into a transform. The specification is
+        given as a list of letter pairs.
+        &#34;&#34;&#34;
+        return [tuple(sanitise(p)) for p in specification.split()]
+    
+    def validate_transform(self, transform):
+        &#34;&#34;&#34;A set of pairs, of from-to. Does not require all 26 letters
+        are in the transform.
+        &#34;&#34;&#34;
+        for p in transform:
+            if len(p) != 2:
+                raise ValueError(&#34;Not all mappings in transform&#34;
+                    &#34;have two elements&#34;)
+    
+    def make_empty_transform(self):
+        &#34;&#34;&#34;An empty transform maps every letter to itself.
+        &#34;&#34;&#34;
+        self.forward_map = list(range(26))
+        self.backward_map = list(range(26))
+        
+    def make_transform_map(self, transform):
+        &#34;&#34;&#34;Makes the maps for a plugboard. Ensures that if the pair (&#39;a&#39;, &#39;b&#39;)
+        is in the specification, the pair (&#39;b&#39;, &#39;a&#39;) is also present.
+        &#34;&#34;&#34;
+        expanded_transform = transform + [tuple(reversed(p)) for p in transform]
+        return super(Plugboard, self).make_transform_map(expanded_transform)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="szyfrow.enigma.LetterTransformer" href="#szyfrow.enigma.LetterTransformer">LetterTransformer</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="szyfrow.enigma.Reflector" href="#szyfrow.enigma.Reflector">Reflector</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="szyfrow.enigma.Plugboard.make_empty_transform"><code class="name flex">
+<span>def <span class="ident">make_empty_transform</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>An empty transform maps every letter to itself.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_empty_transform(self):
+    &#34;&#34;&#34;An empty transform maps every letter to itself.
+    &#34;&#34;&#34;
+    self.forward_map = list(range(26))
+    self.backward_map = list(range(26))</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.Plugboard.make_transform_map"><code class="name flex">
+<span>def <span class="ident">make_transform_map</span></span>(<span>self, transform)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Makes the maps for a plugboard. Ensures that if the pair ('a', 'b')
+is in the specification, the pair ('b', 'a') is also present.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_transform_map(self, transform):
+    &#34;&#34;&#34;Makes the maps for a plugboard. Ensures that if the pair (&#39;a&#39;, &#39;b&#39;)
+    is in the specification, the pair (&#39;b&#39;, &#39;a&#39;) is also present.
+    &#34;&#34;&#34;
+    expanded_transform = transform + [tuple(reversed(p)) for p in transform]
+    return super(Plugboard, self).make_transform_map(expanded_transform)</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.Plugboard.parse_specification"><code class="name flex">
+<span>def <span class="ident">parse_specification</span></span>(<span>self, specification)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Convert a specification into a transform. The specification is
+given as a list of letter pairs.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def parse_specification(self, specification):
+    &#34;&#34;&#34;Convert a specification into a transform. The specification is
+    given as a list of letter pairs.
+    &#34;&#34;&#34;
+    return [tuple(sanitise(p)) for p in specification.split()]</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.Plugboard.validate_transform"><code class="name flex">
+<span>def <span class="ident">validate_transform</span></span>(<span>self, transform)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A set of pairs, of from-to. Does not require all 26 letters
+are in the transform.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def validate_transform(self, transform):
+    &#34;&#34;&#34;A set of pairs, of from-to. Does not require all 26 letters
+    are in the transform.
+    &#34;&#34;&#34;
+    for p in transform:
+        if len(p) != 2:
+            raise ValueError(&#34;Not all mappings in transform&#34;
+                &#34;have two elements&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="szyfrow.enigma.LetterTransformer" href="#szyfrow.enigma.LetterTransformer">LetterTransformer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="szyfrow.enigma.LetterTransformer.backward" href="#szyfrow.enigma.LetterTransformer.backward">backward</a></code></li>
+<li><code><a title="szyfrow.enigma.LetterTransformer.forward" href="#szyfrow.enigma.LetterTransformer.forward">forward</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="szyfrow.enigma.Reflector"><code class="flex name class">
+<span>class <span class="ident">Reflector</span></span>
+<span>(</span><span>specification, raw_transform=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A reflector is a plugboard that requires 13 transforms.
+The 'plugboard' superclass ensures that all 13 transforms are also applied
+in reverse, making 26 transforms in all.</p>
+<p>Validate and create a new transformer. The transform is parsed by
+<code><a title="szyfrow.enigma.LetterTransformer.parse_specification" href="#szyfrow.enigma.LetterTransformer.parse_specification">LetterTransformer.parse_specification()</a></code> unless <code>raw_transform</code> is <code>True</code></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Reflector(Plugboard):
+    &#34;&#34;&#34;A reflector is a plugboard that requires 13 transforms.
+    The &#39;plugboard&#39; superclass ensures that all 13 transforms are also applied
+    in reverse, making 26 transforms in all.
+    &#34;&#34;&#34;
+    def validate_transform(self, transform):
+        if len(transform) != 13:
+            raise ValueError(&#34;Reflector specification has {} pairs, requires 13&#34;.
+                format(len(transform)))
+        if len(set([p[0] for p in transform] + 
+                    [p[1] for p in transform])) != 26:
+            raise ValueError(&#34;Reflector specification does not contain 26 letters&#34;)
+        try:
+            super(Reflector, self).validate_transform(transform)
+        except ValueError as v:
+            raise ValueError(&#34;Not all mappings in reflector have two elements&#34;)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="szyfrow.enigma.Plugboard" href="#szyfrow.enigma.Plugboard">Plugboard</a></li>
+<li><a title="szyfrow.enigma.LetterTransformer" href="#szyfrow.enigma.LetterTransformer">LetterTransformer</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="szyfrow.enigma.Plugboard" href="#szyfrow.enigma.Plugboard">Plugboard</a></b></code>:
+<ul class="hlist">
+<li><code><a title="szyfrow.enigma.Plugboard.backward" href="#szyfrow.enigma.LetterTransformer.backward">backward</a></code></li>
+<li><code><a title="szyfrow.enigma.Plugboard.forward" href="#szyfrow.enigma.LetterTransformer.forward">forward</a></code></li>
+<li><code><a title="szyfrow.enigma.Plugboard.make_empty_transform" href="#szyfrow.enigma.Plugboard.make_empty_transform">make_empty_transform</a></code></li>
+<li><code><a title="szyfrow.enigma.Plugboard.make_transform_map" href="#szyfrow.enigma.Plugboard.make_transform_map">make_transform_map</a></code></li>
+<li><code><a title="szyfrow.enigma.Plugboard.parse_specification" href="#szyfrow.enigma.Plugboard.parse_specification">parse_specification</a></code></li>
+<li><code><a title="szyfrow.enigma.Plugboard.validate_transform" href="#szyfrow.enigma.Plugboard.validate_transform">validate_transform</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="szyfrow.enigma.SimpleWheel"><code class="flex name class">
+<span>class <span class="ident">SimpleWheel</span></span>
+<span>(</span><span>transform, position='a', raw_transform=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A wheel is a transform that rotates.</p>
+<p>Looking from the right, letters go in sequence a-b-c clockwise around the
+wheel. </p>
+<p>The position of the wheel is the number of spaces anticlockwise the wheel
+has turned.</p>
+<p>Letter inputs and outputs are given relative to the frame holding the wheel,
+so if the wheel is advanced three places, an input of 'p' will enter the
+wheel on the position under the wheel's 's' label.</p>
+<p>Validate and create a new transformer. The transform is parsed by
+<code><a title="szyfrow.enigma.LetterTransformer.parse_specification" href="#szyfrow.enigma.LetterTransformer.parse_specification">LetterTransformer.parse_specification()</a></code> unless <code>raw_transform</code> is <code>True</code></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SimpleWheel(LetterTransformer):
+    &#34;&#34;&#34;A wheel is a transform that rotates.
+
+    Looking from the right, letters go in sequence a-b-c clockwise around the 
+    wheel. 
+
+    The position of the wheel is the number of spaces anticlockwise the wheel
+    has turned.
+
+    Letter inputs and outputs are given relative to the frame holding the wheel,
+    so if the wheel is advanced three places, an input of &#39;p&#39; will enter the 
+    wheel on the position under the wheel&#39;s &#39;s&#39; label.
+    &#34;&#34;&#34;
+    def __init__(self, transform, position=&#39;a&#39;, raw_transform=False):
+        super(SimpleWheel, self).__init__(transform, raw_transform)
+        self.set_position(position)
+        
+    def __getattribute__(self,name):
+        if name==&#39;position_l&#39;:
+            return unpos(self.position)
+        else:
+            return object.__getattribute__(self, name)
+    
+    def set_position(self, position):
+        &#34;&#34;&#34;Sets a wheel&#39;s position. If the `position` is a string, convert it
+        to a number and set the position.
+        &#34;&#34;&#34;
+        if isinstance(position, str):
+            self.position = pos(position)
+        else:
+            self.position = position
+    
+    def forward(self, letter):
+        &#34;&#34;&#34;Give the transformed letter in the forward direction, accounting
+        for the position of the wheel.
+        &#34;&#34;&#34;
+        if letter in string.ascii_lowercase:
+            return unpos((self.forward_map[(pos(letter) + self.position) % 26] - self.position))
+        else:
+            return &#39;&#39;
+                
+    def backward(self, letter):
+        &#34;&#34;&#34;Give the transformed letter in the backward direction, accounting
+        for the position of the wheel.
+        &#34;&#34;&#34;
+        if letter in string.ascii_lowercase:
+            return unpos((self.backward_map[(pos(letter) + self.position) % 26] - self.position))
+        else:
+            return &#39;&#39;
+        
+    def advance(self):
+        &#34;&#34;&#34;Advance a wheel one position.&#34;&#34;&#34;
+        self.position = (self.position + 1) % 26</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="szyfrow.enigma.LetterTransformer" href="#szyfrow.enigma.LetterTransformer">LetterTransformer</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="szyfrow.enigma.Wheel" href="#szyfrow.enigma.Wheel">Wheel</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="szyfrow.enigma.SimpleWheel.advance"><code class="name flex">
+<span>def <span class="ident">advance</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Advance a wheel one position.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def advance(self):
+    &#34;&#34;&#34;Advance a wheel one position.&#34;&#34;&#34;
+    self.position = (self.position + 1) % 26</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.SimpleWheel.backward"><code class="name flex">
+<span>def <span class="ident">backward</span></span>(<span>self, letter)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Give the transformed letter in the backward direction, accounting
+for the position of the wheel.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def backward(self, letter):
+    &#34;&#34;&#34;Give the transformed letter in the backward direction, accounting
+    for the position of the wheel.
+    &#34;&#34;&#34;
+    if letter in string.ascii_lowercase:
+        return unpos((self.backward_map[(pos(letter) + self.position) % 26] - self.position))
+    else:
+        return &#39;&#39;</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.SimpleWheel.forward"><code class="name flex">
+<span>def <span class="ident">forward</span></span>(<span>self, letter)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Give the transformed letter in the forward direction, accounting
+for the position of the wheel.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def forward(self, letter):
+    &#34;&#34;&#34;Give the transformed letter in the forward direction, accounting
+    for the position of the wheel.
+    &#34;&#34;&#34;
+    if letter in string.ascii_lowercase:
+        return unpos((self.forward_map[(pos(letter) + self.position) % 26] - self.position))
+    else:
+        return &#39;&#39;</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.enigma.SimpleWheel.set_position"><code class="name flex">
+<span>def <span class="ident">set_position</span></span>(<span>self, position)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets a wheel's position. If the <code>position</code> is a string, convert it
+to a number and set the position.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_position(self, position):
+    &#34;&#34;&#34;Sets a wheel&#39;s position. If the `position` is a string, convert it
+    to a number and set the position.
+    &#34;&#34;&#34;
+    if isinstance(position, str):
+        self.position = pos(position)
+    else:
+        self.position = position</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="szyfrow.enigma.LetterTransformer" href="#szyfrow.enigma.LetterTransformer">LetterTransformer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="szyfrow.enigma.LetterTransformer.make_empty_transform" href="#szyfrow.enigma.LetterTransformer.make_empty_transform">make_empty_transform</a></code></li>
+<li><code><a title="szyfrow.enigma.LetterTransformer.make_transform_map" href="#szyfrow.enigma.LetterTransformer.make_transform_map">make_transform_map</a></code></li>
+<li><code><a title="szyfrow.enigma.LetterTransformer.parse_specification" href="#szyfrow.enigma.LetterTransformer.parse_specification">parse_specification</a></code></li>
+<li><code><a title="szyfrow.enigma.LetterTransformer.validate_transform" href="#szyfrow.enigma.LetterTransformer.validate_transform">validate_transform</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="szyfrow.enigma.Wheel"><code class="flex name class">
+<span>class <span class="ident">Wheel</span></span>
+<span>(</span><span>transform, ring_notch_letters, ring_setting=1, position='a', raw_transform=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A wheel with a movable ring.</p>
+<p>The ring holds the letters and the notches that turn other wheels. The core
+holds the wiring that does the transformation.</p>
+<p>The ring position is how many steps the core is turned relative to the ring.
+This is one-based, so a ring setting of 1 means the core and ring are
+aligned.</p>
+<p>The position of the wheel is the position of the core (the transforms)
+relative to the neutral position. </p>
+<p>The position_l is the position of the ring, or what would be observed
+by the user of the Enigma machine. </p>
+<p>The notch_positions are the number of advances of this wheel before it will
+advance the next wheel.</p>
+<p>Validate and create a new transformer. The transform is parsed by
+<code><a title="szyfrow.enigma.LetterTransformer.parse_specification" href="#szyfrow.enigma.LetterTransformer.parse_specification">LetterTransformer.parse_specification()</a></code> unless <code>raw_transform</code> is <code>True</code></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Wheel(SimpleWheel):
+    &#34;&#34;&#34;A wheel with a movable ring.
+
+    The ring holds the letters and the notches that turn other wheels. The core
+    holds the wiring that does the transformation.
+
+    The ring position is how many steps the core is turned relative to the ring.
+    This is one-based, so a ring setting of 1 means the core and ring are 
+    aligned.
+
+    The position of the wheel is the position of the core (the transforms) 
+    relative to the neutral position. 
+
+    The position_l is the position of the ring, or what would be observed
+    by the user of the Enigma machine. 
+
+    The notch_positions are the number of advances of this wheel before it will 
+    advance the next wheel.
+    &#34;&#34;&#34;
+    def __init__(self, transform, ring_notch_letters, ring_setting=1, 
+            position=&#39;a&#39;, raw_transform=False):
+        self.ring_notch_letters = ring_notch_letters
+        self.ring_setting = ring_setting
+        super(Wheel, self).__init__(transform, position=position, 
+            raw_transform=raw_transform)
+        self.set_position(position)
+        
+    def __getattribute__(self,name):
+        if name==&#39;position_l&#39;:
+            return unpos(self.position + self.ring_setting - 1)
+        else:
+            return object.__getattribute__(self, name)
+
+    def set_position(self, position):
+        if isinstance(position, str):
+            self.position = (pos(position) - self.ring_setting + 1) % 26
+        else:
+            self.position = (position - self.ring_setting) % 26
+        # # self.notch_positions = [(pos(p) - pos(position)) % 26  for p in self.ring_notch_letters]
+        # self.notch_positions = [(pos(p) - (self.position + self.ring_setting - 1)) % 26  for p in self.ring_notch_letters]
+        self.notch_positions = [(self.position + self.ring_setting - 1 - pos(p)) % 26  for p in self.ring_notch_letters]
+        
+    def advance(self):
+        &#34;&#34;&#34;Advance a wheel&#39;s core, then advance the ring position to match.
+        &#34;&#34;&#34;
+        super(Wheel, self).advance()
+        self.notch_positions = [(p + 1) % 26 for p in self.notch_positions]
+        return self.position</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="szyfrow.enigma.SimpleWheel" href="#szyfrow.enigma.SimpleWheel">SimpleWheel</a></li>
+<li><a title="szyfrow.enigma.LetterTransformer" href="#szyfrow.enigma.LetterTransformer">LetterTransformer</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="szyfrow.enigma.Wheel.advance"><code class="name flex">
+<span>def <span class="ident">advance</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Advance a wheel's core, then advance the ring position to match.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def advance(self):
+    &#34;&#34;&#34;Advance a wheel&#39;s core, then advance the ring position to match.
+    &#34;&#34;&#34;
+    super(Wheel, self).advance()
+    self.notch_positions = [(p + 1) % 26 for p in self.notch_positions]
+    return self.position</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="szyfrow.enigma.SimpleWheel" href="#szyfrow.enigma.SimpleWheel">SimpleWheel</a></b></code>:
+<ul class="hlist">
+<li><code><a title="szyfrow.enigma.SimpleWheel.backward" href="#szyfrow.enigma.SimpleWheel.backward">backward</a></code></li>
+<li><code><a title="szyfrow.enigma.SimpleWheel.forward" href="#szyfrow.enigma.SimpleWheel.forward">forward</a></code></li>
+<li><code><a title="szyfrow.enigma.SimpleWheel.make_empty_transform" href="#szyfrow.enigma.LetterTransformer.make_empty_transform">make_empty_transform</a></code></li>
+<li><code><a title="szyfrow.enigma.SimpleWheel.make_transform_map" href="#szyfrow.enigma.LetterTransformer.make_transform_map">make_transform_map</a></code></li>
+<li><code><a title="szyfrow.enigma.SimpleWheel.parse_specification" href="#szyfrow.enigma.LetterTransformer.parse_specification">parse_specification</a></code></li>
+<li><code><a title="szyfrow.enigma.SimpleWheel.set_position" href="#szyfrow.enigma.SimpleWheel.set_position">set_position</a></code></li>
+<li><code><a title="szyfrow.enigma.SimpleWheel.validate_transform" href="#szyfrow.enigma.LetterTransformer.validate_transform">validate_transform</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="szyfrow" href="index.html">szyfrow</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="szyfrow.enigma.cat" href="#szyfrow.enigma.cat">cat</a></code></li>
+<li><code><a title="szyfrow.enigma.lcat" href="#szyfrow.enigma.lcat">lcat</a></code></li>
+<li><code><a title="szyfrow.enigma.wcat" href="#szyfrow.enigma.wcat">wcat</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="szyfrow.enigma.Enigma" href="#szyfrow.enigma.Enigma">Enigma</a></code></h4>
+<ul class="two-column">
+<li><code><a title="szyfrow.enigma.Enigma.advance" href="#szyfrow.enigma.Enigma.advance">advance</a></code></li>
+<li><code><a title="szyfrow.enigma.Enigma.decipher" href="#szyfrow.enigma.Enigma.decipher">decipher</a></code></li>
+<li><code><a title="szyfrow.enigma.Enigma.encipher" href="#szyfrow.enigma.Enigma.encipher">encipher</a></code></li>
+<li><code><a title="szyfrow.enigma.Enigma.encipher_letter" href="#szyfrow.enigma.Enigma.encipher_letter">encipher_letter</a></code></li>
+<li><code><a title="szyfrow.enigma.Enigma.lookup" href="#szyfrow.enigma.Enigma.lookup">lookup</a></code></li>
+<li><code><a title="szyfrow.enigma.Enigma.set_wheels" href="#szyfrow.enigma.Enigma.set_wheels">set_wheels</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="szyfrow.enigma.LetterTransformer" href="#szyfrow.enigma.LetterTransformer">LetterTransformer</a></code></h4>
+<ul class="">
+<li><code><a title="szyfrow.enigma.LetterTransformer.backward" href="#szyfrow.enigma.LetterTransformer.backward">backward</a></code></li>
+<li><code><a title="szyfrow.enigma.LetterTransformer.forward" href="#szyfrow.enigma.LetterTransformer.forward">forward</a></code></li>
+<li><code><a title="szyfrow.enigma.LetterTransformer.make_empty_transform" href="#szyfrow.enigma.LetterTransformer.make_empty_transform">make_empty_transform</a></code></li>
+<li><code><a title="szyfrow.enigma.LetterTransformer.make_transform_map" href="#szyfrow.enigma.LetterTransformer.make_transform_map">make_transform_map</a></code></li>
+<li><code><a title="szyfrow.enigma.LetterTransformer.parse_specification" href="#szyfrow.enigma.LetterTransformer.parse_specification">parse_specification</a></code></li>
+<li><code><a title="szyfrow.enigma.LetterTransformer.validate_transform" href="#szyfrow.enigma.LetterTransformer.validate_transform">validate_transform</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="szyfrow.enigma.Plugboard" href="#szyfrow.enigma.Plugboard">Plugboard</a></code></h4>
+<ul class="">
+<li><code><a title="szyfrow.enigma.Plugboard.make_empty_transform" href="#szyfrow.enigma.Plugboard.make_empty_transform">make_empty_transform</a></code></li>
+<li><code><a title="szyfrow.enigma.Plugboard.make_transform_map" href="#szyfrow.enigma.Plugboard.make_transform_map">make_transform_map</a></code></li>
+<li><code><a title="szyfrow.enigma.Plugboard.parse_specification" href="#szyfrow.enigma.Plugboard.parse_specification">parse_specification</a></code></li>
+<li><code><a title="szyfrow.enigma.Plugboard.validate_transform" href="#szyfrow.enigma.Plugboard.validate_transform">validate_transform</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="szyfrow.enigma.Reflector" href="#szyfrow.enigma.Reflector">Reflector</a></code></h4>
+</li>
+<li>
+<h4><code><a title="szyfrow.enigma.SimpleWheel" href="#szyfrow.enigma.SimpleWheel">SimpleWheel</a></code></h4>
+<ul class="">
+<li><code><a title="szyfrow.enigma.SimpleWheel.advance" href="#szyfrow.enigma.SimpleWheel.advance">advance</a></code></li>
+<li><code><a title="szyfrow.enigma.SimpleWheel.backward" href="#szyfrow.enigma.SimpleWheel.backward">backward</a></code></li>
+<li><code><a title="szyfrow.enigma.SimpleWheel.forward" href="#szyfrow.enigma.SimpleWheel.forward">forward</a></code></li>
+<li><code><a title="szyfrow.enigma.SimpleWheel.set_position" href="#szyfrow.enigma.SimpleWheel.set_position">set_position</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="szyfrow.enigma.Wheel" href="#szyfrow.enigma.Wheel">Wheel</a></code></h4>
+<ul class="">
+<li><code><a title="szyfrow.enigma.Wheel.advance" href="#szyfrow.enigma.Wheel.advance">advance</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

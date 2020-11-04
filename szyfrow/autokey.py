@@ -1,3 +1,6 @@
+"""Enciphering and deciphering using the [Autokey cipher](https://en.wikipedia.org/wiki/Autokey_cipher). 
+Also attempts to break messages that use a Autokey cipher.
+"""
 import math
 import multiprocessing 
 from szyfrow.support.utilities import *
@@ -28,7 +31,6 @@ def autokey_decipher(ciphertext, keyword):
         plaintext += [plaintext_letter]
         keys = keys[1:] + [plaintext_letter]
     return cat(plaintext)
-
 
 
 def autokey_sa_break( message

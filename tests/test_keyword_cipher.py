@@ -38,23 +38,23 @@ def test_decipher_message():
             assert deciphered == plaintext
 
 
+def test_keyword_break_single_thread():
+    plaintext = 'this is a test message for the keyword breaking routine'
+    expected_key = 'elephant'
+    expected_wrap = KeywordWrapAlphabet.from_last
+    ciphertext = keyword_encipher(plaintext, expected_key, expected_wrap)
+    (key, wrap), score = keyword_break_single_thread(ciphertext, 
+        wordlist=['cat', 'elephant', 'kangaroo'])
+    assert key == expected_key
+    assert wrap == expected_wrap
+    assert score == pytest.approx(Pletters(sanitise(plaintext)))
+
 def test_keyword_break():
     plaintext = 'this is a test message for the keyword breaking routine'
     expected_key = 'elephant'
     expected_wrap = KeywordWrapAlphabet.from_last
     ciphertext = keyword_encipher(plaintext, expected_key, expected_wrap)
     (key, wrap), score = keyword_break(ciphertext, 
-        wordlist=['cat', 'elephant', 'kangaroo'])
-    assert key == expected_key
-    assert wrap == expected_wrap
-    assert score == pytest.approx(Pletters(sanitise(plaintext)))
-
-def test_keyword_break_mp():
-    plaintext = 'this is a test message for the keyword breaking routine'
-    expected_key = 'elephant'
-    expected_wrap = KeywordWrapAlphabet.from_last
-    ciphertext = keyword_encipher(plaintext, expected_key, expected_wrap)
-    (key, wrap), score = keyword_break_mp(ciphertext, 
         wordlist=['cat', 'elephant', 'kangaroo'])
     assert key == expected_key
     assert wrap == expected_wrap

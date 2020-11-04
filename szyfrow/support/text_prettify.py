@@ -1,3 +1,7 @@
+"""Various functions for prettifying text, useful when cipher routines generate
+strings of letters without spaces.
+"""
+
 import string
 from szyfrow.support.segment import segment
 from szyfrow.support.utilities import cat, lcat, sanitise

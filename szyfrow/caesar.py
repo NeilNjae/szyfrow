@@ -1,8 +1,20 @@
+"""Enciphering and deciphering using the [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher). 
+Also attempts to break messages that use a Caesar cipher.
+
+The Caesar cipher operates one letter at a time. It converts each letter to a 
+number, then enciphers that number by adding the key. The result is taken mod 
+26 and converted back into a letter.
+
+"""
+
 from szyfrow.support.utilities import *
 from szyfrow.support.language_models import *
 
 def caesar_encipher_letter(accented_letter, shift):
-    """Encipher a letter, given a shift amount
+    """Encipher a letter, given a shift amount.
+
+    Accented version of latin letters (such as é and ö) are converted to their
+    non-accented versions before encryption.
 
     >>> caesar_encipher_letter('a', 1)
     'b'
@@ -90,6 +102,9 @@ def caesar_decipher(message, shift):
 
 def caesar_break(message, fitness=Pletters):
     """Breaks a Caesar cipher using frequency analysis
+
+    It tries all possible keys, scores the fitness of the text decipherd with 
+    each key, and returns the key that produces the most fit deciphered text.
 
     >>> caesar_break('ibxcsyorsaqcheyklxivoexlevmrimwxsfiqevvmihrsasrxliwyrh' \
           'ecjsppsamrkwleppfmergefifvmhixscsymjcsyqeoixlm') # doctest: +ELLIPSIS

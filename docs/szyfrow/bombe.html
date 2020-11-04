@@ -1,0 +1,1123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>szyfrow.bombe API documentation</title>
+<meta name="description" content="A simulator for Bombe machines …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>szyfrow.bombe</code></h1>
+</header>
+<section id="section-intro">
+<p>A simulator for Bombe machines.</p>
+<p>See <code><a title="szyfrow.enigma.Enigma" href="enigma.html#szyfrow.enigma.Enigma">Enigma</a></code> for an implementation of the Enigma to create
+messages.</p>
+<p>There is a good explanation of <a href="http://www.ellsbury.com/enigmabombe.htm">how the bombe worked</a>
+by Graham Ellsbury.</p>
+<p>In this implementation, there are <em>banks</em> of wires (what Ellsbury refers to
+as "cables"), one bank for each position that appears in the menu. A bank
+comprises 26 wires, represented as a <code>dict</code> of <code>bool</code>s, depending on whether
+that wire is live ("energised") or not.</p>
+<p>The menu, derived from the crib, determines how the scramblers connect the
+banks. A <code><a title="szyfrow.bombe.Connection" href="#szyfrow.bombe.Connection">Connection</a></code> represents this.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;A simulator for Bombe machines.
+
+See `szyfrow.enigma.Enigma` for an implementation of the Enigma to create 
+messages.
+
+There is a good explanation of [how the bombe worked](http://www.ellsbury.com/enigmabombe.htm) 
+by Graham Ellsbury.
+
+In this implementation, there are *banks* of wires (what Ellsbury refers to
+as &#34;cables&#34;), one bank for each position that appears in the menu. A bank 
+comprises 26 wires, represented as a `dict` of `bool`s, depending on whether
+that wire is live (&#34;energised&#34;) or not.
+
+The menu, derived from the crib, determines how the scramblers connect the 
+banks. A `Connection` represents this.
+&#34;&#34;&#34;
+
+import string
+import collections
+import multiprocessing
+import itertools
+import logging
+
+from szyfrow.enigma import *
+
+__pdoc__ = {}
+
+Signal = collections.namedtuple(&#39;Signal&#39;, [&#39;bank&#39;, &#39;wire&#39;])
+__pdoc__[&#39;Signal&#39;] = &#34;&#34;&#34;Current propogation through the Bombe indicates that
+this wire in this bank is live, and the effects need to be proogated further
+through the machine.
+&#34;&#34;&#34;
+__pdoc__[&#39;Signal.bank&#39;] = &#34;&#34;&#34;The bank of a signal.&#34;&#34;&#34;
+__pdoc__[&#39;Signal.wire&#39;] = &#34;&#34;&#34;The wire of a signal.&#34;&#34;&#34;
+
+Connection = collections.namedtuple(&#39;Connection&#39;, [&#39;banks&#39;, &#39;scrambler&#39;])
+__pdoc__[&#39;Connection&#39;] = &#34;&#34;&#34;A connection between banks made by a particular
+scrambler (the scrambler state given by its position in the crib).
+&#34;&#34;&#34;
+__pdoc__[&#39;Connection.banks&#39;] = &#34;&#34;&#34;A list of two items, holding the bnaks of 
+a connection.&#34;&#34;&#34;
+__pdoc__[&#39;Connection.scrambler&#39;] = &#34;&#34;&#34;The bnaks of a connection.&#34;&#34;&#34;
+
+
+MenuItem = collections.namedtuple(&#39;MenuIem&#39;, [&#39;before&#39;, &#39;after&#39;, &#39;number&#39;])
+__pdoc__[&#39;MenuItem&#39;] = &#34;&#34;&#34;One item in the menu, derived from the crib.
+&#34;&#34;&#34;
+__pdoc__[&#39;MenuItem.before&#39;] = &#34;The letter before the transform (plaintext).&#34;
+__pdoc__[&#39;MenuItem.after&#39;] = &#34;The letter after the transform (ciphertext).&#34;
+__pdoc__[&#39;MenuItem.number&#39;] = &#34;The position of this item in the menu.&#34;
+
+
+def make_menu(plaintext, ciphertext):
+    &#34;&#34;&#34;Create a menu from a crib: a given plaintext and ciphertext.
+
+    No validation is done to ensure that this is a viable crib (e.g. no 
+    checking for length, no checking that a letter is enciphered to itself).
+    &#34;&#34;&#34;
+    return [MenuItem(p, c, i+1) 
+            for i, (p, c) in enumerate(zip(plaintext, ciphertext))]
+
+
+class Scrambler(object):
+    &#34;&#34;&#34;A scrambler is a collection of three `szyfrow.enigma.SimpleWheel`s.
+    &#34;&#34;&#34;
+    def __init__(self, wheel1_spec, wheel2_spec, wheel3_spec, reflector_spec,
+                 wheel1_pos=&#39;a&#39;, wheel2_pos=&#39;a&#39;, wheel3_pos=&#39;a&#39;):
+        self.wheel1 = SimpleWheel(wheel1_spec, position=wheel1_pos)
+        self.wheel2 = SimpleWheel(wheel2_spec, position=wheel2_pos)
+        self.wheel3 = SimpleWheel(wheel3_spec, position=wheel3_pos)
+        self.reflector = Reflector(reflector_spec)
+    
+    __pdoc__[&#39;Scrambler.wheel_positions&#39;] = &#34;&#34;&#34;Return a 3-tuple of the wheel
+    positions (as numbers)&#34;&#34;&#34;
+    __pdoc__[&#39;Scrambler.wheel_positions_l&#39;] = &#34;&#34;&#34;Return a 3-tuple of the wheel
+    positions (as letters)&#34;&#34;&#34;
+    def __getattribute__(self, name):
+        if name==&#39;wheel_positions&#39;:
+            return self.wheel1.position, self.wheel2.position, self.wheel3.position 
+        elif name==&#39;wheel_positions_l&#39;:
+            return self.wheel1.position_l, self.wheel2.position_l, self.wheel3.position_l 
+        else:
+            return object.__getattribute__(self, name)
+    
+    def advance(self, wheel1=False, wheel2=False, wheel3=True):
+        &#34;&#34;&#34;Advance some wheels of a scrambler.
+        &#34;&#34;&#34;
+        if wheel1: self.wheel1.advance()
+        if wheel2: self.wheel2.advance()
+        if wheel3: self.wheel3.advance()
+            
+    def lookup(self, letter):
+        &#34;&#34;&#34;Lookup the decipherment of a letter, given a particular scrambler
+        orientation.
+        &#34;&#34;&#34;
+        a = self.wheel3.forward(letter)
+        b = self.wheel2.forward(a)
+        c = self.wheel1.forward(b)
+        d = self.reflector.forward(c)
+        e = self.wheel1.backward(d)
+        f = self.wheel2.backward(e)
+        g = self.wheel3.backward(f)
+        return g
+    
+    def set_positions(self, wheel1_pos, wheel2_pos, wheel3_pos):
+        &#34;&#34;&#34;Set the positions of a scrambler&#39;s wheels.
+        &#34;&#34;&#34;
+        self.wheel1.set_position(wheel1_pos)
+        self.wheel2.set_position(wheel2_pos)
+        self.wheel3.set_position(wheel3_pos)        
+
+
+class Bombe(object):
+    &#34;&#34;&#34;An entire Bombe machine.
+
+    This specifies the pattern of the wheels and reflectors used. The 
+    scramblers are connected and wired up according the to the specification
+    given by the menu. 
+
+    Bombe objects are callable. Calling a Bombe (with the starting scrambler 
+    positions) calls the `test` method and  returns the pair of 
+    `start_positions` and the result of `test`.
+
+    Bombe objects have attributes `wheel_positions` and `wheel_positions_l`, 
+    which return the results of the scramblers&#39; `Scrambler.wheel_positions` 
+    and `Scrambler.wheel_positions_l`.
+    &#34;&#34;&#34;
+    
+    def __init__(self, wheel1_spec, wheel2_spec, wheel3_spec, reflector_spec,
+                menu=None, start_signal=None, use_diagonal_board=True, 
+                verify_plugboard=True):
+        self.connections = []
+        self.wheel1_spec = wheel1_spec
+        self.wheel2_spec = wheel2_spec
+        self.wheel3_spec = wheel3_spec
+        self.reflector_spec = reflector_spec
+        if menu:
+            self.read_menu(menu)
+        if start_signal:
+            self.test_start = start_signal
+        self.use_diagonal_board = use_diagonal_board
+        self.verify_plugboard = verify_plugboard
+        
+    __pdoc__[&#39;Bombe.wheel_positions&#39;] = &#34;&#34;&#34;Return a 3-tuple of the wheel
+    positions (as numbers)&#34;&#34;&#34;
+    __pdoc__[&#39;Bomb3.wheel_positions_l&#39;] = &#34;&#34;&#34;Return a 3-tuple of the wheel
+    positions (as letters)&#34;&#34;&#34;
+    def __getattribute__(self, name):
+        if name==&#39;wheel_positions&#39;:
+            return self.connections[0].scrambler.wheel_positions
+        elif name==&#39;wheel_positions_l&#39;:
+            return self.connections[0].scrambler.wheel_positions_l
+        else:
+            return object.__getattribute__(self, name)
+        
+    def __call__(self, start_positions):
+        return start_positions, self.test(initial_signal=self.test_start,
+            start_positions=start_positions, 
+            use_diagonal_board=self.use_diagonal_board,
+            verify_plugboard=self.verify_plugboard)
+        
+    def add_connection(self, bank_before, bank_after, scrambler):
+        &#34;&#34;&#34;Create a new connection between banks.
+        &#34;&#34;&#34;
+        self.connections += [Connection([bank_before, bank_after], scrambler)]
+        
+    def read_menu(self, menu):
+        &#34;&#34;&#34;Read a menu, creating one scrambler for each element of the menu 
+        and setting up the connections it implies. Also defines the most 
+        common letter in the menu&#39;s plaintext as the default letter to start 
+        testing with.&#34;&#34;&#34;
+        self.connections = []
+        for item in menu:
+            scrambler = Scrambler(self.wheel1_spec, self.wheel2_spec, self.wheel3_spec,
+                                  self.reflector_spec,
+                                  wheel3_pos=unpos(item.number - 1))
+            self.add_connection(item.before, item.after, scrambler)
+        most_common_letter = (collections.Counter(m.before for m in menu) +\
+            collections.Counter(m.after for m in menu)).most_common(1)[0][0]
+        self.test_start = Signal(most_common_letter, most_common_letter)
+        
+    def set_positions(self, wheel1_pos, wheel2_pos, wheel3_pos):
+        &#34;&#34;&#34;Set positions of all scramblers. The first scrambler will be set
+        to the specified positions. The second scrambler will have its
+        third wheel advanced one position; the third scramber will have its
+        third wheel advanced two positios; and so on. Not that the first and
+        second wheels of the scramblers are never advanced in setup.&#34;&#34;&#34;
+        for i, c in enumerate(self.connections):
+            c.scrambler.set_positions(wheel1_pos, wheel2_pos, unpos(pos(wheel3_pos) + i))
+    
+    def test(self, initial_signal=None, start_positions=None, use_diagonal_board=True,
+            verify_plugboard=True):
+        &#34;&#34;&#34;Test a scrambler setting. It creates a signal (held in 
+        `self.pending`) on the `initial_signal` wire then uses 
+        `Bombe.propagate` to propagate the signal across the Bombe. 
+
+        Returns a Boolean recording if this scrambler setting with
+        this signal is a &#34;stop&#34; (potential valid scrambler setting).
+
+        * If `initial_signal` is `None`, use the default starting signal set in
+          `Bombe.read_menu`
+        * If `start_positions` is `None`, use the existing scramber positions.&#34;&#34;&#34;
+        self.banks = {label: 
+                      dict(zip(string.ascii_lowercase, 
+                        [False]*len(string.ascii_lowercase)))
+                      for label in string.ascii_lowercase}
+        if start_positions:
+            self.set_positions(*start_positions)
+        if not initial_signal:
+            initial_signal = self.test_start
+        self.pending = [initial_signal]
+        self.propagate(use_diagonal_board)
+        live_wire_count = len([self.banks[self.test_start.bank][w] 
+                    for w in self.banks[self.test_start.bank] 
+                    if self.banks[self.test_start.bank][w]])
+        if live_wire_count &lt; 26:
+            if verify_plugboard:
+                possibles = self.possible_plugboards()
+                return all(s0.isdisjoint(s1) 
+                           for s0 in possibles 
+                           for s1 in possibles 
+                           if s0 != s1)
+            else:
+                return True
+        else:
+            return False
+        
+    def propagate(self, use_diagonal_board):
+        &#34;&#34;&#34;Propagate a signal through the Bombe. Uses `self.pending` as an 
+        agenda for a breadth-first search. Each element on the agenda represents 
+        a particular wire in a bank that is being &#34;energised&#34; (set to `True`).
+        The first element in the agenda is removed, the wire/bank is set, 
+        then all connected wire/banks are added to the `self.pending`
+        agenda.
+        &#34;&#34;&#34;
+        while self.pending:
+            current = self.pending[0]
+            # print(&#34;processing&#34;, current)
+            self.pending = self.pending[1:]
+            if not self.banks[current.bank][current.wire]:
+                self.banks[current.bank][current.wire] = True
+                if use_diagonal_board:
+                    self.pending += [Signal(current.wire, current.bank)]
+                for c in self.connections:
+                    if current.bank in c.banks:
+                        other_bank = [b for b in c.banks if b != current.bank][0]
+                        other_wire = c.scrambler.lookup(current.wire)
+                        # print(&#34;  adding&#34;, other_bank, other_wire, &#34;because&#34;, c.banks)
+                        self.pending += [Signal(other_bank, other_wire)]
+    
+    def run(self, run_start=None, wheel1_pos=&#39;a&#39;, wheel2_pos=&#39;a&#39;, wheel3_pos=&#39;a&#39;, 
+        use_diagonal_board=True):
+        &#34;&#34;&#34;Run a Bombe after setup with a menu, by trying all scramber 
+        positions. For each scrambler position, `Bombe.test` is run. If the 
+        test is successful, the scrambler positiions are added to `self.solutions`.
+        `self.Solutions` is returned.
+        &#34;&#34;&#34;
+        if not run_start:
+            run_start = self.test_start
+        self.solutions = []
+        self.set_positions(wheel1_pos, wheel2_pos, wheel3_pos)
+        for run_index in range(26*26*26):
+            if self.test(initial_signal=run_start, use_diagonal_board=use_diagonal_board):
+                self.solutions += [self.connections[0].scrambler.wheel_positions_l]
+            advance3 = True
+            advance2 = False
+            advance1 = False
+            if (run_index + 1) % 26 == 0: advance2 = True
+            if (run_index + 1) % (26*26) == 0: advance1 = True
+            for c in self.connections:
+                c.scrambler.advance(advance1, advance2, advance3)
+        return self.solutions
+    
+    def possible_plugboards(self):
+        &#34;&#34;&#34;Given a Bombe after a `Bombe.test` has been performed, determine
+        what plugboard settings can be derived from the solution.
+        &#34;&#34;&#34;
+        possibles = set()
+        for b in self.banks:
+            active = [w for w in self.banks[b] if self.banks[b][w]]
+            inactive = [w for w in self.banks[b] if not self.banks[b][w]]
+            if len(active) == 1:
+                possibles = possibles.union({frozenset((b, active[0]))})
+            if len(inactive) == 1:
+                possibles = possibles.union({frozenset((b, inactive[0]))})
+        return possibles
+
+
+def run_multi_bombe(wheel1_spec, wheel2_spec, wheel3_spec, reflector_spec, menu,
+                    start_signal=None, use_diagonal_board=True, 
+                    verify_plugboard=True):
+    &#34;&#34;&#34;Run a Bombe solution, spreading the load across multiple CPU cores.
+    Similar to `Bombe.run` in effects, but quicker on a multi-core machine.
+    &#34;&#34;&#34;
+    allwheels = itertools.product(string.ascii_lowercase, repeat=3)
+
+    with multiprocessing.Pool() as pool:
+        res = pool.map(Bombe(wheel1_spec, wheel2_spec, wheel3_spec, 
+            reflector_spec, menu=menu, start_signal=start_signal, 
+            use_diagonal_board=use_diagonal_board, 
+            verify_plugboard=verify_plugboard),
+                  allwheels)
+    return [r[0] for r in res if r[1]]</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="szyfrow.bombe.cat"><code class="name flex">
+<span>def <span class="ident">cat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+<dt id="szyfrow.bombe.lcat"><code class="name flex">
+<span>def <span class="ident">lcat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+<dt id="szyfrow.bombe.make_menu"><code class="name flex">
+<span>def <span class="ident">make_menu</span></span>(<span>plaintext, ciphertext)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a menu from a crib: a given plaintext and ciphertext.</p>
+<p>No validation is done to ensure that this is a viable crib (e.g. no
+checking for length, no checking that a letter is enciphered to itself).</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_menu(plaintext, ciphertext):
+    &#34;&#34;&#34;Create a menu from a crib: a given plaintext and ciphertext.
+
+    No validation is done to ensure that this is a viable crib (e.g. no 
+    checking for length, no checking that a letter is enciphered to itself).
+    &#34;&#34;&#34;
+    return [MenuItem(p, c, i+1) 
+            for i, (p, c) in enumerate(zip(plaintext, ciphertext))]</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.bombe.run_multi_bombe"><code class="name flex">
+<span>def <span class="ident">run_multi_bombe</span></span>(<span>wheel1_spec, wheel2_spec, wheel3_spec, reflector_spec, menu, start_signal=None, use_diagonal_board=True, verify_plugboard=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run a Bombe solution, spreading the load across multiple CPU cores.
+Similar to <code><a title="szyfrow.bombe.Bombe.run" href="#szyfrow.bombe.Bombe.run">Bombe.run()</a></code> in effects, but quicker on a multi-core machine.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_multi_bombe(wheel1_spec, wheel2_spec, wheel3_spec, reflector_spec, menu,
+                    start_signal=None, use_diagonal_board=True, 
+                    verify_plugboard=True):
+    &#34;&#34;&#34;Run a Bombe solution, spreading the load across multiple CPU cores.
+    Similar to `Bombe.run` in effects, but quicker on a multi-core machine.
+    &#34;&#34;&#34;
+    allwheels = itertools.product(string.ascii_lowercase, repeat=3)
+
+    with multiprocessing.Pool() as pool:
+        res = pool.map(Bombe(wheel1_spec, wheel2_spec, wheel3_spec, 
+            reflector_spec, menu=menu, start_signal=start_signal, 
+            use_diagonal_board=use_diagonal_board, 
+            verify_plugboard=verify_plugboard),
+                  allwheels)
+    return [r[0] for r in res if r[1]]</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.bombe.wcat"><code class="name flex">
+<span>def <span class="ident">wcat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="szyfrow.bombe.Bombe"><code class="flex name class">
+<span>class <span class="ident">Bombe</span></span>
+<span>(</span><span>wheel1_spec, wheel2_spec, wheel3_spec, reflector_spec, menu=None, start_signal=None, use_diagonal_board=True, verify_plugboard=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>An entire Bombe machine.</p>
+<p>This specifies the pattern of the wheels and reflectors used. The
+scramblers are connected and wired up according the to the specification
+given by the menu. </p>
+<p>Bombe objects are callable. Calling a Bombe (with the starting scrambler
+positions) calls the <code>test</code> method and
+returns the pair of
+<code>start_positions</code> and the result of <code>test</code>.</p>
+<p>Bombe objects have attributes <code>wheel_positions</code> and <code>wheel_positions_l</code>,
+which return the results of the scramblers' <code>Scrambler.wheel_positions</code>
+and <code>Scrambler.wheel_positions_l</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Bombe(object):
+    &#34;&#34;&#34;An entire Bombe machine.
+
+    This specifies the pattern of the wheels and reflectors used. The 
+    scramblers are connected and wired up according the to the specification
+    given by the menu. 
+
+    Bombe objects are callable. Calling a Bombe (with the starting scrambler 
+    positions) calls the `test` method and  returns the pair of 
+    `start_positions` and the result of `test`.
+
+    Bombe objects have attributes `wheel_positions` and `wheel_positions_l`, 
+    which return the results of the scramblers&#39; `Scrambler.wheel_positions` 
+    and `Scrambler.wheel_positions_l`.
+    &#34;&#34;&#34;
+    
+    def __init__(self, wheel1_spec, wheel2_spec, wheel3_spec, reflector_spec,
+                menu=None, start_signal=None, use_diagonal_board=True, 
+                verify_plugboard=True):
+        self.connections = []
+        self.wheel1_spec = wheel1_spec
+        self.wheel2_spec = wheel2_spec
+        self.wheel3_spec = wheel3_spec
+        self.reflector_spec = reflector_spec
+        if menu:
+            self.read_menu(menu)
+        if start_signal:
+            self.test_start = start_signal
+        self.use_diagonal_board = use_diagonal_board
+        self.verify_plugboard = verify_plugboard
+        
+    __pdoc__[&#39;Bombe.wheel_positions&#39;] = &#34;&#34;&#34;Return a 3-tuple of the wheel
+    positions (as numbers)&#34;&#34;&#34;
+    __pdoc__[&#39;Bomb3.wheel_positions_l&#39;] = &#34;&#34;&#34;Return a 3-tuple of the wheel
+    positions (as letters)&#34;&#34;&#34;
+    def __getattribute__(self, name):
+        if name==&#39;wheel_positions&#39;:
+            return self.connections[0].scrambler.wheel_positions
+        elif name==&#39;wheel_positions_l&#39;:
+            return self.connections[0].scrambler.wheel_positions_l
+        else:
+            return object.__getattribute__(self, name)
+        
+    def __call__(self, start_positions):
+        return start_positions, self.test(initial_signal=self.test_start,
+            start_positions=start_positions, 
+            use_diagonal_board=self.use_diagonal_board,
+            verify_plugboard=self.verify_plugboard)
+        
+    def add_connection(self, bank_before, bank_after, scrambler):
+        &#34;&#34;&#34;Create a new connection between banks.
+        &#34;&#34;&#34;
+        self.connections += [Connection([bank_before, bank_after], scrambler)]
+        
+    def read_menu(self, menu):
+        &#34;&#34;&#34;Read a menu, creating one scrambler for each element of the menu 
+        and setting up the connections it implies. Also defines the most 
+        common letter in the menu&#39;s plaintext as the default letter to start 
+        testing with.&#34;&#34;&#34;
+        self.connections = []
+        for item in menu:
+            scrambler = Scrambler(self.wheel1_spec, self.wheel2_spec, self.wheel3_spec,
+                                  self.reflector_spec,
+                                  wheel3_pos=unpos(item.number - 1))
+            self.add_connection(item.before, item.after, scrambler)
+        most_common_letter = (collections.Counter(m.before for m in menu) +\
+            collections.Counter(m.after for m in menu)).most_common(1)[0][0]
+        self.test_start = Signal(most_common_letter, most_common_letter)
+        
+    def set_positions(self, wheel1_pos, wheel2_pos, wheel3_pos):
+        &#34;&#34;&#34;Set positions of all scramblers. The first scrambler will be set
+        to the specified positions. The second scrambler will have its
+        third wheel advanced one position; the third scramber will have its
+        third wheel advanced two positios; and so on. Not that the first and
+        second wheels of the scramblers are never advanced in setup.&#34;&#34;&#34;
+        for i, c in enumerate(self.connections):
+            c.scrambler.set_positions(wheel1_pos, wheel2_pos, unpos(pos(wheel3_pos) + i))
+    
+    def test(self, initial_signal=None, start_positions=None, use_diagonal_board=True,
+            verify_plugboard=True):
+        &#34;&#34;&#34;Test a scrambler setting. It creates a signal (held in 
+        `self.pending`) on the `initial_signal` wire then uses 
+        `Bombe.propagate` to propagate the signal across the Bombe. 
+
+        Returns a Boolean recording if this scrambler setting with
+        this signal is a &#34;stop&#34; (potential valid scrambler setting).
+
+        * If `initial_signal` is `None`, use the default starting signal set in
+          `Bombe.read_menu`
+        * If `start_positions` is `None`, use the existing scramber positions.&#34;&#34;&#34;
+        self.banks = {label: 
+                      dict(zip(string.ascii_lowercase, 
+                        [False]*len(string.ascii_lowercase)))
+                      for label in string.ascii_lowercase}
+        if start_positions:
+            self.set_positions(*start_positions)
+        if not initial_signal:
+            initial_signal = self.test_start
+        self.pending = [initial_signal]
+        self.propagate(use_diagonal_board)
+        live_wire_count = len([self.banks[self.test_start.bank][w] 
+                    for w in self.banks[self.test_start.bank] 
+                    if self.banks[self.test_start.bank][w]])
+        if live_wire_count &lt; 26:
+            if verify_plugboard:
+                possibles = self.possible_plugboards()
+                return all(s0.isdisjoint(s1) 
+                           for s0 in possibles 
+                           for s1 in possibles 
+                           if s0 != s1)
+            else:
+                return True
+        else:
+            return False
+        
+    def propagate(self, use_diagonal_board):
+        &#34;&#34;&#34;Propagate a signal through the Bombe. Uses `self.pending` as an 
+        agenda for a breadth-first search. Each element on the agenda represents 
+        a particular wire in a bank that is being &#34;energised&#34; (set to `True`).
+        The first element in the agenda is removed, the wire/bank is set, 
+        then all connected wire/banks are added to the `self.pending`
+        agenda.
+        &#34;&#34;&#34;
+        while self.pending:
+            current = self.pending[0]
+            # print(&#34;processing&#34;, current)
+            self.pending = self.pending[1:]
+            if not self.banks[current.bank][current.wire]:
+                self.banks[current.bank][current.wire] = True
+                if use_diagonal_board:
+                    self.pending += [Signal(current.wire, current.bank)]
+                for c in self.connections:
+                    if current.bank in c.banks:
+                        other_bank = [b for b in c.banks if b != current.bank][0]
+                        other_wire = c.scrambler.lookup(current.wire)
+                        # print(&#34;  adding&#34;, other_bank, other_wire, &#34;because&#34;, c.banks)
+                        self.pending += [Signal(other_bank, other_wire)]
+    
+    def run(self, run_start=None, wheel1_pos=&#39;a&#39;, wheel2_pos=&#39;a&#39;, wheel3_pos=&#39;a&#39;, 
+        use_diagonal_board=True):
+        &#34;&#34;&#34;Run a Bombe after setup with a menu, by trying all scramber 
+        positions. For each scrambler position, `Bombe.test` is run. If the 
+        test is successful, the scrambler positiions are added to `self.solutions`.
+        `self.Solutions` is returned.
+        &#34;&#34;&#34;
+        if not run_start:
+            run_start = self.test_start
+        self.solutions = []
+        self.set_positions(wheel1_pos, wheel2_pos, wheel3_pos)
+        for run_index in range(26*26*26):
+            if self.test(initial_signal=run_start, use_diagonal_board=use_diagonal_board):
+                self.solutions += [self.connections[0].scrambler.wheel_positions_l]
+            advance3 = True
+            advance2 = False
+            advance1 = False
+            if (run_index + 1) % 26 == 0: advance2 = True
+            if (run_index + 1) % (26*26) == 0: advance1 = True
+            for c in self.connections:
+                c.scrambler.advance(advance1, advance2, advance3)
+        return self.solutions
+    
+    def possible_plugboards(self):
+        &#34;&#34;&#34;Given a Bombe after a `Bombe.test` has been performed, determine
+        what plugboard settings can be derived from the solution.
+        &#34;&#34;&#34;
+        possibles = set()
+        for b in self.banks:
+            active = [w for w in self.banks[b] if self.banks[b][w]]
+            inactive = [w for w in self.banks[b] if not self.banks[b][w]]
+            if len(active) == 1:
+                possibles = possibles.union({frozenset((b, active[0]))})
+            if len(inactive) == 1:
+                possibles = possibles.union({frozenset((b, inactive[0]))})
+        return possibles</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="szyfrow.bombe.Bombe.add_connection"><code class="name flex">
+<span>def <span class="ident">add_connection</span></span>(<span>self, bank_before, bank_after, scrambler)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a new connection between banks.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_connection(self, bank_before, bank_after, scrambler):
+    &#34;&#34;&#34;Create a new connection between banks.
+    &#34;&#34;&#34;
+    self.connections += [Connection([bank_before, bank_after], scrambler)]</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.bombe.Bombe.possible_plugboards"><code class="name flex">
+<span>def <span class="ident">possible_plugboards</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Given a Bombe after a <code><a title="szyfrow.bombe.Bombe.test" href="#szyfrow.bombe.Bombe.test">Bombe.test()</a></code> has been performed, determine
+what plugboard settings can be derived from the solution.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def possible_plugboards(self):
+    &#34;&#34;&#34;Given a Bombe after a `Bombe.test` has been performed, determine
+    what plugboard settings can be derived from the solution.
+    &#34;&#34;&#34;
+    possibles = set()
+    for b in self.banks:
+        active = [w for w in self.banks[b] if self.banks[b][w]]
+        inactive = [w for w in self.banks[b] if not self.banks[b][w]]
+        if len(active) == 1:
+            possibles = possibles.union({frozenset((b, active[0]))})
+        if len(inactive) == 1:
+            possibles = possibles.union({frozenset((b, inactive[0]))})
+    return possibles</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.bombe.Bombe.propagate"><code class="name flex">
+<span>def <span class="ident">propagate</span></span>(<span>self, use_diagonal_board)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Propagate a signal through the Bombe. Uses <code>self.pending</code> as an
+agenda for a breadth-first search. Each element on the agenda represents
+a particular wire in a bank that is being "energised" (set to <code>True</code>).
+The first element in the agenda is removed, the wire/bank is set,
+then all connected wire/banks are added to the <code>self.pending</code>
+agenda.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def propagate(self, use_diagonal_board):
+    &#34;&#34;&#34;Propagate a signal through the Bombe. Uses `self.pending` as an 
+    agenda for a breadth-first search. Each element on the agenda represents 
+    a particular wire in a bank that is being &#34;energised&#34; (set to `True`).
+    The first element in the agenda is removed, the wire/bank is set, 
+    then all connected wire/banks are added to the `self.pending`
+    agenda.
+    &#34;&#34;&#34;
+    while self.pending:
+        current = self.pending[0]
+        # print(&#34;processing&#34;, current)
+        self.pending = self.pending[1:]
+        if not self.banks[current.bank][current.wire]:
+            self.banks[current.bank][current.wire] = True
+            if use_diagonal_board:
+                self.pending += [Signal(current.wire, current.bank)]
+            for c in self.connections:
+                if current.bank in c.banks:
+                    other_bank = [b for b in c.banks if b != current.bank][0]
+                    other_wire = c.scrambler.lookup(current.wire)
+                    # print(&#34;  adding&#34;, other_bank, other_wire, &#34;because&#34;, c.banks)
+                    self.pending += [Signal(other_bank, other_wire)]</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.bombe.Bombe.read_menu"><code class="name flex">
+<span>def <span class="ident">read_menu</span></span>(<span>self, menu)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Read a menu, creating one scrambler for each element of the menu
+and setting up the connections it implies. Also defines the most
+common letter in the menu's plaintext as the default letter to start
+testing with.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read_menu(self, menu):
+    &#34;&#34;&#34;Read a menu, creating one scrambler for each element of the menu 
+    and setting up the connections it implies. Also defines the most 
+    common letter in the menu&#39;s plaintext as the default letter to start 
+    testing with.&#34;&#34;&#34;
+    self.connections = []
+    for item in menu:
+        scrambler = Scrambler(self.wheel1_spec, self.wheel2_spec, self.wheel3_spec,
+                              self.reflector_spec,
+                              wheel3_pos=unpos(item.number - 1))
+        self.add_connection(item.before, item.after, scrambler)
+    most_common_letter = (collections.Counter(m.before for m in menu) +\
+        collections.Counter(m.after for m in menu)).most_common(1)[0][0]
+    self.test_start = Signal(most_common_letter, most_common_letter)</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.bombe.Bombe.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self, run_start=None, wheel1_pos='a', wheel2_pos='a', wheel3_pos='a', use_diagonal_board=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run a Bombe after setup with a menu, by trying all scramber
+positions. For each scrambler position, <code><a title="szyfrow.bombe.Bombe.test" href="#szyfrow.bombe.Bombe.test">Bombe.test()</a></code> is run. If the
+test is successful, the scrambler positiions are added to <code>self.solutions</code>.
+<code>self.Solutions</code> is returned.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(self, run_start=None, wheel1_pos=&#39;a&#39;, wheel2_pos=&#39;a&#39;, wheel3_pos=&#39;a&#39;, 
+    use_diagonal_board=True):
+    &#34;&#34;&#34;Run a Bombe after setup with a menu, by trying all scramber 
+    positions. For each scrambler position, `Bombe.test` is run. If the 
+    test is successful, the scrambler positiions are added to `self.solutions`.
+    `self.Solutions` is returned.
+    &#34;&#34;&#34;
+    if not run_start:
+        run_start = self.test_start
+    self.solutions = []
+    self.set_positions(wheel1_pos, wheel2_pos, wheel3_pos)
+    for run_index in range(26*26*26):
+        if self.test(initial_signal=run_start, use_diagonal_board=use_diagonal_board):
+            self.solutions += [self.connections[0].scrambler.wheel_positions_l]
+        advance3 = True
+        advance2 = False
+        advance1 = False
+        if (run_index + 1) % 26 == 0: advance2 = True
+        if (run_index + 1) % (26*26) == 0: advance1 = True
+        for c in self.connections:
+            c.scrambler.advance(advance1, advance2, advance3)
+    return self.solutions</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.bombe.Bombe.set_positions"><code class="name flex">
+<span>def <span class="ident">set_positions</span></span>(<span>self, wheel1_pos, wheel2_pos, wheel3_pos)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set positions of all scramblers. The first scrambler will be set
+to the specified positions. The second scrambler will have its
+third wheel advanced one position; the third scramber will have its
+third wheel advanced two positios; and so on. Not that the first and
+second wheels of the scramblers are never advanced in setup.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_positions(self, wheel1_pos, wheel2_pos, wheel3_pos):
+    &#34;&#34;&#34;Set positions of all scramblers. The first scrambler will be set
+    to the specified positions. The second scrambler will have its
+    third wheel advanced one position; the third scramber will have its
+    third wheel advanced two positios; and so on. Not that the first and
+    second wheels of the scramblers are never advanced in setup.&#34;&#34;&#34;
+    for i, c in enumerate(self.connections):
+        c.scrambler.set_positions(wheel1_pos, wheel2_pos, unpos(pos(wheel3_pos) + i))</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.bombe.Bombe.test"><code class="name flex">
+<span>def <span class="ident">test</span></span>(<span>self, initial_signal=None, start_positions=None, use_diagonal_board=True, verify_plugboard=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Test a scrambler setting. It creates a signal (held in
+<code>self.pending</code>) on the <code>initial_signal</code> wire then uses
+<code><a title="szyfrow.bombe.Bombe.propagate" href="#szyfrow.bombe.Bombe.propagate">Bombe.propagate()</a></code> to propagate the signal across the Bombe. </p>
+<p>Returns a Boolean recording if this scrambler setting with
+this signal is a "stop" (potential valid scrambler setting).</p>
+<ul>
+<li>If <code>initial_signal</code> is <code>None</code>, use the default starting signal set in
+<code><a title="szyfrow.bombe.Bombe.read_menu" href="#szyfrow.bombe.Bombe.read_menu">Bombe.read_menu()</a></code></li>
+<li>If <code>start_positions</code> is <code>None</code>, use the existing scramber positions.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test(self, initial_signal=None, start_positions=None, use_diagonal_board=True,
+        verify_plugboard=True):
+    &#34;&#34;&#34;Test a scrambler setting. It creates a signal (held in 
+    `self.pending`) on the `initial_signal` wire then uses 
+    `Bombe.propagate` to propagate the signal across the Bombe. 
+
+    Returns a Boolean recording if this scrambler setting with
+    this signal is a &#34;stop&#34; (potential valid scrambler setting).
+
+    * If `initial_signal` is `None`, use the default starting signal set in
+      `Bombe.read_menu`
+    * If `start_positions` is `None`, use the existing scramber positions.&#34;&#34;&#34;
+    self.banks = {label: 
+                  dict(zip(string.ascii_lowercase, 
+                    [False]*len(string.ascii_lowercase)))
+                  for label in string.ascii_lowercase}
+    if start_positions:
+        self.set_positions(*start_positions)
+    if not initial_signal:
+        initial_signal = self.test_start
+    self.pending = [initial_signal]
+    self.propagate(use_diagonal_board)
+    live_wire_count = len([self.banks[self.test_start.bank][w] 
+                for w in self.banks[self.test_start.bank] 
+                if self.banks[self.test_start.bank][w]])
+    if live_wire_count &lt; 26:
+        if verify_plugboard:
+            possibles = self.possible_plugboards()
+            return all(s0.isdisjoint(s1) 
+                       for s0 in possibles 
+                       for s1 in possibles 
+                       if s0 != s1)
+        else:
+            return True
+    else:
+        return False</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="szyfrow.bombe.Connection"><code class="flex name class">
+<span>class <span class="ident">Connection</span></span>
+<span>(</span><span>banks, scrambler)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A connection between banks made by a particular
+scrambler (the scrambler state given by its position in the crib).</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.tuple</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="szyfrow.bombe.Connection.banks"><code class="name">var <span class="ident">banks</span></code></dt>
+<dd>
+<div class="desc"><p>A list of two items, holding the bnaks of
+a connection.</p></div>
+</dd>
+<dt id="szyfrow.bombe.Connection.scrambler"><code class="name">var <span class="ident">scrambler</span></code></dt>
+<dd>
+<div class="desc"><p>The bnaks of a connection.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="szyfrow.bombe.MenuIem"><code class="flex name class">
+<span>class <span class="ident">MenuItem</span></span>
+<span>(</span><span>before, after, number)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>MenuIem(before, after, number)</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.tuple</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="szyfrow.bombe.MenuIem.after"><code class="name">var <span class="ident">after</span></code></dt>
+<dd>
+<div class="desc"><p>Alias for field number 1</p></div>
+</dd>
+<dt id="szyfrow.bombe.MenuIem.before"><code class="name">var <span class="ident">before</span></code></dt>
+<dd>
+<div class="desc"><p>Alias for field number 0</p></div>
+</dd>
+<dt id="szyfrow.bombe.MenuIem.number"><code class="name">var <span class="ident">number</span></code></dt>
+<dd>
+<div class="desc"><p>Alias for field number 2</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="szyfrow.bombe.Scrambler"><code class="flex name class">
+<span>class <span class="ident">Scrambler</span></span>
+<span>(</span><span>wheel1_spec, wheel2_spec, wheel3_spec, reflector_spec, wheel1_pos='a', wheel2_pos='a', wheel3_pos='a')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A scrambler is a collection of three <code><a title="szyfrow.enigma.SimpleWheel" href="enigma.html#szyfrow.enigma.SimpleWheel">SimpleWheel</a></code>s.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Scrambler(object):
+    &#34;&#34;&#34;A scrambler is a collection of three `szyfrow.enigma.SimpleWheel`s.
+    &#34;&#34;&#34;
+    def __init__(self, wheel1_spec, wheel2_spec, wheel3_spec, reflector_spec,
+                 wheel1_pos=&#39;a&#39;, wheel2_pos=&#39;a&#39;, wheel3_pos=&#39;a&#39;):
+        self.wheel1 = SimpleWheel(wheel1_spec, position=wheel1_pos)
+        self.wheel2 = SimpleWheel(wheel2_spec, position=wheel2_pos)
+        self.wheel3 = SimpleWheel(wheel3_spec, position=wheel3_pos)
+        self.reflector = Reflector(reflector_spec)
+    
+    __pdoc__[&#39;Scrambler.wheel_positions&#39;] = &#34;&#34;&#34;Return a 3-tuple of the wheel
+    positions (as numbers)&#34;&#34;&#34;
+    __pdoc__[&#39;Scrambler.wheel_positions_l&#39;] = &#34;&#34;&#34;Return a 3-tuple of the wheel
+    positions (as letters)&#34;&#34;&#34;
+    def __getattribute__(self, name):
+        if name==&#39;wheel_positions&#39;:
+            return self.wheel1.position, self.wheel2.position, self.wheel3.position 
+        elif name==&#39;wheel_positions_l&#39;:
+            return self.wheel1.position_l, self.wheel2.position_l, self.wheel3.position_l 
+        else:
+            return object.__getattribute__(self, name)
+    
+    def advance(self, wheel1=False, wheel2=False, wheel3=True):
+        &#34;&#34;&#34;Advance some wheels of a scrambler.
+        &#34;&#34;&#34;
+        if wheel1: self.wheel1.advance()
+        if wheel2: self.wheel2.advance()
+        if wheel3: self.wheel3.advance()
+            
+    def lookup(self, letter):
+        &#34;&#34;&#34;Lookup the decipherment of a letter, given a particular scrambler
+        orientation.
+        &#34;&#34;&#34;
+        a = self.wheel3.forward(letter)
+        b = self.wheel2.forward(a)
+        c = self.wheel1.forward(b)
+        d = self.reflector.forward(c)
+        e = self.wheel1.backward(d)
+        f = self.wheel2.backward(e)
+        g = self.wheel3.backward(f)
+        return g
+    
+    def set_positions(self, wheel1_pos, wheel2_pos, wheel3_pos):
+        &#34;&#34;&#34;Set the positions of a scrambler&#39;s wheels.
+        &#34;&#34;&#34;
+        self.wheel1.set_position(wheel1_pos)
+        self.wheel2.set_position(wheel2_pos)
+        self.wheel3.set_position(wheel3_pos)        </code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="szyfrow.bombe.Scrambler.advance"><code class="name flex">
+<span>def <span class="ident">advance</span></span>(<span>self, wheel1=False, wheel2=False, wheel3=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Advance some wheels of a scrambler.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def advance(self, wheel1=False, wheel2=False, wheel3=True):
+    &#34;&#34;&#34;Advance some wheels of a scrambler.
+    &#34;&#34;&#34;
+    if wheel1: self.wheel1.advance()
+    if wheel2: self.wheel2.advance()
+    if wheel3: self.wheel3.advance()</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.bombe.Scrambler.lookup"><code class="name flex">
+<span>def <span class="ident">lookup</span></span>(<span>self, letter)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Lookup the decipherment of a letter, given a particular scrambler
+orientation.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def lookup(self, letter):
+    &#34;&#34;&#34;Lookup the decipherment of a letter, given a particular scrambler
+    orientation.
+    &#34;&#34;&#34;
+    a = self.wheel3.forward(letter)
+    b = self.wheel2.forward(a)
+    c = self.wheel1.forward(b)
+    d = self.reflector.forward(c)
+    e = self.wheel1.backward(d)
+    f = self.wheel2.backward(e)
+    g = self.wheel3.backward(f)
+    return g</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.bombe.Scrambler.set_positions"><code class="name flex">
+<span>def <span class="ident">set_positions</span></span>(<span>self, wheel1_pos, wheel2_pos, wheel3_pos)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set the positions of a scrambler's wheels.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_positions(self, wheel1_pos, wheel2_pos, wheel3_pos):
+    &#34;&#34;&#34;Set the positions of a scrambler&#39;s wheels.
+    &#34;&#34;&#34;
+    self.wheel1.set_position(wheel1_pos)
+    self.wheel2.set_position(wheel2_pos)
+    self.wheel3.set_position(wheel3_pos)        </code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="szyfrow.bombe.Signal"><code class="flex name class">
+<span>class <span class="ident">Signal</span></span>
+<span>(</span><span>bank, wire)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Current propogation through the Bombe indicates that
+this wire in this bank is live, and the effects need to be proogated further
+through the machine.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.tuple</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="szyfrow.bombe.Signal.bank"><code class="name">var <span class="ident">bank</span></code></dt>
+<dd>
+<div class="desc"><p>The bank of a signal.</p></div>
+</dd>
+<dt id="szyfrow.bombe.Signal.wire"><code class="name">var <span class="ident">wire</span></code></dt>
+<dd>
+<div class="desc"><p>The wire of a signal.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="szyfrow" href="index.html">szyfrow</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="szyfrow.bombe.cat" href="#szyfrow.bombe.cat">cat</a></code></li>
+<li><code><a title="szyfrow.bombe.lcat" href="#szyfrow.bombe.lcat">lcat</a></code></li>
+<li><code><a title="szyfrow.bombe.make_menu" href="#szyfrow.bombe.make_menu">make_menu</a></code></li>
+<li><code><a title="szyfrow.bombe.run_multi_bombe" href="#szyfrow.bombe.run_multi_bombe">run_multi_bombe</a></code></li>
+<li><code><a title="szyfrow.bombe.wcat" href="#szyfrow.bombe.wcat">wcat</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="szyfrow.bombe.Bombe" href="#szyfrow.bombe.Bombe">Bombe</a></code></h4>
+<ul class="two-column">
+<li><code><a title="szyfrow.bombe.Bombe.add_connection" href="#szyfrow.bombe.Bombe.add_connection">add_connection</a></code></li>
+<li><code><a title="szyfrow.bombe.Bombe.possible_plugboards" href="#szyfrow.bombe.Bombe.possible_plugboards">possible_plugboards</a></code></li>
+<li><code><a title="szyfrow.bombe.Bombe.propagate" href="#szyfrow.bombe.Bombe.propagate">propagate</a></code></li>
+<li><code><a title="szyfrow.bombe.Bombe.read_menu" href="#szyfrow.bombe.Bombe.read_menu">read_menu</a></code></li>
+<li><code><a title="szyfrow.bombe.Bombe.run" href="#szyfrow.bombe.Bombe.run">run</a></code></li>
+<li><code><a title="szyfrow.bombe.Bombe.set_positions" href="#szyfrow.bombe.Bombe.set_positions">set_positions</a></code></li>
+<li><code><a title="szyfrow.bombe.Bombe.test" href="#szyfrow.bombe.Bombe.test">test</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="szyfrow.bombe.Connection" href="#szyfrow.bombe.Connection">Connection</a></code></h4>
+<ul class="">
+<li><code><a title="szyfrow.bombe.Connection.banks" href="#szyfrow.bombe.Connection.banks">banks</a></code></li>
+<li><code><a title="szyfrow.bombe.Connection.scrambler" href="#szyfrow.bombe.Connection.scrambler">scrambler</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="szyfrow.bombe.MenuIem" href="#szyfrow.bombe.MenuIem">MenuIem</a></code></h4>
+<ul class="">
+<li><code><a title="szyfrow.bombe.MenuIem.after" href="#szyfrow.bombe.MenuIem.after">after</a></code></li>
+<li><code><a title="szyfrow.bombe.MenuIem.before" href="#szyfrow.bombe.MenuIem.before">before</a></code></li>
+<li><code><a title="szyfrow.bombe.MenuIem.number" href="#szyfrow.bombe.MenuIem.number">number</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="szyfrow.bombe.Scrambler" href="#szyfrow.bombe.Scrambler">Scrambler</a></code></h4>
+<ul class="">
+<li><code><a title="szyfrow.bombe.Scrambler.advance" href="#szyfrow.bombe.Scrambler.advance">advance</a></code></li>
+<li><code><a title="szyfrow.bombe.Scrambler.lookup" href="#szyfrow.bombe.Scrambler.lookup">lookup</a></code></li>
+<li><code><a title="szyfrow.bombe.Scrambler.set_positions" href="#szyfrow.bombe.Scrambler.set_positions">set_positions</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="szyfrow.bombe.Signal" href="#szyfrow.bombe.Signal">Signal</a></code></h4>
+<ul class="">
+<li><code><a title="szyfrow.bombe.Signal.bank" href="#szyfrow.bombe.Signal.bank">bank</a></code></li>
+<li><code><a title="szyfrow.bombe.Signal.wire" href="#szyfrow.bombe.Signal.wire">wire</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

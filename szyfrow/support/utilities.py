@@ -1,16 +1,18 @@
+"""A mish-mash of utility functions"""
+
 import string
 import collections
 import unicodedata
 from itertools import zip_longest
 
-# join a a list of letters into a string
 cat = ''.join
+"""join a a list of letters into a string."""
 
-# join a list of words into a string, separated by spaces
 wcat = ' '.join
+"""join a list of words into a string, separated by spaces"""
 
-# join a list of lines, separated by newline
 lcat = '\n'.join
+"""join a list of lines, separated by newline"""
 
 def pos(letter): 
     """Return the position of a letter in the alphabet (0-25)"""
@@ -122,6 +124,9 @@ def untranspose(items, transposition):
     return transposed
 
 def deduplicate(text):
+    """Return the input string, but with second (and subsequent) occurrences
+    of a character removed.
+    """
     return list(collections.OrderedDict.fromkeys(text))
 
 
@@ -172,6 +177,9 @@ def sanitise(text):
 
 
 def index_of_coincidence(text):
+    """Index of coincidence of a string. This is low for random text, 
+    higher for natural langauge.
+    """
     stext = sanitise(text)
     counts = collections.Counter(stext)
     denom = len(stext) * (len(text) - 1) / 26

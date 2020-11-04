@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>szyfrow.pocket_enigma API documentation</title>
+<meta name="description" content="The Pocket Enigma machine, a simple example that illustrates the mechanisms
+of the Enigma machine. See [a …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>szyfrow.pocket_enigma</code></h1>
+</header>
+<section id="section-intro">
+<p>The Pocket Enigma machine, a simple example that illustrates the mechanisms
+of the Enigma machine. See <a href="http://www.savory.de/pocket_enigma.htm">a review</a>
+for more information about the machine.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;The Pocket Enigma machine, a simple example that illustrates the mechanisms
+of the Enigma machine. See [a review](http://www.savory.de/pocket_enigma.htm)
+for more information about the machine.
+&#34;&#34;&#34;
+
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
+
+
+class PocketEnigma(object):
+    &#34;&#34;&#34;A pocket enigma machine
+    The wheel is internally represented as a 26-element list self.wheel_map, 
+    where wheel_map[i] == j shows that the position i places on from the arrow 
+    maps to the position j places on.
+    &#34;&#34;&#34;
+    def __init__(self, wheel=1, position=&#39;a&#39;):
+        &#34;&#34;&#34;initialise the pocket enigma, including which wheel to use and the
+        starting position of the wheel.
+
+        The wheel is either 1 or 2 (the predefined wheels) or a list of letter
+        pairs.
+
+        The position is the letter pointed to by the arrow on the wheel.
+
+        &gt;&gt;&gt; pe.wheel_map
+        [25, 4, 23, 10, 1, 7, 9, 5, 12, 6, 3, 17, 8, 14, 13, 21, 19, 11, 20, 16, 18, 15, 24, 2, 22, 0]
+        &gt;&gt;&gt; pe.position
+        0
+        &#34;&#34;&#34;
+        self.wheel1 = [(&#39;a&#39;, &#39;z&#39;), (&#39;b&#39;, &#39;e&#39;), (&#39;c&#39;, &#39;x&#39;), (&#39;d&#39;, &#39;k&#39;), 
+            (&#39;f&#39;, &#39;h&#39;), (&#39;g&#39;, &#39;j&#39;), (&#39;i&#39;, &#39;m&#39;), (&#39;l&#39;, &#39;r&#39;), (&#39;n&#39;, &#39;o&#39;), 
+            (&#39;p&#39;, &#39;v&#39;), (&#39;q&#39;, &#39;t&#39;), (&#39;s&#39;, &#39;u&#39;), (&#39;w&#39;, &#39;y&#39;)]
+        self.wheel2 = [(&#39;a&#39;, &#39;c&#39;), (&#39;b&#39;, &#39;d&#39;), (&#39;e&#39;, &#39;w&#39;), (&#39;f&#39;, &#39;i&#39;), 
+            (&#39;g&#39;, &#39;p&#39;), (&#39;h&#39;, &#39;m&#39;), (&#39;j&#39;, &#39;k&#39;), (&#39;l&#39;, &#39;n&#39;), (&#39;o&#39;, &#39;q&#39;), 
+            (&#39;r&#39;, &#39;z&#39;), (&#39;s&#39;, &#39;u&#39;), (&#39;t&#39;, &#39;v&#39;), (&#39;x&#39;, &#39;y&#39;)]
+        if wheel == 1:
+            self.make_wheel_map(self.wheel1)
+        elif wheel == 2:
+            self.make_wheel_map(self.wheel2)
+        else:
+            self.validate_wheel_spec(wheel)
+            self.make_wheel_map(wheel)
+        if position in string.ascii_lowercase:
+            self.position = pos(position)
+        else:
+            self.position = position
+
+    def make_wheel_map(self, wheel_spec):
+        &#34;&#34;&#34;Expands a wheel specification from a list of letter-letter pairs
+        into a full wheel_map.
+
+        &gt;&gt;&gt; pe.make_wheel_map(pe.wheel2)
+        [2, 3, 0, 1, 22, 8, 15, 12, 5, 10, 9, 13, 7, 11, 16, 6, 14, 25, 20, 21, 18, 19, 4, 24, 23, 17]
+        &#34;&#34;&#34;
+        self.validate_wheel_spec(wheel_spec)
+        self.wheel_map = [0] * 26
+        for p in wheel_spec:
+            self.wheel_map[pos(p[0])] = pos(p[1])
+            self.wheel_map[pos(p[1])] = pos(p[0])
+        return self.wheel_map
+
+    def validate_wheel_spec(self, wheel_spec):
+        &#34;&#34;&#34;Validates that a wheel specificaiton will turn into a valid wheel
+        map.
+
+        &gt;&gt;&gt; pe.validate_wheel_spec([])
+        Traceback (most recent call last):
+            ...
+        ValueError: Wheel specification has 0 pairs, requires 13
+        &gt;&gt;&gt; pe.validate_wheel_spec([(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;)]*13)
+        Traceback (most recent call last):
+            ...
+        ValueError: Not all mappings in wheel specificationhave two elements
+        &gt;&gt;&gt; pe.validate_wheel_spec([(&#39;a&#39;, &#39;b&#39;)]*13)
+        Traceback (most recent call last):
+            ...
+        ValueError: Wheel specification does not contain 26 letters
+        &#34;&#34;&#34;
+        if len(wheel_spec) != 13:
+            raise ValueError(&#34;Wheel specification has {} pairs, requires 13&#34;.
+                format(len(wheel_spec)))
+        for p in wheel_spec:
+            if len(p) != 2:
+                raise ValueError(&#34;Not all mappings in wheel specification&#34;
+                    &#34;have two elements&#34;)
+        if len(set([p[0] for p in wheel_spec] + 
+                    [p[1] for p in wheel_spec])) != 26:
+            raise ValueError(&#34;Wheel specification does not contain 26 letters&#34;)
+
+    def encipher_letter(self, letter):
+        &#34;&#34;&#34;Enciphers a single letter, by advancing the wheel before looking up
+        the letter on the wheel.
+
+        &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+        5
+        &gt;&gt;&gt; pe.encipher_letter(&#39;k&#39;)
+        &#39;h&#39;
+        &#34;&#34;&#34;
+        self.advance()
+        return self.lookup(letter)
+    decipher_letter = encipher_letter
+
+    def lookup(self, letter):
+        &#34;&#34;&#34;Look up what a letter enciphers to, without turning the wheel.
+
+        &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+        5
+        &gt;&gt;&gt; cat([pe.lookup(l) for l in string.ascii_lowercase])
+        &#39;udhbfejcpgmokrliwntsayqzvx&#39;
+        &gt;&gt;&gt; pe.lookup(&#39;A&#39;)
+        &#39;&#39;
+        &#34;&#34;&#34;
+        if letter in string.ascii_lowercase:
+            return unpos(
+                (self.wheel_map[(pos(letter) - self.position) % 26] + 
+                    self.position))
+        else:
+            return &#39;&#39;
+
+    def advance(self):
+        &#34;&#34;&#34;Advances the wheel one position.
+
+        &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+        5
+        &gt;&gt;&gt; pe.advance()
+        6
+        &#34;&#34;&#34;
+        self.position = (self.position + 1) % 26
+        return self.position
+
+    def encipher(self, message, starting_position=None):
+        &#34;&#34;&#34;Enciphers a whole message.
+
+        &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+        5
+        &gt;&gt;&gt; pe.encipher(&#39;helloworld&#39;)
+        &#39;kjsglcjoqc&#39;
+        &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+        5
+        &gt;&gt;&gt; pe.encipher(&#39;kjsglcjoqc&#39;)
+        &#39;helloworld&#39;
+        &gt;&gt;&gt; pe.encipher(&#39;helloworld&#39;, starting_position = &#39;x&#39;)
+        &#39;egrekthnnf&#39;
+        &#34;&#34;&#34;
+        if starting_position:
+            self.set_position(starting_position)
+        transformed = &#39;&#39;
+        for l in message:
+            transformed += self.encipher_letter(l)
+        return transformed
+    decipher = encipher
+
+    def set_position(self, position):
+        &#34;&#34;&#34;Sets the position of the wheel, by specifying the letter the arrow
+        points to.
+
+        &gt;&gt;&gt; pe.set_position(&#39;a&#39;)
+        0
+        &gt;&gt;&gt; pe.set_position(&#39;m&#39;)
+        12
+        &gt;&gt;&gt; pe.set_position(&#39;z&#39;)
+        25
+        &#34;&#34;&#34;
+        self.position = pos(position)
+        return self.position
+
+
+def pocket_enigma_break_by_crib(message, wheel_spec, crib, crib_position):
+    &#34;&#34;&#34;Break a pocket enigma using a crib (some plaintext that&#39;s expected to
+    be in a certain position). Returns a list of possible starting wheel
+    positions that could produce the crib.
+
+    &gt;&gt;&gt; pocket_enigma_break_by_crib(&#39;kzpjlzmoga&#39;, 1, &#39;h&#39;, 0)
+    [&#39;a&#39;, &#39;f&#39;, &#39;q&#39;]
+    &gt;&gt;&gt; pocket_enigma_break_by_crib(&#39;kzpjlzmoga&#39;, 1, &#39;he&#39;, 0)
+    [&#39;a&#39;]
+    &gt;&gt;&gt; pocket_enigma_break_by_crib(&#39;kzpjlzmoga&#39;, 1, &#39;ll&#39;, 2)
+    [&#39;a&#39;]
+    &gt;&gt;&gt; pocket_enigma_break_by_crib(&#39;kzpjlzmoga&#39;, 1, &#39;l&#39;, 2)
+    [&#39;a&#39;]
+    &gt;&gt;&gt; pocket_enigma_break_by_crib(&#39;kzpjlzmoga&#39;, 1, &#39;l&#39;, 3)
+    [&#39;a&#39;, &#39;j&#39;, &#39;n&#39;]
+    &gt;&gt;&gt; pocket_enigma_break_by_crib(&#39;aaaaa&#39;, 1, &#39;l&#39;, 3)
+    []
+    &#34;&#34;&#34;
+    pe = PocketEnigma(wheel=wheel_spec)
+    possible_positions = []
+    for p in string.ascii_lowercase:
+        pe.set_position(p)
+        plaintext = pe.decipher(message)
+        if plaintext[crib_position:crib_position+len(crib)] == crib:
+            possible_positions += [p]
+    return possible_positions
+
+if __name__ == &#34;__main__&#34;:
+    import doctest
+    doctest.testmod(extraglobs={&#39;pe&#39;: PocketEnigma(1, &#39;a&#39;)})</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="szyfrow.pocket_enigma.cat"><code class="name flex">
+<span>def <span class="ident">cat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+<dt id="szyfrow.pocket_enigma.lcat"><code class="name flex">
+<span>def <span class="ident">lcat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+<dt id="szyfrow.pocket_enigma.pocket_enigma_break_by_crib"><code class="name flex">
+<span>def <span class="ident">pocket_enigma_break_by_crib</span></span>(<span>message, wheel_spec, crib, crib_position)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Break a pocket enigma using a crib (some plaintext that's expected to
+be in a certain position). Returns a list of possible starting wheel
+positions that could produce the crib.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; pocket_enigma_break_by_crib('kzpjlzmoga', 1, 'h', 0)
+['a', 'f', 'q']
+&gt;&gt;&gt; pocket_enigma_break_by_crib('kzpjlzmoga', 1, 'he', 0)
+['a']
+&gt;&gt;&gt; pocket_enigma_break_by_crib('kzpjlzmoga', 1, 'll', 2)
+['a']
+&gt;&gt;&gt; pocket_enigma_break_by_crib('kzpjlzmoga', 1, 'l', 2)
+['a']
+&gt;&gt;&gt; pocket_enigma_break_by_crib('kzpjlzmoga', 1, 'l', 3)
+['a', 'j', 'n']
+&gt;&gt;&gt; pocket_enigma_break_by_crib('aaaaa', 1, 'l', 3)
+[]
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pocket_enigma_break_by_crib(message, wheel_spec, crib, crib_position):
+    &#34;&#34;&#34;Break a pocket enigma using a crib (some plaintext that&#39;s expected to
+    be in a certain position). Returns a list of possible starting wheel
+    positions that could produce the crib.
+
+    &gt;&gt;&gt; pocket_enigma_break_by_crib(&#39;kzpjlzmoga&#39;, 1, &#39;h&#39;, 0)
+    [&#39;a&#39;, &#39;f&#39;, &#39;q&#39;]
+    &gt;&gt;&gt; pocket_enigma_break_by_crib(&#39;kzpjlzmoga&#39;, 1, &#39;he&#39;, 0)
+    [&#39;a&#39;]
+    &gt;&gt;&gt; pocket_enigma_break_by_crib(&#39;kzpjlzmoga&#39;, 1, &#39;ll&#39;, 2)
+    [&#39;a&#39;]
+    &gt;&gt;&gt; pocket_enigma_break_by_crib(&#39;kzpjlzmoga&#39;, 1, &#39;l&#39;, 2)
+    [&#39;a&#39;]
+    &gt;&gt;&gt; pocket_enigma_break_by_crib(&#39;kzpjlzmoga&#39;, 1, &#39;l&#39;, 3)
+    [&#39;a&#39;, &#39;j&#39;, &#39;n&#39;]
+    &gt;&gt;&gt; pocket_enigma_break_by_crib(&#39;aaaaa&#39;, 1, &#39;l&#39;, 3)
+    []
+    &#34;&#34;&#34;
+    pe = PocketEnigma(wheel=wheel_spec)
+    possible_positions = []
+    for p in string.ascii_lowercase:
+        pe.set_position(p)
+        plaintext = pe.decipher(message)
+        if plaintext[crib_position:crib_position+len(crib)] == crib:
+            possible_positions += [p]
+    return possible_positions</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.pocket_enigma.wcat"><code class="name flex">
+<span>def <span class="ident">wcat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="szyfrow.pocket_enigma.PocketEnigma"><code class="flex name class">
+<span>class <span class="ident">PocketEnigma</span></span>
+<span>(</span><span>wheel=1, position='a')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A pocket enigma machine
+The wheel is internally represented as a 26-element list self.wheel_map,
+where wheel_map[i] == j shows that the position i places on from the arrow
+maps to the position j places on.</p>
+<p>initialise the pocket enigma, including which wheel to use and the
+starting position of the wheel.</p>
+<p>The wheel is either 1 or 2 (the predefined wheels) or a list of letter
+pairs.</p>
+<p>The position is the letter pointed to by the arrow on the wheel.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; pe.wheel_map
+[25, 4, 23, 10, 1, 7, 9, 5, 12, 6, 3, 17, 8, 14, 13, 21, 19, 11, 20, 16, 18, 15, 24, 2, 22, 0]
+&gt;&gt;&gt; pe.position
+0
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PocketEnigma(object):
+    &#34;&#34;&#34;A pocket enigma machine
+    The wheel is internally represented as a 26-element list self.wheel_map, 
+    where wheel_map[i] == j shows that the position i places on from the arrow 
+    maps to the position j places on.
+    &#34;&#34;&#34;
+    def __init__(self, wheel=1, position=&#39;a&#39;):
+        &#34;&#34;&#34;initialise the pocket enigma, including which wheel to use and the
+        starting position of the wheel.
+
+        The wheel is either 1 or 2 (the predefined wheels) or a list of letter
+        pairs.
+
+        The position is the letter pointed to by the arrow on the wheel.
+
+        &gt;&gt;&gt; pe.wheel_map
+        [25, 4, 23, 10, 1, 7, 9, 5, 12, 6, 3, 17, 8, 14, 13, 21, 19, 11, 20, 16, 18, 15, 24, 2, 22, 0]
+        &gt;&gt;&gt; pe.position
+        0
+        &#34;&#34;&#34;
+        self.wheel1 = [(&#39;a&#39;, &#39;z&#39;), (&#39;b&#39;, &#39;e&#39;), (&#39;c&#39;, &#39;x&#39;), (&#39;d&#39;, &#39;k&#39;), 
+            (&#39;f&#39;, &#39;h&#39;), (&#39;g&#39;, &#39;j&#39;), (&#39;i&#39;, &#39;m&#39;), (&#39;l&#39;, &#39;r&#39;), (&#39;n&#39;, &#39;o&#39;), 
+            (&#39;p&#39;, &#39;v&#39;), (&#39;q&#39;, &#39;t&#39;), (&#39;s&#39;, &#39;u&#39;), (&#39;w&#39;, &#39;y&#39;)]
+        self.wheel2 = [(&#39;a&#39;, &#39;c&#39;), (&#39;b&#39;, &#39;d&#39;), (&#39;e&#39;, &#39;w&#39;), (&#39;f&#39;, &#39;i&#39;), 
+            (&#39;g&#39;, &#39;p&#39;), (&#39;h&#39;, &#39;m&#39;), (&#39;j&#39;, &#39;k&#39;), (&#39;l&#39;, &#39;n&#39;), (&#39;o&#39;, &#39;q&#39;), 
+            (&#39;r&#39;, &#39;z&#39;), (&#39;s&#39;, &#39;u&#39;), (&#39;t&#39;, &#39;v&#39;), (&#39;x&#39;, &#39;y&#39;)]
+        if wheel == 1:
+            self.make_wheel_map(self.wheel1)
+        elif wheel == 2:
+            self.make_wheel_map(self.wheel2)
+        else:
+            self.validate_wheel_spec(wheel)
+            self.make_wheel_map(wheel)
+        if position in string.ascii_lowercase:
+            self.position = pos(position)
+        else:
+            self.position = position
+
+    def make_wheel_map(self, wheel_spec):
+        &#34;&#34;&#34;Expands a wheel specification from a list of letter-letter pairs
+        into a full wheel_map.
+
+        &gt;&gt;&gt; pe.make_wheel_map(pe.wheel2)
+        [2, 3, 0, 1, 22, 8, 15, 12, 5, 10, 9, 13, 7, 11, 16, 6, 14, 25, 20, 21, 18, 19, 4, 24, 23, 17]
+        &#34;&#34;&#34;
+        self.validate_wheel_spec(wheel_spec)
+        self.wheel_map = [0] * 26
+        for p in wheel_spec:
+            self.wheel_map[pos(p[0])] = pos(p[1])
+            self.wheel_map[pos(p[1])] = pos(p[0])
+        return self.wheel_map
+
+    def validate_wheel_spec(self, wheel_spec):
+        &#34;&#34;&#34;Validates that a wheel specificaiton will turn into a valid wheel
+        map.
+
+        &gt;&gt;&gt; pe.validate_wheel_spec([])
+        Traceback (most recent call last):
+            ...
+        ValueError: Wheel specification has 0 pairs, requires 13
+        &gt;&gt;&gt; pe.validate_wheel_spec([(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;)]*13)
+        Traceback (most recent call last):
+            ...
+        ValueError: Not all mappings in wheel specificationhave two elements
+        &gt;&gt;&gt; pe.validate_wheel_spec([(&#39;a&#39;, &#39;b&#39;)]*13)
+        Traceback (most recent call last):
+            ...
+        ValueError: Wheel specification does not contain 26 letters
+        &#34;&#34;&#34;
+        if len(wheel_spec) != 13:
+            raise ValueError(&#34;Wheel specification has {} pairs, requires 13&#34;.
+                format(len(wheel_spec)))
+        for p in wheel_spec:
+            if len(p) != 2:
+                raise ValueError(&#34;Not all mappings in wheel specification&#34;
+                    &#34;have two elements&#34;)
+        if len(set([p[0] for p in wheel_spec] + 
+                    [p[1] for p in wheel_spec])) != 26:
+            raise ValueError(&#34;Wheel specification does not contain 26 letters&#34;)
+
+    def encipher_letter(self, letter):
+        &#34;&#34;&#34;Enciphers a single letter, by advancing the wheel before looking up
+        the letter on the wheel.
+
+        &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+        5
+        &gt;&gt;&gt; pe.encipher_letter(&#39;k&#39;)
+        &#39;h&#39;
+        &#34;&#34;&#34;
+        self.advance()
+        return self.lookup(letter)
+    decipher_letter = encipher_letter
+
+    def lookup(self, letter):
+        &#34;&#34;&#34;Look up what a letter enciphers to, without turning the wheel.
+
+        &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+        5
+        &gt;&gt;&gt; cat([pe.lookup(l) for l in string.ascii_lowercase])
+        &#39;udhbfejcpgmokrliwntsayqzvx&#39;
+        &gt;&gt;&gt; pe.lookup(&#39;A&#39;)
+        &#39;&#39;
+        &#34;&#34;&#34;
+        if letter in string.ascii_lowercase:
+            return unpos(
+                (self.wheel_map[(pos(letter) - self.position) % 26] + 
+                    self.position))
+        else:
+            return &#39;&#39;
+
+    def advance(self):
+        &#34;&#34;&#34;Advances the wheel one position.
+
+        &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+        5
+        &gt;&gt;&gt; pe.advance()
+        6
+        &#34;&#34;&#34;
+        self.position = (self.position + 1) % 26
+        return self.position
+
+    def encipher(self, message, starting_position=None):
+        &#34;&#34;&#34;Enciphers a whole message.
+
+        &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+        5
+        &gt;&gt;&gt; pe.encipher(&#39;helloworld&#39;)
+        &#39;kjsglcjoqc&#39;
+        &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+        5
+        &gt;&gt;&gt; pe.encipher(&#39;kjsglcjoqc&#39;)
+        &#39;helloworld&#39;
+        &gt;&gt;&gt; pe.encipher(&#39;helloworld&#39;, starting_position = &#39;x&#39;)
+        &#39;egrekthnnf&#39;
+        &#34;&#34;&#34;
+        if starting_position:
+            self.set_position(starting_position)
+        transformed = &#39;&#39;
+        for l in message:
+            transformed += self.encipher_letter(l)
+        return transformed
+    decipher = encipher
+
+    def set_position(self, position):
+        &#34;&#34;&#34;Sets the position of the wheel, by specifying the letter the arrow
+        points to.
+
+        &gt;&gt;&gt; pe.set_position(&#39;a&#39;)
+        0
+        &gt;&gt;&gt; pe.set_position(&#39;m&#39;)
+        12
+        &gt;&gt;&gt; pe.set_position(&#39;z&#39;)
+        25
+        &#34;&#34;&#34;
+        self.position = pos(position)
+        return self.position</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="szyfrow.pocket_enigma.PocketEnigma.advance"><code class="name flex">
+<span>def <span class="ident">advance</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Advances the wheel one position.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; pe.set_position('f')
+5
+&gt;&gt;&gt; pe.advance()
+6
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def advance(self):
+    &#34;&#34;&#34;Advances the wheel one position.
+
+    &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+    5
+    &gt;&gt;&gt; pe.advance()
+    6
+    &#34;&#34;&#34;
+    self.position = (self.position + 1) % 26
+    return self.position</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.pocket_enigma.PocketEnigma.decipher"><code class="name flex">
+<span>def <span class="ident">decipher</span></span>(<span>self, message, starting_position=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enciphers a whole message.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; pe.set_position('f')
+5
+&gt;&gt;&gt; pe.encipher('helloworld')
+'kjsglcjoqc'
+&gt;&gt;&gt; pe.set_position('f')
+5
+&gt;&gt;&gt; pe.encipher('kjsglcjoqc')
+'helloworld'
+&gt;&gt;&gt; pe.encipher('helloworld', starting_position = 'x')
+'egrekthnnf'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def encipher(self, message, starting_position=None):
+    &#34;&#34;&#34;Enciphers a whole message.
+
+    &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+    5
+    &gt;&gt;&gt; pe.encipher(&#39;helloworld&#39;)
+    &#39;kjsglcjoqc&#39;
+    &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+    5
+    &gt;&gt;&gt; pe.encipher(&#39;kjsglcjoqc&#39;)
+    &#39;helloworld&#39;
+    &gt;&gt;&gt; pe.encipher(&#39;helloworld&#39;, starting_position = &#39;x&#39;)
+    &#39;egrekthnnf&#39;
+    &#34;&#34;&#34;
+    if starting_position:
+        self.set_position(starting_position)
+    transformed = &#39;&#39;
+    for l in message:
+        transformed += self.encipher_letter(l)
+    return transformed</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.pocket_enigma.PocketEnigma.decipher_letter"><code class="name flex">
+<span>def <span class="ident">decipher_letter</span></span>(<span>self, letter)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enciphers a single letter, by advancing the wheel before looking up
+the letter on the wheel.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; pe.set_position('f')
+5
+&gt;&gt;&gt; pe.encipher_letter('k')
+'h'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def encipher_letter(self, letter):
+    &#34;&#34;&#34;Enciphers a single letter, by advancing the wheel before looking up
+    the letter on the wheel.
+
+    &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+    5
+    &gt;&gt;&gt; pe.encipher_letter(&#39;k&#39;)
+    &#39;h&#39;
+    &#34;&#34;&#34;
+    self.advance()
+    return self.lookup(letter)</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.pocket_enigma.PocketEnigma.encipher"><code class="name flex">
+<span>def <span class="ident">encipher</span></span>(<span>self, message, starting_position=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enciphers a whole message.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; pe.set_position('f')
+5
+&gt;&gt;&gt; pe.encipher('helloworld')
+'kjsglcjoqc'
+&gt;&gt;&gt; pe.set_position('f')
+5
+&gt;&gt;&gt; pe.encipher('kjsglcjoqc')
+'helloworld'
+&gt;&gt;&gt; pe.encipher('helloworld', starting_position = 'x')
+'egrekthnnf'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def encipher(self, message, starting_position=None):
+    &#34;&#34;&#34;Enciphers a whole message.
+
+    &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+    5
+    &gt;&gt;&gt; pe.encipher(&#39;helloworld&#39;)
+    &#39;kjsglcjoqc&#39;
+    &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+    5
+    &gt;&gt;&gt; pe.encipher(&#39;kjsglcjoqc&#39;)
+    &#39;helloworld&#39;
+    &gt;&gt;&gt; pe.encipher(&#39;helloworld&#39;, starting_position = &#39;x&#39;)
+    &#39;egrekthnnf&#39;
+    &#34;&#34;&#34;
+    if starting_position:
+        self.set_position(starting_position)
+    transformed = &#39;&#39;
+    for l in message:
+        transformed += self.encipher_letter(l)
+    return transformed</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.pocket_enigma.PocketEnigma.encipher_letter"><code class="name flex">
+<span>def <span class="ident">encipher_letter</span></span>(<span>self, letter)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enciphers a single letter, by advancing the wheel before looking up
+the letter on the wheel.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; pe.set_position('f')
+5
+&gt;&gt;&gt; pe.encipher_letter('k')
+'h'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def encipher_letter(self, letter):
+    &#34;&#34;&#34;Enciphers a single letter, by advancing the wheel before looking up
+    the letter on the wheel.
+
+    &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+    5
+    &gt;&gt;&gt; pe.encipher_letter(&#39;k&#39;)
+    &#39;h&#39;
+    &#34;&#34;&#34;
+    self.advance()
+    return self.lookup(letter)</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.pocket_enigma.PocketEnigma.lookup"><code class="name flex">
+<span>def <span class="ident">lookup</span></span>(<span>self, letter)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Look up what a letter enciphers to, without turning the wheel.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; pe.set_position('f')
+5
+&gt;&gt;&gt; cat([pe.lookup(l) for l in string.ascii_lowercase])
+'udhbfejcpgmokrliwntsayqzvx'
+&gt;&gt;&gt; pe.lookup('A')
+''
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def lookup(self, letter):
+    &#34;&#34;&#34;Look up what a letter enciphers to, without turning the wheel.
+
+    &gt;&gt;&gt; pe.set_position(&#39;f&#39;)
+    5
+    &gt;&gt;&gt; cat([pe.lookup(l) for l in string.ascii_lowercase])
+    &#39;udhbfejcpgmokrliwntsayqzvx&#39;
+    &gt;&gt;&gt; pe.lookup(&#39;A&#39;)
+    &#39;&#39;
+    &#34;&#34;&#34;
+    if letter in string.ascii_lowercase:
+        return unpos(
+            (self.wheel_map[(pos(letter) - self.position) % 26] + 
+                self.position))
+    else:
+        return &#39;&#39;</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.pocket_enigma.PocketEnigma.make_wheel_map"><code class="name flex">
+<span>def <span class="ident">make_wheel_map</span></span>(<span>self, wheel_spec)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Expands a wheel specification from a list of letter-letter pairs
+into a full wheel_map.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; pe.make_wheel_map(pe.wheel2)
+[2, 3, 0, 1, 22, 8, 15, 12, 5, 10, 9, 13, 7, 11, 16, 6, 14, 25, 20, 21, 18, 19, 4, 24, 23, 17]
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_wheel_map(self, wheel_spec):
+    &#34;&#34;&#34;Expands a wheel specification from a list of letter-letter pairs
+    into a full wheel_map.
+
+    &gt;&gt;&gt; pe.make_wheel_map(pe.wheel2)
+    [2, 3, 0, 1, 22, 8, 15, 12, 5, 10, 9, 13, 7, 11, 16, 6, 14, 25, 20, 21, 18, 19, 4, 24, 23, 17]
+    &#34;&#34;&#34;
+    self.validate_wheel_spec(wheel_spec)
+    self.wheel_map = [0] * 26
+    for p in wheel_spec:
+        self.wheel_map[pos(p[0])] = pos(p[1])
+        self.wheel_map[pos(p[1])] = pos(p[0])
+    return self.wheel_map</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.pocket_enigma.PocketEnigma.set_position"><code class="name flex">
+<span>def <span class="ident">set_position</span></span>(<span>self, position)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the position of the wheel, by specifying the letter the arrow
+points to.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; pe.set_position('a')
+0
+&gt;&gt;&gt; pe.set_position('m')
+12
+&gt;&gt;&gt; pe.set_position('z')
+25
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_position(self, position):
+    &#34;&#34;&#34;Sets the position of the wheel, by specifying the letter the arrow
+    points to.
+
+    &gt;&gt;&gt; pe.set_position(&#39;a&#39;)
+    0
+    &gt;&gt;&gt; pe.set_position(&#39;m&#39;)
+    12
+    &gt;&gt;&gt; pe.set_position(&#39;z&#39;)
+    25
+    &#34;&#34;&#34;
+    self.position = pos(position)
+    return self.position</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.pocket_enigma.PocketEnigma.validate_wheel_spec"><code class="name flex">
+<span>def <span class="ident">validate_wheel_spec</span></span>(<span>self, wheel_spec)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Validates that a wheel specificaiton will turn into a valid wheel
+map.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; pe.validate_wheel_spec([])
+Traceback (most recent call last):
+    ...
+ValueError: Wheel specification has 0 pairs, requires 13
+&gt;&gt;&gt; pe.validate_wheel_spec([('a', 'b', 'c')]*13)
+Traceback (most recent call last):
+    ...
+ValueError: Not all mappings in wheel specificationhave two elements
+&gt;&gt;&gt; pe.validate_wheel_spec([('a', 'b')]*13)
+Traceback (most recent call last):
+    ...
+ValueError: Wheel specification does not contain 26 letters
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def validate_wheel_spec(self, wheel_spec):
+    &#34;&#34;&#34;Validates that a wheel specificaiton will turn into a valid wheel
+    map.
+
+    &gt;&gt;&gt; pe.validate_wheel_spec([])
+    Traceback (most recent call last):
+        ...
+    ValueError: Wheel specification has 0 pairs, requires 13
+    &gt;&gt;&gt; pe.validate_wheel_spec([(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;)]*13)
+    Traceback (most recent call last):
+        ...
+    ValueError: Not all mappings in wheel specificationhave two elements
+    &gt;&gt;&gt; pe.validate_wheel_spec([(&#39;a&#39;, &#39;b&#39;)]*13)
+    Traceback (most recent call last):
+        ...
+    ValueError: Wheel specification does not contain 26 letters
+    &#34;&#34;&#34;
+    if len(wheel_spec) != 13:
+        raise ValueError(&#34;Wheel specification has {} pairs, requires 13&#34;.
+            format(len(wheel_spec)))
+    for p in wheel_spec:
+        if len(p) != 2:
+            raise ValueError(&#34;Not all mappings in wheel specification&#34;
+                &#34;have two elements&#34;)
+    if len(set([p[0] for p in wheel_spec] + 
+                [p[1] for p in wheel_spec])) != 26:
+        raise ValueError(&#34;Wheel specification does not contain 26 letters&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="szyfrow" href="index.html">szyfrow</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="szyfrow.pocket_enigma.cat" href="#szyfrow.pocket_enigma.cat">cat</a></code></li>
+<li><code><a title="szyfrow.pocket_enigma.lcat" href="#szyfrow.pocket_enigma.lcat">lcat</a></code></li>
+<li><code><a title="szyfrow.pocket_enigma.pocket_enigma_break_by_crib" href="#szyfrow.pocket_enigma.pocket_enigma_break_by_crib">pocket_enigma_break_by_crib</a></code></li>
+<li><code><a title="szyfrow.pocket_enigma.wcat" href="#szyfrow.pocket_enigma.wcat">wcat</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="szyfrow.pocket_enigma.PocketEnigma" href="#szyfrow.pocket_enigma.PocketEnigma">PocketEnigma</a></code></h4>
+<ul class="two-column">
+<li><code><a title="szyfrow.pocket_enigma.PocketEnigma.advance" href="#szyfrow.pocket_enigma.PocketEnigma.advance">advance</a></code></li>
+<li><code><a title="szyfrow.pocket_enigma.PocketEnigma.decipher" href="#szyfrow.pocket_enigma.PocketEnigma.decipher">decipher</a></code></li>
+<li><code><a title="szyfrow.pocket_enigma.PocketEnigma.decipher_letter" href="#szyfrow.pocket_enigma.PocketEnigma.decipher_letter">decipher_letter</a></code></li>
+<li><code><a title="szyfrow.pocket_enigma.PocketEnigma.encipher" href="#szyfrow.pocket_enigma.PocketEnigma.encipher">encipher</a></code></li>
+<li><code><a title="szyfrow.pocket_enigma.PocketEnigma.encipher_letter" href="#szyfrow.pocket_enigma.PocketEnigma.encipher_letter">encipher_letter</a></code></li>
+<li><code><a title="szyfrow.pocket_enigma.PocketEnigma.lookup" href="#szyfrow.pocket_enigma.PocketEnigma.lookup">lookup</a></code></li>
+<li><code><a title="szyfrow.pocket_enigma.PocketEnigma.make_wheel_map" href="#szyfrow.pocket_enigma.PocketEnigma.make_wheel_map">make_wheel_map</a></code></li>
+<li><code><a title="szyfrow.pocket_enigma.PocketEnigma.set_position" href="#szyfrow.pocket_enigma.PocketEnigma.set_position">set_position</a></code></li>
+<li><code><a title="szyfrow.pocket_enigma.PocketEnigma.validate_wheel_spec" href="#szyfrow.pocket_enigma.PocketEnigma.validate_wheel_spec">validate_wheel_spec</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>szyfrow.amsco API documentation</title>
+<meta name="description" content="Enciphering and deciphering using the [Amsco cipher](http://ericbrandel.com/2016/10/09/the-amsco-cipher/).
+Also attempts to break messages that use …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>szyfrow.amsco</code></h1>
+</header>
+<section id="section-intro">
+<p>Enciphering and deciphering using the <a href="http://ericbrandel.com/2016/10/09/the-amsco-cipher/">Amsco cipher</a>.
+Also attempts to break messages that use an Amsco cipher.</p>
+<p>The Amsco cipher is a column transpositoin cipher. The plaintext is laid out,
+row by row, into columns. However, different numbers of letters are laid out
+in each cell, typically in a 1-2 pattern.</p>
+<p>It's clearer with an example. Consider we're using the keyword "perceptive",
+which turns into "perctiv". The text ""It is a truth universally
+acknowledged, that a single man in, possession of a good fortune, must be in
+want of a wife." is laid out in seven columns like this:</p>
+<pre><code>p  e  r  c  t  i  v
+--------------------
+i  ti s  at r  ut h 
+un i  ve r  sa l  ly 
+a  ck n  ow l  ed g 
+ed t  ha t  as i  ng 
+l  em a  ni n  po s 
+se s  si o  no f  ag 
+o  od f  or t  un e 
+mu s  tb e  in w  an 
+t  of a  wi f  e
+</code></pre>
+<p>The ciphertext is read out in columns, according to the order of the keyword.
+In this example, the "c" column is read first, then the "e" column, and so on.
+That gives the ciphertext of "atrowtnioorewi tiicktemsodsof utledipofunwe
+iunaedlseomut svenhaasiftba rsalasnnotinf hlygngsagean".</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Enciphering and deciphering using the [Amsco cipher](http://ericbrandel.com/2016/10/09/the-amsco-cipher/). 
+Also attempts to break messages that use an Amsco cipher.
+
+The Amsco cipher is a column transpositoin cipher. The plaintext is laid out, 
+row by row, into columns. However, different numbers of letters are laid out
+in each cell, typically in a 1-2 pattern.
+
+It&#39;s clearer with an example. Consider we&#39;re using the keyword &#34;perceptive&#34;, 
+which turns into &#34;perctiv&#34;. The text &#34;&#34;It is a truth universally 
+acknowledged, that a single man in, possession of a good fortune, must be in 
+want of a wife.&#34; is laid out in seven columns like this:
+
+    p  e  r  c  t  i  v
+    --------------------
+    i  ti s  at r  ut h 
+    un i  ve r  sa l  ly 
+    a  ck n  ow l  ed g 
+    ed t  ha t  as i  ng 
+    l  em a  ni n  po s 
+    se s  si o  no f  ag 
+    o  od f  or t  un e 
+    mu s  tb e  in w  an 
+    t  of a  wi f  e
+
+The ciphertext is read out in columns, according to the order of the keyword.
+In this example, the &#34;c&#34; column is read first, then the &#34;e&#34; column, and so on.
+That gives the ciphertext of &#34;atrowtnioorewi tiicktemsodsof utledipofunwe 
+iunaedlseomut svenhaasiftba rsalasnnotinf hlygngsagean&#34;.
+&#34;&#34;&#34;
+
+from enum import Enum
+import multiprocessing 
+import itertools
+
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
+
+__pdoc__ = {}
+
+AmscoSlice = collections.namedtuple(&#39;AmscoSlice&#39;, [&#39;index&#39;, &#39;start&#39;, &#39;end&#39;])
+__pdoc__[&#39;AmscoSlice&#39;] = &#34;&#34;&#34;Where each piece of plainatext ends up in the AMSCO 
+transpositon cipher.&#34;&#34;&#34;
+__pdoc__[&#39;AmscoSlice.index&#39;] = &#34;&#34;&#34;Where the slice appears in the plaintext&#34;&#34;&#34;
+__pdoc__[&#39;AmscoSlice.start&#39;] = &#34;&#34;&#34;Where the slice starts in the plaintext&#34;&#34;&#34;
+__pdoc__[&#39;AmscoSlice.end&#39;] = &#34;&#34;&#34;Where the slice ends in the plaintext&#34;&#34;&#34;
+
+class AmscoFillStyle(Enum):
+    &#34;&#34;&#34;Different methods of filling the grid.
+    * `continuous`: continue the fillpattern unbroken by row boundaries
+    * `same_each_row`: each row has the same fillpattern
+    * `reverse_each_row`: each row has the reversed fillpattern to the row above
+    &#34;&#34;&#34;
+    continuous = 1
+    same_each_row = 2
+    reverse_each_row = 3
+
+def amsco_positions(message, keyword, 
+      fillpattern=(1, 2),
+      fillstyle=AmscoFillStyle.continuous,
+      fillcolumnwise=False,
+      emptycolumnwise=True):
+    &#34;&#34;&#34;Creates the grid for the AMSCO transposition cipher. Each element in the
+    grid shows the index of that slice and the start and end positions of the
+    plaintext that go to make it up.
+
+    &gt;&gt;&gt; amsco_positions(string.ascii_lowercase, &#39;freddy&#39;, \
+        fillpattern=(1, 2)) # doctest:  +NORMALIZE_WHITESPACE
+    [[AmscoSlice(index=3, start=4, end=6),
+     AmscoSlice(index=2, start=3, end=4),
+     AmscoSlice(index=0, start=0, end=1),
+     AmscoSlice(index=1, start=1, end=3),
+     AmscoSlice(index=4, start=6, end=7)],
+    [AmscoSlice(index=8, start=12, end=13),
+     AmscoSlice(index=7, start=10, end=12),
+     AmscoSlice(index=5, start=7, end=9),
+     AmscoSlice(index=6, start=9, end=10),
+     AmscoSlice(index=9, start=13, end=15)],
+    [AmscoSlice(index=13, start=19, end=21),
+     AmscoSlice(index=12, start=18, end=19),
+     AmscoSlice(index=10, start=15, end=16),
+     AmscoSlice(index=11, start=16, end=18),
+     AmscoSlice(index=14, start=21, end=22)],
+    [AmscoSlice(index=18, start=27, end=28),
+     AmscoSlice(index=17, start=25, end=27),
+     AmscoSlice(index=15, start=22, end=24),
+     AmscoSlice(index=16, start=24, end=25),
+     AmscoSlice(index=19, start=28, end=30)]]
+    &#34;&#34;&#34;
+    transpositions = transpositions_of(keyword)
+    fill_iterator = itertools.cycle(fillpattern)
+    indices = itertools.count()
+    message_length = len(message)
+
+    current_position = 0
+    grid = []
+    current_fillpattern = fillpattern
+    while current_position &lt; message_length:
+        row = []
+        if fillstyle == AmscoFillStyle.same_each_row:
+            fill_iterator = itertools.cycle(fillpattern)
+        if fillstyle == AmscoFillStyle.reverse_each_row:
+            fill_iterator = itertools.cycle(current_fillpattern)
+        for _ in range(len(transpositions)):
+            index = next(indices)
+            gap = next(fill_iterator)
+            row += [AmscoSlice(index, current_position, current_position + gap)]
+            current_position += gap
+        grid += [row]
+        if fillstyle == AmscoFillStyle.reverse_each_row:
+            current_fillpattern = list(reversed(current_fillpattern))
+    return [transpose(r, transpositions) for r in grid]
+
+def amsco_encipher(message, keyword, 
+    fillpattern=(1,2), fillstyle=AmscoFillStyle.reverse_each_row):
+    &#34;&#34;&#34;AMSCO transposition encipher.
+
+    &gt;&gt;&gt; amsco_encipher(&#39;hellothere&#39;, &#39;abc&#39;, fillpattern=(1, 2))
+    &#39;hoteelhler&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hellothere&#39;, &#39;abc&#39;, fillpattern=(2, 1))
+    &#39;hetelhelor&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hellothere&#39;, &#39;acb&#39;, fillpattern=(1, 2))
+    &#39;hotelerelh&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hellothere&#39;, &#39;acb&#39;, fillpattern=(2, 1))
+    &#39;hetelorlhe&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hereissometexttoencipher&#39;, &#39;encode&#39;)
+    &#39;etecstthhomoerereenisxip&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hereissometexttoencipher&#39;, &#39;cipher&#39;, fillpattern=(1, 2))
+    &#39;hetcsoeisterereipexthomn&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hereissometexttoencipher&#39;, &#39;cipher&#39;, fillpattern=(1, 2), fillstyle=AmscoFillStyle.continuous)
+    &#39;hecsoisttererteipexhomen&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hereissometexttoencipher&#39;, &#39;cipher&#39;, fillpattern=(2, 1))
+    &#39;heecisoosttrrtepeixhemen&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hereissometexttoencipher&#39;, &#39;cipher&#39;, fillpattern=(1, 3, 2))
+    &#39;hxtomephescieretoeisnter&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hereissometexttoencipher&#39;, &#39;cipher&#39;, fillpattern=(1, 3, 2), fillstyle=AmscoFillStyle.continuous)
+    &#39;hxomeiphscerettoisenteer&#39;
+    &#34;&#34;&#34;
+    grid = amsco_positions(message, keyword, 
+        fillpattern=fillpattern, fillstyle=fillstyle)
+    ct_as_grid = [[message[s.start:s.end] for s in r] for r in grid]
+    return combine_every_nth(ct_as_grid)
+
+
+def amsco_decipher(message, keyword, 
+    fillpattern=(1,2), fillstyle=AmscoFillStyle.reverse_each_row):
+    &#34;&#34;&#34;AMSCO transposition decipher
+
+    &gt;&gt;&gt; amsco_decipher(&#39;hoteelhler&#39;, &#39;abc&#39;, fillpattern=(1, 2))
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;hetelhelor&#39;, &#39;abc&#39;, fillpattern=(2, 1))
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;hotelerelh&#39;, &#39;acb&#39;, fillpattern=(1, 2))
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;hetelorlhe&#39;, &#39;acb&#39;, fillpattern=(2, 1))
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;etecstthhomoerereenisxip&#39;, &#39;encode&#39;)
+    &#39;hereissometexttoencipher&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;hetcsoeisterereipexthomn&#39;, &#39;cipher&#39;, fillpattern=(1, 2))
+    &#39;hereissometexttoencipher&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;hecsoisttererteipexhomen&#39;, &#39;cipher&#39;, fillpattern=(1, 2), fillstyle=AmscoFillStyle.continuous)
+    &#39;hereissometexttoencipher&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;heecisoosttrrtepeixhemen&#39;, &#39;cipher&#39;, fillpattern=(2, 1))
+    &#39;hereissometexttoencipher&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;hxtomephescieretoeisnter&#39;, &#39;cipher&#39;, fillpattern=(1, 3, 2))
+    &#39;hereissometexttoencipher&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;hxomeiphscerettoisenteer&#39;, &#39;cipher&#39;, fillpattern=(1, 3, 2), fillstyle=AmscoFillStyle.continuous)
+    &#39;hereissometexttoencipher&#39;
+    &#34;&#34;&#34;
+
+    grid = amsco_positions(message, keyword, 
+        fillpattern=fillpattern, fillstyle=fillstyle)
+    transposed_sections = [s for c in [l for l in zip(*grid)] for s in c]
+    plaintext_list = [&#39;&#39;] * len(transposed_sections)
+    current_pos = 0
+    for slice in transposed_sections:
+        plaintext_list[slice.index] = message[current_pos:current_pos-slice.start+slice.end][:len(message[slice.start:slice.end])]
+        current_pos += len(message[slice.start:slice.end])
+    return cat(plaintext_list)
+
+
+def amsco_break(message, translist=None, patterns = [(1, 2), (2, 1)],
+                                  fillstyles = [AmscoFillStyle.continuous, 
+                                                AmscoFillStyle.same_each_row, 
+                                                AmscoFillStyle.reverse_each_row],
+                                  fitness=Pbigrams, 
+                                  chunksize=500):
+    &#34;&#34;&#34;Breaks an AMSCO transposition cipher using a dictionary and
+    n-gram frequency analysis.
+
+    If `translist` is not specified, use 
+    [`szyfrow.support.langauge_models.transpositions`](support/language_models.html#szyfrow.support.language_models.transpositions).
+
+    &gt;&gt;&gt; amsco_break(amsco_encipher(sanitise( \
+            &#34;It is a truth universally acknowledged, that a single man in \
+             possession of a good fortune, must be in want of a wife. However \
+             little known the feelings or views of such a man may be on his \
+             first entering a neighbourhood, this truth is so well fixed in \
+             the minds of the surrounding families, that he is considered the \
+             rightful property of some one or other of their daughters.&#34;), \
+        &#39;encipher&#39;), \
+        translist={(2, 0, 5, 3, 1, 4, 6): [&#39;encipher&#39;], \
+                   (5, 0, 6, 1, 3, 4, 2): [&#39;fourteen&#39;], \
+                   (6, 1, 0, 4, 5, 3, 2): [&#39;keyword&#39;]}, \
+        patterns=[(1, 2)]) # doctest: +ELLIPSIS
+    (((2, 0, 5, 3, 1, 4, 6), (1, 2), &lt;AmscoFillStyle.continuous: 1&gt;), -709.4646722...)
+    &gt;&gt;&gt; amsco_break(amsco_encipher(sanitise( \
+            &#34;It is a truth universally acknowledged, that a single man in \
+             possession of a good fortune, must be in want of a wife. However \
+             little known the feelings or views of such a man may be on his \
+             first entering a neighbourhood, this truth is so well fixed in \
+             the minds of the surrounding families, that he is considered the \
+             rightful property of some one or other of their daughters.&#34;), \
+        &#39;encipher&#39;, fillpattern=(2, 1)), \
+        translist={(2, 0, 5, 3, 1, 4, 6): [&#39;encipher&#39;], \
+                   (5, 0, 6, 1, 3, 4, 2): [&#39;fourteen&#39;], \
+                   (6, 1, 0, 4, 5, 3, 2): [&#39;keyword&#39;]}, \
+        patterns=[(1, 2), (2, 1)], fitness=Ptrigrams) # doctest: +ELLIPSIS
+    (((2, 0, 5, 3, 1, 4, 6), (2, 1), &lt;AmscoFillStyle.continuous: 1&gt;), -997.0129085...)
+    &#34;&#34;&#34;
+    if translist is None:
+        translist = transpositions
+    
+    with multiprocessing.Pool() as pool:
+        helper_args = [(message, trans, pattern, fillstyle, fitness)
+                       for trans in translist
+                       for pattern in patterns
+                       for fillstyle in fillstyles]
+        # Gotcha: the helper function here needs to be defined at the top level
+        #   (limitation of Pool.starmap)
+        breaks = pool.starmap(amsco_break_worker, helper_args, chunksize) 
+        return max(breaks, key=lambda k: k[1])
+
+def amsco_break_worker(message, transposition,
+        pattern, fillstyle, fitness):
+    plaintext = amsco_decipher(message, transposition,
+        fillpattern=pattern, fillstyle=fillstyle)
+    fit = fitness(sanitise(plaintext))
+    return (transposition, pattern, fillstyle), fit
+
+if __name__ == &#34;__main__&#34;:
+    import doctest</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="szyfrow.amsco.amsco_break"><code class="name flex">
+<span>def <span class="ident">amsco_break</span></span>(<span>message, translist=None, patterns=[(1, 2), (2, 1)], fillstyles=[&lt;AmscoFillStyle.continuous: 1&gt;, &lt;AmscoFillStyle.same_each_row: 2&gt;, &lt;AmscoFillStyle.reverse_each_row: 3&gt;], fitness=&lt;function Pbigrams&gt;, chunksize=500)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Breaks an AMSCO transposition cipher using a dictionary and
+n-gram frequency analysis.</p>
+<p>If <code>translist</code> is not specified, use
+<a href="support/language_models.html#szyfrow.support.language_models.transpositions"><code>szyfrow.support.langauge_models.transpositions</code></a>.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; amsco_break(amsco_encipher(sanitise(             &quot;It is a truth universally acknowledged, that a single man in              possession of a good fortune, must be in want of a wife. However              little known the feelings or views of such a man may be on his              first entering a neighbourhood, this truth is so well fixed in              the minds of the surrounding families, that he is considered the              rightful property of some one or other of their daughters.&quot;),         'encipher'),         translist={(2, 0, 5, 3, 1, 4, 6): ['encipher'],                    (5, 0, 6, 1, 3, 4, 2): ['fourteen'],                    (6, 1, 0, 4, 5, 3, 2): ['keyword']},         patterns=[(1, 2)]) # doctest: +ELLIPSIS
+(((2, 0, 5, 3, 1, 4, 6), (1, 2), &lt;AmscoFillStyle.continuous: 1&gt;), -709.4646722...)
+&gt;&gt;&gt; amsco_break(amsco_encipher(sanitise(             &quot;It is a truth universally acknowledged, that a single man in              possession of a good fortune, must be in want of a wife. However              little known the feelings or views of such a man may be on his              first entering a neighbourhood, this truth is so well fixed in              the minds of the surrounding families, that he is considered the              rightful property of some one or other of their daughters.&quot;),         'encipher', fillpattern=(2, 1)),         translist={(2, 0, 5, 3, 1, 4, 6): ['encipher'],                    (5, 0, 6, 1, 3, 4, 2): ['fourteen'],                    (6, 1, 0, 4, 5, 3, 2): ['keyword']},         patterns=[(1, 2), (2, 1)], fitness=Ptrigrams) # doctest: +ELLIPSIS
+(((2, 0, 5, 3, 1, 4, 6), (2, 1), &lt;AmscoFillStyle.continuous: 1&gt;), -997.0129085...)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def amsco_break(message, translist=None, patterns = [(1, 2), (2, 1)],
+                                  fillstyles = [AmscoFillStyle.continuous, 
+                                                AmscoFillStyle.same_each_row, 
+                                                AmscoFillStyle.reverse_each_row],
+                                  fitness=Pbigrams, 
+                                  chunksize=500):
+    &#34;&#34;&#34;Breaks an AMSCO transposition cipher using a dictionary and
+    n-gram frequency analysis.
+
+    If `translist` is not specified, use 
+    [`szyfrow.support.langauge_models.transpositions`](support/language_models.html#szyfrow.support.language_models.transpositions).
+
+    &gt;&gt;&gt; amsco_break(amsco_encipher(sanitise( \
+            &#34;It is a truth universally acknowledged, that a single man in \
+             possession of a good fortune, must be in want of a wife. However \
+             little known the feelings or views of such a man may be on his \
+             first entering a neighbourhood, this truth is so well fixed in \
+             the minds of the surrounding families, that he is considered the \
+             rightful property of some one or other of their daughters.&#34;), \
+        &#39;encipher&#39;), \
+        translist={(2, 0, 5, 3, 1, 4, 6): [&#39;encipher&#39;], \
+                   (5, 0, 6, 1, 3, 4, 2): [&#39;fourteen&#39;], \
+                   (6, 1, 0, 4, 5, 3, 2): [&#39;keyword&#39;]}, \
+        patterns=[(1, 2)]) # doctest: +ELLIPSIS
+    (((2, 0, 5, 3, 1, 4, 6), (1, 2), &lt;AmscoFillStyle.continuous: 1&gt;), -709.4646722...)
+    &gt;&gt;&gt; amsco_break(amsco_encipher(sanitise( \
+            &#34;It is a truth universally acknowledged, that a single man in \
+             possession of a good fortune, must be in want of a wife. However \
+             little known the feelings or views of such a man may be on his \
+             first entering a neighbourhood, this truth is so well fixed in \
+             the minds of the surrounding families, that he is considered the \
+             rightful property of some one or other of their daughters.&#34;), \
+        &#39;encipher&#39;, fillpattern=(2, 1)), \
+        translist={(2, 0, 5, 3, 1, 4, 6): [&#39;encipher&#39;], \
+                   (5, 0, 6, 1, 3, 4, 2): [&#39;fourteen&#39;], \
+                   (6, 1, 0, 4, 5, 3, 2): [&#39;keyword&#39;]}, \
+        patterns=[(1, 2), (2, 1)], fitness=Ptrigrams) # doctest: +ELLIPSIS
+    (((2, 0, 5, 3, 1, 4, 6), (2, 1), &lt;AmscoFillStyle.continuous: 1&gt;), -997.0129085...)
+    &#34;&#34;&#34;
+    if translist is None:
+        translist = transpositions
+    
+    with multiprocessing.Pool() as pool:
+        helper_args = [(message, trans, pattern, fillstyle, fitness)
+                       for trans in translist
+                       for pattern in patterns
+                       for fillstyle in fillstyles]
+        # Gotcha: the helper function here needs to be defined at the top level
+        #   (limitation of Pool.starmap)
+        breaks = pool.starmap(amsco_break_worker, helper_args, chunksize) 
+        return max(breaks, key=lambda k: k[1])</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.amsco.amsco_break_worker"><code class="name flex">
+<span>def <span class="ident">amsco_break_worker</span></span>(<span>message, transposition, pattern, fillstyle, fitness)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def amsco_break_worker(message, transposition,
+        pattern, fillstyle, fitness):
+    plaintext = amsco_decipher(message, transposition,
+        fillpattern=pattern, fillstyle=fillstyle)
+    fit = fitness(sanitise(plaintext))
+    return (transposition, pattern, fillstyle), fit</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.amsco.amsco_decipher"><code class="name flex">
+<span>def <span class="ident">amsco_decipher</span></span>(<span>message, keyword, fillpattern=(1, 2), fillstyle=AmscoFillStyle.reverse_each_row)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>AMSCO transposition decipher</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; amsco_decipher('hoteelhler', 'abc', fillpattern=(1, 2))
+'hellothere'
+&gt;&gt;&gt; amsco_decipher('hetelhelor', 'abc', fillpattern=(2, 1))
+'hellothere'
+&gt;&gt;&gt; amsco_decipher('hotelerelh', 'acb', fillpattern=(1, 2))
+'hellothere'
+&gt;&gt;&gt; amsco_decipher('hetelorlhe', 'acb', fillpattern=(2, 1))
+'hellothere'
+&gt;&gt;&gt; amsco_decipher('etecstthhomoerereenisxip', 'encode')
+'hereissometexttoencipher'
+&gt;&gt;&gt; amsco_decipher('hetcsoeisterereipexthomn', 'cipher', fillpattern=(1, 2))
+'hereissometexttoencipher'
+&gt;&gt;&gt; amsco_decipher('hecsoisttererteipexhomen', 'cipher', fillpattern=(1, 2), fillstyle=AmscoFillStyle.continuous)
+'hereissometexttoencipher'
+&gt;&gt;&gt; amsco_decipher('heecisoosttrrtepeixhemen', 'cipher', fillpattern=(2, 1))
+'hereissometexttoencipher'
+&gt;&gt;&gt; amsco_decipher('hxtomephescieretoeisnter', 'cipher', fillpattern=(1, 3, 2))
+'hereissometexttoencipher'
+&gt;&gt;&gt; amsco_decipher('hxomeiphscerettoisenteer', 'cipher', fillpattern=(1, 3, 2), fillstyle=AmscoFillStyle.continuous)
+'hereissometexttoencipher'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def amsco_decipher(message, keyword, 
+    fillpattern=(1,2), fillstyle=AmscoFillStyle.reverse_each_row):
+    &#34;&#34;&#34;AMSCO transposition decipher
+
+    &gt;&gt;&gt; amsco_decipher(&#39;hoteelhler&#39;, &#39;abc&#39;, fillpattern=(1, 2))
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;hetelhelor&#39;, &#39;abc&#39;, fillpattern=(2, 1))
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;hotelerelh&#39;, &#39;acb&#39;, fillpattern=(1, 2))
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;hetelorlhe&#39;, &#39;acb&#39;, fillpattern=(2, 1))
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;etecstthhomoerereenisxip&#39;, &#39;encode&#39;)
+    &#39;hereissometexttoencipher&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;hetcsoeisterereipexthomn&#39;, &#39;cipher&#39;, fillpattern=(1, 2))
+    &#39;hereissometexttoencipher&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;hecsoisttererteipexhomen&#39;, &#39;cipher&#39;, fillpattern=(1, 2), fillstyle=AmscoFillStyle.continuous)
+    &#39;hereissometexttoencipher&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;heecisoosttrrtepeixhemen&#39;, &#39;cipher&#39;, fillpattern=(2, 1))
+    &#39;hereissometexttoencipher&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;hxtomephescieretoeisnter&#39;, &#39;cipher&#39;, fillpattern=(1, 3, 2))
+    &#39;hereissometexttoencipher&#39;
+    &gt;&gt;&gt; amsco_decipher(&#39;hxomeiphscerettoisenteer&#39;, &#39;cipher&#39;, fillpattern=(1, 3, 2), fillstyle=AmscoFillStyle.continuous)
+    &#39;hereissometexttoencipher&#39;
+    &#34;&#34;&#34;
+
+    grid = amsco_positions(message, keyword, 
+        fillpattern=fillpattern, fillstyle=fillstyle)
+    transposed_sections = [s for c in [l for l in zip(*grid)] for s in c]
+    plaintext_list = [&#39;&#39;] * len(transposed_sections)
+    current_pos = 0
+    for slice in transposed_sections:
+        plaintext_list[slice.index] = message[current_pos:current_pos-slice.start+slice.end][:len(message[slice.start:slice.end])]
+        current_pos += len(message[slice.start:slice.end])
+    return cat(plaintext_list)</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.amsco.amsco_encipher"><code class="name flex">
+<span>def <span class="ident">amsco_encipher</span></span>(<span>message, keyword, fillpattern=(1, 2), fillstyle=AmscoFillStyle.reverse_each_row)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>AMSCO transposition encipher.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; amsco_encipher('hellothere', 'abc', fillpattern=(1, 2))
+'hoteelhler'
+&gt;&gt;&gt; amsco_encipher('hellothere', 'abc', fillpattern=(2, 1))
+'hetelhelor'
+&gt;&gt;&gt; amsco_encipher('hellothere', 'acb', fillpattern=(1, 2))
+'hotelerelh'
+&gt;&gt;&gt; amsco_encipher('hellothere', 'acb', fillpattern=(2, 1))
+'hetelorlhe'
+&gt;&gt;&gt; amsco_encipher('hereissometexttoencipher', 'encode')
+'etecstthhomoerereenisxip'
+&gt;&gt;&gt; amsco_encipher('hereissometexttoencipher', 'cipher', fillpattern=(1, 2))
+'hetcsoeisterereipexthomn'
+&gt;&gt;&gt; amsco_encipher('hereissometexttoencipher', 'cipher', fillpattern=(1, 2), fillstyle=AmscoFillStyle.continuous)
+'hecsoisttererteipexhomen'
+&gt;&gt;&gt; amsco_encipher('hereissometexttoencipher', 'cipher', fillpattern=(2, 1))
+'heecisoosttrrtepeixhemen'
+&gt;&gt;&gt; amsco_encipher('hereissometexttoencipher', 'cipher', fillpattern=(1, 3, 2))
+'hxtomephescieretoeisnter'
+&gt;&gt;&gt; amsco_encipher('hereissometexttoencipher', 'cipher', fillpattern=(1, 3, 2), fillstyle=AmscoFillStyle.continuous)
+'hxomeiphscerettoisenteer'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def amsco_encipher(message, keyword, 
+    fillpattern=(1,2), fillstyle=AmscoFillStyle.reverse_each_row):
+    &#34;&#34;&#34;AMSCO transposition encipher.
+
+    &gt;&gt;&gt; amsco_encipher(&#39;hellothere&#39;, &#39;abc&#39;, fillpattern=(1, 2))
+    &#39;hoteelhler&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hellothere&#39;, &#39;abc&#39;, fillpattern=(2, 1))
+    &#39;hetelhelor&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hellothere&#39;, &#39;acb&#39;, fillpattern=(1, 2))
+    &#39;hotelerelh&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hellothere&#39;, &#39;acb&#39;, fillpattern=(2, 1))
+    &#39;hetelorlhe&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hereissometexttoencipher&#39;, &#39;encode&#39;)
+    &#39;etecstthhomoerereenisxip&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hereissometexttoencipher&#39;, &#39;cipher&#39;, fillpattern=(1, 2))
+    &#39;hetcsoeisterereipexthomn&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hereissometexttoencipher&#39;, &#39;cipher&#39;, fillpattern=(1, 2), fillstyle=AmscoFillStyle.continuous)
+    &#39;hecsoisttererteipexhomen&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hereissometexttoencipher&#39;, &#39;cipher&#39;, fillpattern=(2, 1))
+    &#39;heecisoosttrrtepeixhemen&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hereissometexttoencipher&#39;, &#39;cipher&#39;, fillpattern=(1, 3, 2))
+    &#39;hxtomephescieretoeisnter&#39;
+    &gt;&gt;&gt; amsco_encipher(&#39;hereissometexttoencipher&#39;, &#39;cipher&#39;, fillpattern=(1, 3, 2), fillstyle=AmscoFillStyle.continuous)
+    &#39;hxomeiphscerettoisenteer&#39;
+    &#34;&#34;&#34;
+    grid = amsco_positions(message, keyword, 
+        fillpattern=fillpattern, fillstyle=fillstyle)
+    ct_as_grid = [[message[s.start:s.end] for s in r] for r in grid]
+    return combine_every_nth(ct_as_grid)</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.amsco.amsco_positions"><code class="name flex">
+<span>def <span class="ident">amsco_positions</span></span>(<span>message, keyword, fillpattern=(1, 2), fillstyle=AmscoFillStyle.continuous, fillcolumnwise=False, emptycolumnwise=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates the grid for the AMSCO transposition cipher. Each element in the
+grid shows the index of that slice and the start and end positions of the
+plaintext that go to make it up.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; amsco_positions(string.ascii_lowercase, 'freddy',         fillpattern=(1, 2)) # doctest:  +NORMALIZE_WHITESPACE
+[[AmscoSlice(index=3, start=4, end=6),
+ AmscoSlice(index=2, start=3, end=4),
+ AmscoSlice(index=0, start=0, end=1),
+ AmscoSlice(index=1, start=1, end=3),
+ AmscoSlice(index=4, start=6, end=7)],
+[AmscoSlice(index=8, start=12, end=13),
+ AmscoSlice(index=7, start=10, end=12),
+ AmscoSlice(index=5, start=7, end=9),
+ AmscoSlice(index=6, start=9, end=10),
+ AmscoSlice(index=9, start=13, end=15)],
+[AmscoSlice(index=13, start=19, end=21),
+ AmscoSlice(index=12, start=18, end=19),
+ AmscoSlice(index=10, start=15, end=16),
+ AmscoSlice(index=11, start=16, end=18),
+ AmscoSlice(index=14, start=21, end=22)],
+[AmscoSlice(index=18, start=27, end=28),
+ AmscoSlice(index=17, start=25, end=27),
+ AmscoSlice(index=15, start=22, end=24),
+ AmscoSlice(index=16, start=24, end=25),
+ AmscoSlice(index=19, start=28, end=30)]]
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def amsco_positions(message, keyword, 
+      fillpattern=(1, 2),
+      fillstyle=AmscoFillStyle.continuous,
+      fillcolumnwise=False,
+      emptycolumnwise=True):
+    &#34;&#34;&#34;Creates the grid for the AMSCO transposition cipher. Each element in the
+    grid shows the index of that slice and the start and end positions of the
+    plaintext that go to make it up.
+
+    &gt;&gt;&gt; amsco_positions(string.ascii_lowercase, &#39;freddy&#39;, \
+        fillpattern=(1, 2)) # doctest:  +NORMALIZE_WHITESPACE
+    [[AmscoSlice(index=3, start=4, end=6),
+     AmscoSlice(index=2, start=3, end=4),
+     AmscoSlice(index=0, start=0, end=1),
+     AmscoSlice(index=1, start=1, end=3),
+     AmscoSlice(index=4, start=6, end=7)],
+    [AmscoSlice(index=8, start=12, end=13),
+     AmscoSlice(index=7, start=10, end=12),
+     AmscoSlice(index=5, start=7, end=9),
+     AmscoSlice(index=6, start=9, end=10),
+     AmscoSlice(index=9, start=13, end=15)],
+    [AmscoSlice(index=13, start=19, end=21),
+     AmscoSlice(index=12, start=18, end=19),
+     AmscoSlice(index=10, start=15, end=16),
+     AmscoSlice(index=11, start=16, end=18),
+     AmscoSlice(index=14, start=21, end=22)],
+    [AmscoSlice(index=18, start=27, end=28),
+     AmscoSlice(index=17, start=25, end=27),
+     AmscoSlice(index=15, start=22, end=24),
+     AmscoSlice(index=16, start=24, end=25),
+     AmscoSlice(index=19, start=28, end=30)]]
+    &#34;&#34;&#34;
+    transpositions = transpositions_of(keyword)
+    fill_iterator = itertools.cycle(fillpattern)
+    indices = itertools.count()
+    message_length = len(message)
+
+    current_position = 0
+    grid = []
+    current_fillpattern = fillpattern
+    while current_position &lt; message_length:
+        row = []
+        if fillstyle == AmscoFillStyle.same_each_row:
+            fill_iterator = itertools.cycle(fillpattern)
+        if fillstyle == AmscoFillStyle.reverse_each_row:
+            fill_iterator = itertools.cycle(current_fillpattern)
+        for _ in range(len(transpositions)):
+            index = next(indices)
+            gap = next(fill_iterator)
+            row += [AmscoSlice(index, current_position, current_position + gap)]
+            current_position += gap
+        grid += [row]
+        if fillstyle == AmscoFillStyle.reverse_each_row:
+            current_fillpattern = list(reversed(current_fillpattern))
+    return [transpose(r, transpositions) for r in grid]</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.amsco.cat"><code class="name flex">
+<span>def <span class="ident">cat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+<dt id="szyfrow.amsco.lcat"><code class="name flex">
+<span>def <span class="ident">lcat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+<dt id="szyfrow.amsco.wcat"><code class="name flex">
+<span>def <span class="ident">wcat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="szyfrow.amsco.AmscoFillStyle"><code class="flex name class">
+<span>class <span class="ident">AmscoFillStyle</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Different methods of filling the grid.
+* <code>continuous</code>: continue the fillpattern unbroken by row boundaries
+* <code>same_each_row</code>: each row has the same fillpattern
+* <code>reverse_each_row</code>: each row has the reversed fillpattern to the row above</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AmscoFillStyle(Enum):
+    &#34;&#34;&#34;Different methods of filling the grid.
+    * `continuous`: continue the fillpattern unbroken by row boundaries
+    * `same_each_row`: each row has the same fillpattern
+    * `reverse_each_row`: each row has the reversed fillpattern to the row above
+    &#34;&#34;&#34;
+    continuous = 1
+    same_each_row = 2
+    reverse_each_row = 3</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="szyfrow.amsco.AmscoFillStyle.continuous"><code class="name">var <span class="ident">continuous</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="szyfrow.amsco.AmscoFillStyle.reverse_each_row"><code class="name">var <span class="ident">reverse_each_row</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="szyfrow.amsco.AmscoFillStyle.same_each_row"><code class="name">var <span class="ident">same_each_row</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="szyfrow.amsco.AmscoSlice"><code class="flex name class">
+<span>class <span class="ident">AmscoSlice</span></span>
+<span>(</span><span>index, start, end)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Where each piece of plainatext ends up in the AMSCO
+transpositon cipher.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.tuple</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="szyfrow.amsco.AmscoSlice.end"><code class="name">var <span class="ident">end</span></code></dt>
+<dd>
+<div class="desc"><p>Where the slice ends in the plaintext</p></div>
+</dd>
+<dt id="szyfrow.amsco.AmscoSlice.index"><code class="name">var <span class="ident">index</span></code></dt>
+<dd>
+<div class="desc"><p>Where the slice appears in the plaintext</p></div>
+</dd>
+<dt id="szyfrow.amsco.AmscoSlice.start"><code class="name">var <span class="ident">start</span></code></dt>
+<dd>
+<div class="desc"><p>Where the slice starts in the plaintext</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="szyfrow" href="index.html">szyfrow</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="szyfrow.amsco.amsco_break" href="#szyfrow.amsco.amsco_break">amsco_break</a></code></li>
+<li><code><a title="szyfrow.amsco.amsco_break_worker" href="#szyfrow.amsco.amsco_break_worker">amsco_break_worker</a></code></li>
+<li><code><a title="szyfrow.amsco.amsco_decipher" href="#szyfrow.amsco.amsco_decipher">amsco_decipher</a></code></li>
+<li><code><a title="szyfrow.amsco.amsco_encipher" href="#szyfrow.amsco.amsco_encipher">amsco_encipher</a></code></li>
+<li><code><a title="szyfrow.amsco.amsco_positions" href="#szyfrow.amsco.amsco_positions">amsco_positions</a></code></li>
+<li><code><a title="szyfrow.amsco.cat" href="#szyfrow.amsco.cat">cat</a></code></li>
+<li><code><a title="szyfrow.amsco.lcat" href="#szyfrow.amsco.lcat">lcat</a></code></li>
+<li><code><a title="szyfrow.amsco.wcat" href="#szyfrow.amsco.wcat">wcat</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="szyfrow.amsco.AmscoFillStyle" href="#szyfrow.amsco.AmscoFillStyle">AmscoFillStyle</a></code></h4>
+<ul class="">
+<li><code><a title="szyfrow.amsco.AmscoFillStyle.continuous" href="#szyfrow.amsco.AmscoFillStyle.continuous">continuous</a></code></li>
+<li><code><a title="szyfrow.amsco.AmscoFillStyle.reverse_each_row" href="#szyfrow.amsco.AmscoFillStyle.reverse_each_row">reverse_each_row</a></code></li>
+<li><code><a title="szyfrow.amsco.AmscoFillStyle.same_each_row" href="#szyfrow.amsco.AmscoFillStyle.same_each_row">same_each_row</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="szyfrow.amsco.AmscoSlice" href="#szyfrow.amsco.AmscoSlice">AmscoSlice</a></code></h4>
+<ul class="">
+<li><code><a title="szyfrow.amsco.AmscoSlice.end" href="#szyfrow.amsco.AmscoSlice.end">end</a></code></li>
+<li><code><a title="szyfrow.amsco.AmscoSlice.index" href="#szyfrow.amsco.AmscoSlice.index">index</a></code></li>
+<li><code><a title="szyfrow.amsco.AmscoSlice.start" href="#szyfrow.amsco.AmscoSlice.start">start</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

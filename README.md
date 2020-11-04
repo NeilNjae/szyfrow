@@ -1,4 +1,4 @@
 # Szyfow ciphers
 
-Various tools for encipher, deciphering, and breaking simple (manual) ciphers.
+Various tools for enciphering, deciphering, and breaking simple (manual) ciphers.
 

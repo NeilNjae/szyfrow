@@ -1,37 +1,37 @@
+"""A simulator for Enigma machines.
 
-# coding: utf-8
+See `szyfrow.bombe.Bombe` for an implementation of the Bombe to break Enigma
+messages.
 
-##################################
-# # Enigma machine
-##################################
-# Specification from [Codes and Ciphers](http://www.codesandciphers.org.uk/enigma/rotorspec.htm) page.
-# 
-# Example Enigma machines from [Louise Dale](http://enigma.louisedade.co.uk/enigma.html) (full simulation) and [EnigmaCo](http://enigmaco.de/enigma/enigma.html) (good animation of the wheels, but no ring settings).
-# 
-# There's also the nice Enigma simulator for Android by [Franklin Heath](https://franklinheath.co.uk/2012/02/04/our-first-app-published-enigma-simulator/), available on the [Google Play store](https://play.google.com/store/apps/details?id=uk.co.franklinheath.enigmasim&hl=en_GB).
+Specification from [Codes and Ciphers](http://www.codesandciphers.org.uk/enigma/rotorspec.htm) page.
 
+Example Enigma machines from [Louise Dale](http://enigma.louisedade.co.uk/enigma.html) (full simulation) and [EnigmaCo](http://enigmaco.de/enigma/enigma.html) (good animation of the wheels, but no ring settings).
 
+There's also the nice Enigma simulator for Android by [Franklin Heath](https://franklinheath.co.uk/2012/02/04/our-first-app-published-enigma-simulator/), available on the [Google Play store](https://play.google.com/store/apps/details?id=uk.co.franklinheath.enigmasim&hl=en_GB).
+"""
 
 import string
 import collections
 import multiprocessing
 import itertools
 
-# Some convenience functions
+from szyfrow.support.utilities import *
 
-cat = ''.join
+# # Some convenience functions
 
-def clean(text): return cat(l.lower() for l in text if l in string.ascii_letters)
+# cat = ''.join
 
-def pos(letter): 
-    if letter in string.ascii_lowercase:
-        return ord(letter) - ord('a')
-    elif letter in string.ascii_uppercase:
-        return ord(letter) - ord('A')
-    else:
-        return ''
+# def clean(text): return cat(l.lower() for l in text if l in string.ascii_letters)
+
+# def pos(letter): 
+#     if letter in string.ascii_lowercase:
+#         return ord(letter) - ord('a')
+#     elif letter in string.ascii_uppercase:
+#         return ord(letter) - ord('A')
+#     else:
+#         return ''
     
-def unpos(number): return chr(number % 26 + ord('a'))
+# def unpos(number): return chr(number % 26 + ord('a'))
 
 
 wheel_i_spec = 'ekmflgdqvzntowyhxuspaibrcj'
@@ -63,8 +63,16 @@ class LetterTransformer(object):
     """A generic substitution cipher, that has different transforms in the 
     forward and backward directions. It requires that the transforms for all
     letters by provided.
+
+    A `transform` is a list of letter pairs, like `[('a', 'b'), ('c', 'd')]`.
+    That would say that, in the forward direction `a` goes to `b` and 
+    `c` goes to `d`. In the backward direction, `b` goes to `a` and `d` goes
+    to `c`. 
     """
     def __init__(self, specification, raw_transform=False):
+        """Validate and create a new transformer. The transform is parsed by
+        `LetterTransformer.parse_specification` unless `raw_transform` is `True`
+        """
         if raw_transform:
             transform = specification
         else:
@@ -73,11 +81,17 @@ class LetterTransformer(object):
         self.make_transform_map(transform)
     
     def parse_specification(self, specification):
-        return list(zip(string.ascii_lowercase, clean(specification)))
+        """Turn a `specification` string into a transform, by zipping it
+        with ASCII lowercase letters to generate the pairs. This assumes that
+        the `specification` defines the destination of the forward transform.
+        """
+        return list(zip(string.ascii_lowercase, sanitise(specification)))
         # return specification
     
     def validate_transform(self, transform):
-        """A set of pairs, of from-to"""
+        """Checks that a transform is valid (every letter is mapped to 
+        exactly one other letter, in both directions).
+        """
         if len(transform) != 26:
             raise ValueError("Transform specification has {} pairs, requires 26".
                 format(len(transform)))
@@ -91,10 +105,16 @@ class LetterTransformer(object):
             raise ValueError("Transform specification must list 26 destination letters") 
 
     def make_empty_transform(self):
+        """An empty transform is one that maps every letter to 'a'.
+        """
         self.forward_map = [0] * 26
         self.backward_map = [0] * 26
             
     def make_transform_map(self, transform):
+        """Create `forward_map` and `backward_map` from `transform`. The maps
+        work on letter positions, not letter values. This makes the arithmetic
+        for wheels much easier.
+        """
         self.make_empty_transform()
         for p in transform:
             self.forward_map[pos(p[0])] = pos(p[1])
@@ -102,12 +122,16 @@ class LetterTransformer(object):
         return self.forward_map, self.backward_map
     
     def forward(self, letter):
+        """Apply a map in the forward direction.
+        """
         if letter in string.ascii_lowercase:
             return unpos(self.forward_map[pos(letter)])
         else:
             return ''
                 
     def backward(self, letter):
+        """Apply a map in the backward direction.
+        """
         if letter in string.ascii_lowercase:
             return unpos(self.backward_map[pos(letter)])
         else:
@@ -119,21 +143,32 @@ class Plugboard(LetterTransformer):
     transforms are the same. If a letter isn't explicitly transformed, it is 
     kept as it is.
     """
+
     def parse_specification(self, specification):
-        return [tuple(clean(p)) for p in specification.split()]
+        """Convert a specification into a transform. The specification is
+        given as a list of letter pairs.
+        """
+        return [tuple(sanitise(p)) for p in specification.split()]
     
     def validate_transform(self, transform):
-        """A set of pairs, of from-to"""
+        """A set of pairs, of from-to. Does not require all 26 letters
+        are in the transform.
+        """
         for p in transform:
             if len(p) != 2:
                 raise ValueError("Not all mappings in transform"
                     "have two elements")
     
     def make_empty_transform(self):
+        """An empty transform maps every letter to itself.
+        """
         self.forward_map = list(range(26))
         self.backward_map = list(range(26))
         
     def make_transform_map(self, transform):
+        """Makes the maps for a plugboard. Ensures that if the pair ('a', 'b')
+        is in the specification, the pair ('b', 'a') is also present.
+        """
         expanded_transform = transform + [tuple(reversed(p)) for p in transform]
         return super(Plugboard, self).make_transform_map(expanded_transform)
 
@@ -142,6 +177,8 @@ class Plugboard(LetterTransformer):
 
 class Reflector(Plugboard):
     """A reflector is a plugboard that requires 13 transforms.
+    The 'plugboard' superclass ensures that all 13 transforms are also applied
+    in reverse, making 26 transforms in all.
     """
     def validate_transform(self, transform):
         if len(transform) != 13:
@@ -169,7 +206,7 @@ class SimpleWheel(LetterTransformer):
 
     Letter inputs and outputs are given relative to the frame holding the wheel,
     so if the wheel is advanced three places, an input of 'p' will enter the 
-    wheel on the position under the wheel's 'q' label.
+    wheel on the position under the wheel's 's' label.
     """
     def __init__(self, transform, position='a', raw_transform=False):
         super(SimpleWheel, self).__init__(transform, raw_transform)
@@ -182,25 +219,34 @@ class SimpleWheel(LetterTransformer):
             return object.__getattribute__(self, name)
     
     def set_position(self, position):
+        """Sets a wheel's position. If the `position` is a string, convert it
+        to a number and set the position.
+        """
         if isinstance(position, str):
-            # self.position = ord(position) - ord('a')
             self.position = pos(position)
         else:
             self.position = position
     
     def forward(self, letter):
+        """Give the transformed letter in the forward direction, accounting
+        for the position of the wheel.
+        """
         if letter in string.ascii_lowercase:
             return unpos((self.forward_map[(pos(letter) + self.position) % 26] - self.position))
         else:
             return ''
                 
     def backward(self, letter):
+        """Give the transformed letter in the backward direction, accounting
+        for the position of the wheel.
+        """
         if letter in string.ascii_lowercase:
             return unpos((self.backward_map[(pos(letter) + self.position) % 26] - self.position))
         else:
             return ''
         
     def advance(self):
+        """Advance a wheel one position."""
         self.position = (self.position + 1) % 26
 
 
@@ -223,12 +269,13 @@ class Wheel(SimpleWheel):
 
     The notch_positions are the number of advances of this wheel before it will 
     advance the next wheel.
-
     """
-    def __init__(self, transform, ring_notch_letters, ring_setting=1, position='a', raw_transform=False):
+    def __init__(self, transform, ring_notch_letters, ring_setting=1, 
+            position='a', raw_transform=False):
         self.ring_notch_letters = ring_notch_letters
         self.ring_setting = ring_setting
-        super(Wheel, self).__init__(transform, position=position, raw_transform=raw_transform)
+        super(Wheel, self).__init__(transform, position=position, 
+            raw_transform=raw_transform)
         self.set_position(position)
         
     def __getattribute__(self,name):
@@ -247,6 +294,8 @@ class Wheel(SimpleWheel):
         self.notch_positions = [(self.position + self.ring_setting - 1 - pos(p)) % 26  for p in self.ring_notch_letters]
         
     def advance(self):
+        """Advance a wheel's core, then advance the ring position to match.
+        """
         super(Wheel, self).advance()
         self.notch_positions = [(p + 1) % 26 for p in self.notch_positions]
         return self.position
@@ -264,27 +313,44 @@ class Enigma(object):
                  left_ring_setting, middle_ring_setting, right_ring_setting,
                  plugboard_setting):
         self.reflector = Reflector(reflector_spec)
-        self.left_wheel = Wheel(left_wheel_spec, left_wheel_notches, ring_setting=left_ring_setting)
-        self.middle_wheel = Wheel(middle_wheel_spec, middle_wheel_notches, ring_setting=middle_ring_setting)
-        self.right_wheel = Wheel(right_wheel_spec, right_wheel_notches, ring_setting=right_ring_setting)
+        self.left_wheel = Wheel(left_wheel_spec, left_wheel_notches, 
+            ring_setting=left_ring_setting)
+        self.middle_wheel = Wheel(middle_wheel_spec, middle_wheel_notches, 
+            ring_setting=middle_ring_setting)
+        self.right_wheel = Wheel(right_wheel_spec, right_wheel_notches, 
+            ring_setting=right_ring_setting)
         self.plugboard = Plugboard(plugboard_setting)
         
     def __getattribute__(self,name):
         if name=='wheel_positions':
-            return self.left_wheel.position, self.middle_wheel.position, self.right_wheel.position 
+            return (self.left_wheel.position, 
+                    self.middle_wheel.position, 
+                    self.right_wheel.position
+                    )
         elif name=='wheel_positions_l':
-            return self.left_wheel.position_l, self.middle_wheel.position_l, self.right_wheel.position_l 
+            return (self.left_wheel.position_l, 
+                    self.middle_wheel.position_l, 
+                    self.right_wheel.position_l
+                    )
         elif name=='notch_positions':
-            return self.left_wheel.notch_positions, self.middle_wheel.notch_positions, self.right_wheel.notch_positions
+            return (self.left_wheel.notch_positions, 
+                    self.middle_wheel.notch_positions, 
+                    self.right_wheel.notch_positions
+                    )
         else:
             return object.__getattribute__(self, name)
 
-    def set_wheels(self, left_wheel_position, middle_wheel_position, right_wheel_position):
+    def set_wheels(self, left_wheel_position, middle_wheel_position, 
+            right_wheel_position):
+        """Set the Enigma's wheels to the specified positions.
+        """
         self.left_wheel.set_position(left_wheel_position)
         self.middle_wheel.set_position(middle_wheel_position)
         self.right_wheel.set_position(right_wheel_position)
         
     def lookup(self, letter):
+        """Lookup the enciphering of a letter, without advancing any wheels
+        """
         a = self.plugboard.forward(letter)
         b = self.right_wheel.forward(a)
         c = self.middle_wheel.forward(b)
@@ -297,6 +363,10 @@ class Enigma(object):
         return i
     
     def advance(self):
+        """Advance the Enigma's wheels one step. The right wheel always
+        advances. The middle and right wheels may advance if the notches
+        line up correctly.
+        """
         advance_middle = False
         advance_left = False
         if 0 in self.right_wheel.notch_positions:
@@ -309,12 +379,16 @@ class Enigma(object):
         if advance_left: self.left_wheel.advance()
             
     def encipher_letter(self, letter):
+        """Encipher a letter. Advance the Enigma machine, then lookup the
+        encryption of a letter.
+        """
         self.advance()
         return self.lookup(letter)
     
     def encipher(self, message):
+        """Encipher a message."""
         enciphered = ''
-        for letter in clean(message):
+        for letter in sanitise(message):
             enciphered += self.encipher_letter(letter)
         return enciphered
 

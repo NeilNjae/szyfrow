@@ -1,3 +1,20 @@
+"""Descriptive models of a natural language (in this case, English).
+
+The functions `Pwords`, `Pletters`, `Pbigrams`, and `Ptrigrams` return the 
+log probability of a section of text.
+
+If you want to use a different language, replace the data files in 
+[`szyfrow/language_model_files`](../language_model_files/index.html).
+
+* `count_1l.txt`: counts of single letters
+* `count_2l.txt`: counts of pairs letters, bigrams
+* `count_3l.txt`: counts of triples of letters, triagrams
+* `words.txt`: a dictionary of words, used for keyword-based cipher breaking.
+  These words should only contain characters cointained in 
+  `string.ascii_letters`.
+
+"""
+
 import string
 import random
 import collections
@@ -21,14 +38,26 @@ def datafile(name, sep='\t'):
             yield [splits[0], int(splits[1])]
 
 english_counts = collections.Counter(dict(datafile('count_1l.txt')))
+"""Counts of single letters in English."""
 normalised_english_counts = szyfrow.support.norms.normalise(english_counts)
+"""Normalised counts of single letters in English (the sum of all counts
+adds to 1)."""
 
 english_bigram_counts = collections.Counter(dict(datafile('count_2l.txt')))
+"""Counts of letter bigrams in English."""
 normalised_english_bigram_counts = szyfrow.support.norms.normalise(english_bigram_counts)
+"""Normalised counts of letter bigrams in English (the sum of all counts
+adds to 1)."""
 
 english_trigram_counts = collections.Counter(dict(datafile('count_3l.txt')))
+"""Counts of letter trigrams in English."""
 normalised_english_trigram_counts = szyfrow.support.norms.normalise(english_trigram_counts)
+"""Normalised counts of letter trigrams in English (the sum of all counts
+adds to 1)."""
 
+keywords = []
+"""A sample list of keywords, to act as a dictionary for 
+dictionary-based cipher breaking attempts."""
 with pkg_resources.open_text(language_model_files, 'words.txt') as f:
     keywords = [line.rstrip() for line in f]
 
@@ -56,6 +85,9 @@ def transpositions_of(keyword):
         return transpositions
 
 transpositions = collections.defaultdict(list)
+"""A sample dict of transpositions, to act as a dictionary for 
+dictionary-based cipher breaking attempts. Each key is a transposition, 
+each value is a list of words that give that transposition."""
 for word in keywords:
     transpositions[transpositions_of(word)] += [word]
 
@@ -63,13 +95,15 @@ for word in keywords:
 def weighted_choice(d):
     """Generate random item from a dictionary of item counts
     """
-    target = random.uniform(0, sum(d.values()))
-    cuml = 0.0
-    for (l, p) in d.items():
-        cuml += p
-        if cuml > target:
-            return l
-    return None
+    delems, dweights = list(zip(*d.items()))
+    return random.choices(delems, dweights)[0] 
+    # target = random.uniform(0, sum(d.values()))
+    # cuml = 0.0
+    # for (l, p) in d.items():
+    #     cuml += p
+    #     if cuml > target:
+    #         return l
+    # return None
 
 def random_english_letter():
     """Generate a random letter based on English letter counts
@@ -109,9 +143,18 @@ def log_probability_of_unknown_word(key, N):
     return -log10(N * 10**((len(key) - 2) * 1.4))
 
 Pw = Pdist(datafile('count_1w.txt'), log_probability_of_unknown_word)
+"""A [Pdist](#szyfrow.support.language_models.Pdist) holding log probabilities 
+of words. Unknown words have their probability estimated by 
+[log_probability_of_unknown_word](#szyfrow.support.language_models.log_probability_of_unknown_word)"""
 Pl = Pdist(datafile('count_1l.txt'), lambda _k, _N: 0)
+"""A [Pdist](#szyfrow.support.language_models.Pdist) holding log probabilities 
+of single letters. Unknown words have their probability estimated as zero."""
 P2l = Pdist(datafile('count_2l.txt'), lambda _k, _N: 0)
+"""A [Pdist](#szyfrow.support.language_models.Pdist) holding log probabilities 
+of letter bigrams. Unknown words have their probability estimated as zero."""
 P3l = Pdist(datafile('count_3l.txt'), lambda _k, _N: 0)
+"""A [Pdist](#szyfrow.support.language_models.Pdist) holding log probabilities 
+of letter trigrams. Unknown words have their probability estimated as zero."""
 
 def Pwords(words): 
     """The Naive Bayes log probability of a sequence of words.

@@ -1,8 +1,72 @@
+"""Enciphering and deciphering using the [Cadenus cipher](https://www.thonky.com/kryptos/cadenus-cipher). 
+Also attempts to break messages that use a Cadenus cipher.
+
+The plaintext is written out in a grid, with one column per letter of the 
+keyword. The plaintext is written out left to right in rows. The plaintext 
+needs to fill 25 rows: if it is shorter, the text is padded; if longer, it is
+broken into 25-row chunks.
+
+For instance, the 100 letter chunk:
+
+> Whoever has made a voyage up the Hudson must remember the Kaatskill mountains. 
+> They are a dismembered branch of the great
+
+and the keyword "wink" would written out as the leftmost grid below.
+
+The columns are then rotated according to the _keycolumn_. For each column, the
+keyword letter in that column is found in the keycolumn. This identifies a 
+specific row in the grid. That column only is rotated upwards until the selected
+row is at the top of the column. Each column is rotated independently, according
+to its keyword letter.
+
+For instance, the middle grid below is formed from the leftmost grid by 
+rotating the first column up four positions, the second column up 17 positions,
+and so on. (The letters chosen to head the new colums are capitalised in the
+leftmost grid.)
+
+Finally, each row is transposed given the alphabetic order of the keyword (as
+seen in the rightmost grid below).
+
+The ciphertext is read out in rows, starting with the now-leftmost column. For
+the example, the ciphertext would be 
+
+> antodeleeeuhrsidrbhmhdrrhnimefmthgeaetakseomehetyaasuvoyegrastmmuuaeenabbtpchehtarorikswosmvaleatned'
+
+```
+w i n k         w i n k    i k n w
+-------         -------    -------
+w h o e    a    o a t n    a n t o
+v e r h    z    e d l e    d e l e
+a s m a    y    h e u e    e e u h
+d e a v    x    d r i s    r s i d
+O y a g    vw   m r h b    r b h m
+e u p t    u    r h r d    h d r r
+h e h u    t    m h i n    h n i m
+d s o n    s    t e m f    e f m t
+m u s t    r    a h e g    h g e a
+r e m e    q    k e a t    e t a k
+m b e r    p    m s o e    s e o m
+t h e k    o    t e e h    e h e t
+a a T s    n    s y a a    y a a s
+k i l l    m    y u o v    u v o y
+m o u n    l    a e r g    e g r a
+t a i N    k    m s m t    s t m m
+s t h e    j    e u a u    u u a e
+y A r e    i    b e a n    e n a b
+a d i s    h    c b p t    b t p c
+m e m b    g    t h h e    h e h t
+e r e d    f    r a o r    a r o r
+b r a n    e    w i s k    i k s w
+c h o f    d    v o m s    o s m v
+t h e g    c    a a e l    a l e a
+r e a t    b    d t e n    t n e d
+```
+
+"""
 from itertools import chain
 import multiprocessing
 from szyfrow.support.utilities import *
 from szyfrow.support.language_models import *
-from szyfrow.column_transposition import transpositions_of
 
 
 def make_cadenus_keycolumn(doubled_letters = 'vw', start='a', reverse=False):
@@ -101,8 +165,17 @@ def cadenus_decipher(message, keyword, keycolumn, fillvalue='a'):
     
 
 
-def cadenus_break(message, wordlist=keywords, 
+def cadenus_break(message, wordlist=None, 
     doubled_letters='vw', fitness=Pbigrams):
+    """Breaks a Cadenus cipher using a dictionary and
+    frequency analysis
+
+    If `wordlist` is not specified, use 
+    [`szyfrow.support.langauge_models.keywords`](support/language_models.html#szyfrow.support.language_models.keywords).
+    """
+    if wordlist is None:
+        wordlist = keywords
+
     # c = make_cadenus_keycolumn(reverse=True)
     # valid_words = [w for w in wordlist
     #     if len(transpositions_of(w)) == len(message) // 25]

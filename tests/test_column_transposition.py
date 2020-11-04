@@ -79,7 +79,7 @@ def test_column_transposition_break():
     for word in 'encipher fourteen keyword'.split():
         used_translist[transpositions_of(word)] += [word]
 
-    (key, fill, empty), score = column_transposition_break_mp(ciphertext, 
+    (key, fill, empty), score = column_transposition_break(ciphertext, 
         translist=used_translist)
 
     assert key == transpositions_of(expected_key)
@@ -98,7 +98,7 @@ def test_scytale_break():
     expected_score = Pbigrams(plaintext)
     ciphertext = scytale_encipher(plaintext, expected_key)
 
-    key, score = scytale_break_mp(ciphertext)
+    key, score = scytale_break(ciphertext)
 
     assert key == expected_key
     assert score == pytest.approx(expected_score)

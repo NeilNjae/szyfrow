@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>szyfrow.bifid API documentation</title>
+<meta name="description" content="Enciphering and deciphering using the [Bifid cipher](https://en.wikipedia.org/wiki/Bifid_cipher).
+Also attempts to break messages that use a Bifid …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>szyfrow.bifid</code></h1>
+</header>
+<section id="section-intro">
+<p>Enciphering and deciphering using the <a href="https://en.wikipedia.org/wiki/Bifid_cipher">Bifid cipher</a>.
+Also attempts to break messages that use a Bifid cipher.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Enciphering and deciphering using the [Bifid cipher](https://en.wikipedia.org/wiki/Bifid_cipher). 
+Also attempts to break messages that use a Bifid cipher.
+&#34;&#34;&#34;
+import multiprocessing 
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
+from szyfrow.keyword_cipher import KeywordWrapAlphabet, keyword_cipher_alphabet_of
+
+def bifid_grid(keyword, wrap_alphabet, letter_mapping):
+    &#34;&#34;&#34;Create the grids for a Bifid cipher
+    &#34;&#34;&#34;
+    cipher_alphabet = keyword_cipher_alphabet_of(keyword, wrap_alphabet)
+    if letter_mapping is None:
+        letter_mapping = {&#39;j&#39;: &#39;i&#39;}
+    translation = &#39;&#39;.maketrans(letter_mapping)
+    cipher_alphabet = cat(collections.OrderedDict.fromkeys(cipher_alphabet.translate(translation)))
+    f_grid = {k: ((i // 5) + 1, (i % 5) + 1) 
+              for i, k in enumerate(cipher_alphabet)}
+    r_grid = {((i // 5) + 1, (i % 5) + 1): k 
+              for i, k in enumerate(cipher_alphabet)}
+    return translation, f_grid, r_grid
+
+def bifid_encipher(message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a, 
+                   letter_mapping=None, period=None, fillvalue=None):
+    &#34;&#34;&#34;Bifid cipher
+
+    &gt;&gt;&gt; bifid_encipher(&#34;indiajelly&#34;, &#39;iguana&#39;)
+    &#39;ibidonhprm&#39;
+    &gt;&gt;&gt; bifid_encipher(&#34;indiacurry&#34;, &#39;iguana&#39;, period=4)
+    &#39;ibnhgaqltm&#39;
+    &gt;&gt;&gt; bifid_encipher(&#34;indiacurry&#34;, &#39;iguana&#39;, period=4, fillvalue=&#39;x&#39;)
+    &#39;ibnhgaqltzml&#39;
+    &#34;&#34;&#34;
+
+    if period:
+        if not fillvalue:
+            raise ValueError(&#34;fillvalue must be given if period is given&#34;)
+        else:
+            p_message = message + pad(len(message), period, fillvalue)
+    else:
+        p_message = message
+
+    translation, f_grid, r_grid = bifid_grid(keyword, wrap_alphabet, letter_mapping)
+    
+    t_message = p_message.translate(translation)
+    pairs0 = [f_grid[l] for l in sanitise(t_message)]
+    if period:
+        # chunked_pairs = [pairs0[i:i+period] for i in range(0, len(pairs0), period)]
+        # if len(chunked_pairs[-1]) &lt; period and fillvalue:
+        #     chunked_pairs[-1] += [f_grid[fillvalue]] * (period - len(chunked_pairs[-1]))
+        chunked_pairs = chunks(pairs0, period, fillvalue=None)
+    else:
+        chunked_pairs = [pairs0]
+    
+    pairs1 = []
+    for c in chunked_pairs:
+        items = sum(list(list(i) for i in zip(*c)), [])
+        p = [(items[i], items[i+1]) for i in range(0, len(items), 2)]
+        pairs1 += p
+    
+    return cat(r_grid[p] for p in pairs1)
+
+
+def bifid_decipher(message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a, 
+                   letter_mapping=None, period=None, fillvalue=None):
+    &#34;&#34;&#34;Decipher with bifid cipher
+
+    &gt;&gt;&gt; bifid_decipher(&#39;ibidonhprm&#39;, &#39;iguana&#39;)
+    &#39;indiaielly&#39;
+    &gt;&gt;&gt; bifid_decipher(&#34;ibnhgaqltm&#34;, &#39;iguana&#39;, period=4)
+    &#39;indiacurry&#39;
+    &gt;&gt;&gt; bifid_decipher(&#34;ibnhgaqltzml&#34;, &#39;iguana&#39;, period=4)
+    &#39;indiacurryxx&#39;
+    &#34;&#34;&#34;
+    if period:
+        if not fillvalue:
+            raise ValueError(&#34;fillvalue must be given if period is given&#34;)
+        else:
+            p_message = message + pad(len(message), period, fillvalue)
+    else:
+        p_message = message
+
+    translation, f_grid, r_grid = bifid_grid(keyword, wrap_alphabet, letter_mapping)
+    
+    t_message = message.translate(translation)
+    pairs0 = [f_grid[l] for l in sanitise(t_message)]
+    if period:
+        # chunked_pairs = [pairs0[i:i+period] for i in range(0, len(pairs0), period)]
+        # if len(chunked_pairs[-1]) &lt; period and fillvalue:
+        #     chunked_pairs[-1] += [f_grid[fillvalue]] * (period - len(chunked_pairs[-1]))
+        chunked_pairs = chunks(pairs0, period, fillvalue=None)
+    else:
+        chunked_pairs = [pairs0]
+        
+    pairs1 = []
+    for c in chunked_pairs:
+        items = [j for i in c for j in i]
+        gap = len(c)
+        p = [(items[i], items[i+gap]) for i in range(gap)]
+        pairs1 += p
+
+    return cat(r_grid[p] for p in pairs1) 
+
+
+def bifid_break(message, wordlist=None, fitness=Pletters, max_period=10,
+                     number_of_solutions=1, chunksize=500):
+    &#34;&#34;&#34;Breaks a keyword substitution cipher using a dictionary and
+    frequency analysis
+
+    If `wordlist` is not specified, use 
+    [`szyfrow.support.langauge_models.keywords`](support/language_models.html#szyfrow.support.language_models.keywords).
+
+    &gt;&gt;&gt; bifid_break(bifid_encipher(&#39;this is a test message for the &#39; \
+          &#39;keyword decipherment&#39;, &#39;elephant&#39;, wrap_alphabet=KeywordWrapAlphabet.from_last), \
+          wordlist=[&#39;cat&#39;, &#39;elephant&#39;, &#39;kangaroo&#39;]) # doctest: +ELLIPSIS
+    ((&#39;elephant&#39;, &lt;KeywordWrapAlphabet.from_last: 2&gt;, 0), -52.834575011...)
+    &gt;&gt;&gt; bifid_break(bifid_encipher(&#39;this is a test message for the &#39; \
+          &#39;keyword decipherment&#39;, &#39;elephant&#39;, wrap_alphabet=KeywordWrapAlphabet.from_last), \
+          wordlist=[&#39;cat&#39;, &#39;elephant&#39;, &#39;kangaroo&#39;], \
+          number_of_solutions=2) # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
+    [((&#39;elephant&#39;, &lt;KeywordWrapAlphabet.from_last: 2&gt;, 0), -52.834575011...), 
+    ((&#39;elephant&#39;, &lt;KeywordWrapAlphabet.from_largest: 3&gt;, 0), -52.834575011...)]
+    &#34;&#34;&#34;
+    if wordlist is None:
+        wordlist = keywords
+
+    with multiprocessing.Pool() as pool:
+        helper_args = [(message, word, wrap, period, fitness)
+                       for word in wordlist
+                       for wrap in KeywordWrapAlphabet
+                       for period in range(max_period+1)]
+        # Gotcha: the helper function here needs to be defined at the top level
+        #   (limitation of Pool.starmap)
+        breaks = pool.starmap(bifid_break_worker, helper_args, chunksize)
+        if number_of_solutions == 1:
+            return max(breaks, key=lambda k: k[1])
+        else:
+            return sorted(breaks, key=lambda k: k[1], reverse=True)[:number_of_solutions]
+
+def bifid_break_worker(message, keyword, wrap_alphabet, period, fitness):
+    plaintext = bifid_decipher(message, keyword, wrap_alphabet, 
+        period=period, fillvalue=&#39;e&#39;)
+    fit = fitness(plaintext)
+    return (keyword, wrap_alphabet, period), fit
+
+if __name__ == &#34;__main__&#34;:
+    import doctest</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="szyfrow.bifid.bifid_break"><code class="name flex">
+<span>def <span class="ident">bifid_break</span></span>(<span>message, wordlist=None, fitness=&lt;function Pletters&gt;, max_period=10, number_of_solutions=1, chunksize=500)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Breaks a keyword substitution cipher using a dictionary and
+frequency analysis</p>
+<p>If <code>wordlist</code> is not specified, use
+<a href="support/language_models.html#szyfrow.support.language_models.keywords"><code>szyfrow.support.langauge_models.keywords</code></a>.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; bifid_break(bifid_encipher('this is a test message for the '           'keyword decipherment', 'elephant', wrap_alphabet=KeywordWrapAlphabet.from_last),           wordlist=['cat', 'elephant', 'kangaroo']) # doctest: +ELLIPSIS
+(('elephant', &lt;KeywordWrapAlphabet.from_last: 2&gt;, 0), -52.834575011...)
+&gt;&gt;&gt; bifid_break(bifid_encipher('this is a test message for the '           'keyword decipherment', 'elephant', wrap_alphabet=KeywordWrapAlphabet.from_last),           wordlist=['cat', 'elephant', 'kangaroo'],           number_of_solutions=2) # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
+[(('elephant', &lt;KeywordWrapAlphabet.from_last: 2&gt;, 0), -52.834575011...), 
+(('elephant', &lt;KeywordWrapAlphabet.from_largest: 3&gt;, 0), -52.834575011...)]
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def bifid_break(message, wordlist=None, fitness=Pletters, max_period=10,
+                     number_of_solutions=1, chunksize=500):
+    &#34;&#34;&#34;Breaks a keyword substitution cipher using a dictionary and
+    frequency analysis
+
+    If `wordlist` is not specified, use 
+    [`szyfrow.support.langauge_models.keywords`](support/language_models.html#szyfrow.support.language_models.keywords).
+
+    &gt;&gt;&gt; bifid_break(bifid_encipher(&#39;this is a test message for the &#39; \
+          &#39;keyword decipherment&#39;, &#39;elephant&#39;, wrap_alphabet=KeywordWrapAlphabet.from_last), \
+          wordlist=[&#39;cat&#39;, &#39;elephant&#39;, &#39;kangaroo&#39;]) # doctest: +ELLIPSIS
+    ((&#39;elephant&#39;, &lt;KeywordWrapAlphabet.from_last: 2&gt;, 0), -52.834575011...)
+    &gt;&gt;&gt; bifid_break(bifid_encipher(&#39;this is a test message for the &#39; \
+          &#39;keyword decipherment&#39;, &#39;elephant&#39;, wrap_alphabet=KeywordWrapAlphabet.from_last), \
+          wordlist=[&#39;cat&#39;, &#39;elephant&#39;, &#39;kangaroo&#39;], \
+          number_of_solutions=2) # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
+    [((&#39;elephant&#39;, &lt;KeywordWrapAlphabet.from_last: 2&gt;, 0), -52.834575011...), 
+    ((&#39;elephant&#39;, &lt;KeywordWrapAlphabet.from_largest: 3&gt;, 0), -52.834575011...)]
+    &#34;&#34;&#34;
+    if wordlist is None:
+        wordlist = keywords
+
+    with multiprocessing.Pool() as pool:
+        helper_args = [(message, word, wrap, period, fitness)
+                       for word in wordlist
+                       for wrap in KeywordWrapAlphabet
+                       for period in range(max_period+1)]
+        # Gotcha: the helper function here needs to be defined at the top level
+        #   (limitation of Pool.starmap)
+        breaks = pool.starmap(bifid_break_worker, helper_args, chunksize)
+        if number_of_solutions == 1:
+            return max(breaks, key=lambda k: k[1])
+        else:
+            return sorted(breaks, key=lambda k: k[1], reverse=True)[:number_of_solutions]</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.bifid.bifid_break_worker"><code class="name flex">
+<span>def <span class="ident">bifid_break_worker</span></span>(<span>message, keyword, wrap_alphabet, period, fitness)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def bifid_break_worker(message, keyword, wrap_alphabet, period, fitness):
+    plaintext = bifid_decipher(message, keyword, wrap_alphabet, 
+        period=period, fillvalue=&#39;e&#39;)
+    fit = fitness(plaintext)
+    return (keyword, wrap_alphabet, period), fit</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.bifid.bifid_decipher"><code class="name flex">
+<span>def <span class="ident">bifid_decipher</span></span>(<span>message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a, letter_mapping=None, period=None, fillvalue=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decipher with bifid cipher</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; bifid_decipher('ibidonhprm', 'iguana')
+'indiaielly'
+&gt;&gt;&gt; bifid_decipher(&quot;ibnhgaqltm&quot;, 'iguana', period=4)
+'indiacurry'
+&gt;&gt;&gt; bifid_decipher(&quot;ibnhgaqltzml&quot;, 'iguana', period=4)
+'indiacurryxx'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def bifid_decipher(message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a, 
+                   letter_mapping=None, period=None, fillvalue=None):
+    &#34;&#34;&#34;Decipher with bifid cipher
+
+    &gt;&gt;&gt; bifid_decipher(&#39;ibidonhprm&#39;, &#39;iguana&#39;)
+    &#39;indiaielly&#39;
+    &gt;&gt;&gt; bifid_decipher(&#34;ibnhgaqltm&#34;, &#39;iguana&#39;, period=4)
+    &#39;indiacurry&#39;
+    &gt;&gt;&gt; bifid_decipher(&#34;ibnhgaqltzml&#34;, &#39;iguana&#39;, period=4)
+    &#39;indiacurryxx&#39;
+    &#34;&#34;&#34;
+    if period:
+        if not fillvalue:
+            raise ValueError(&#34;fillvalue must be given if period is given&#34;)
+        else:
+            p_message = message + pad(len(message), period, fillvalue)
+    else:
+        p_message = message
+
+    translation, f_grid, r_grid = bifid_grid(keyword, wrap_alphabet, letter_mapping)
+    
+    t_message = message.translate(translation)
+    pairs0 = [f_grid[l] for l in sanitise(t_message)]
+    if period:
+        # chunked_pairs = [pairs0[i:i+period] for i in range(0, len(pairs0), period)]
+        # if len(chunked_pairs[-1]) &lt; period and fillvalue:
+        #     chunked_pairs[-1] += [f_grid[fillvalue]] * (period - len(chunked_pairs[-1]))
+        chunked_pairs = chunks(pairs0, period, fillvalue=None)
+    else:
+        chunked_pairs = [pairs0]
+        
+    pairs1 = []
+    for c in chunked_pairs:
+        items = [j for i in c for j in i]
+        gap = len(c)
+        p = [(items[i], items[i+gap]) for i in range(gap)]
+        pairs1 += p
+
+    return cat(r_grid[p] for p in pairs1) </code></pre>
+</details>
+</dd>
+<dt id="szyfrow.bifid.bifid_encipher"><code class="name flex">
+<span>def <span class="ident">bifid_encipher</span></span>(<span>message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a, letter_mapping=None, period=None, fillvalue=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Bifid cipher</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; bifid_encipher(&quot;indiajelly&quot;, 'iguana')
+'ibidonhprm'
+&gt;&gt;&gt; bifid_encipher(&quot;indiacurry&quot;, 'iguana', period=4)
+'ibnhgaqltm'
+&gt;&gt;&gt; bifid_encipher(&quot;indiacurry&quot;, 'iguana', period=4, fillvalue='x')
+'ibnhgaqltzml'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def bifid_encipher(message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a, 
+                   letter_mapping=None, period=None, fillvalue=None):
+    &#34;&#34;&#34;Bifid cipher
+
+    &gt;&gt;&gt; bifid_encipher(&#34;indiajelly&#34;, &#39;iguana&#39;)
+    &#39;ibidonhprm&#39;
+    &gt;&gt;&gt; bifid_encipher(&#34;indiacurry&#34;, &#39;iguana&#39;, period=4)
+    &#39;ibnhgaqltm&#39;
+    &gt;&gt;&gt; bifid_encipher(&#34;indiacurry&#34;, &#39;iguana&#39;, period=4, fillvalue=&#39;x&#39;)
+    &#39;ibnhgaqltzml&#39;
+    &#34;&#34;&#34;
+
+    if period:
+        if not fillvalue:
+            raise ValueError(&#34;fillvalue must be given if period is given&#34;)
+        else:
+            p_message = message + pad(len(message), period, fillvalue)
+    else:
+        p_message = message
+
+    translation, f_grid, r_grid = bifid_grid(keyword, wrap_alphabet, letter_mapping)
+    
+    t_message = p_message.translate(translation)
+    pairs0 = [f_grid[l] for l in sanitise(t_message)]
+    if period:
+        # chunked_pairs = [pairs0[i:i+period] for i in range(0, len(pairs0), period)]
+        # if len(chunked_pairs[-1]) &lt; period and fillvalue:
+        #     chunked_pairs[-1] += [f_grid[fillvalue]] * (period - len(chunked_pairs[-1]))
+        chunked_pairs = chunks(pairs0, period, fillvalue=None)
+    else:
+        chunked_pairs = [pairs0]
+    
+    pairs1 = []
+    for c in chunked_pairs:
+        items = sum(list(list(i) for i in zip(*c)), [])
+        p = [(items[i], items[i+1]) for i in range(0, len(items), 2)]
+        pairs1 += p
+    
+    return cat(r_grid[p] for p in pairs1)</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.bifid.bifid_grid"><code class="name flex">
+<span>def <span class="ident">bifid_grid</span></span>(<span>keyword, wrap_alphabet, letter_mapping)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create the grids for a Bifid cipher</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def bifid_grid(keyword, wrap_alphabet, letter_mapping):
+    &#34;&#34;&#34;Create the grids for a Bifid cipher
+    &#34;&#34;&#34;
+    cipher_alphabet = keyword_cipher_alphabet_of(keyword, wrap_alphabet)
+    if letter_mapping is None:
+        letter_mapping = {&#39;j&#39;: &#39;i&#39;}
+    translation = &#39;&#39;.maketrans(letter_mapping)
+    cipher_alphabet = cat(collections.OrderedDict.fromkeys(cipher_alphabet.translate(translation)))
+    f_grid = {k: ((i // 5) + 1, (i % 5) + 1) 
+              for i, k in enumerate(cipher_alphabet)}
+    r_grid = {((i // 5) + 1, (i % 5) + 1): k 
+              for i, k in enumerate(cipher_alphabet)}
+    return translation, f_grid, r_grid</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.bifid.cat"><code class="name flex">
+<span>def <span class="ident">cat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+<dt id="szyfrow.bifid.lcat"><code class="name flex">
+<span>def <span class="ident">lcat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+<dt id="szyfrow.bifid.wcat"><code class="name flex">
+<span>def <span class="ident">wcat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="szyfrow" href="index.html">szyfrow</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="szyfrow.bifid.bifid_break" href="#szyfrow.bifid.bifid_break">bifid_break</a></code></li>
+<li><code><a title="szyfrow.bifid.bifid_break_worker" href="#szyfrow.bifid.bifid_break_worker">bifid_break_worker</a></code></li>
+<li><code><a title="szyfrow.bifid.bifid_decipher" href="#szyfrow.bifid.bifid_decipher">bifid_decipher</a></code></li>
+<li><code><a title="szyfrow.bifid.bifid_encipher" href="#szyfrow.bifid.bifid_encipher">bifid_encipher</a></code></li>
+<li><code><a title="szyfrow.bifid.bifid_grid" href="#szyfrow.bifid.bifid_grid">bifid_grid</a></code></li>
+<li><code><a title="szyfrow.bifid.cat" href="#szyfrow.bifid.cat">cat</a></code></li>
+<li><code><a title="szyfrow.bifid.lcat" href="#szyfrow.bifid.lcat">lcat</a></code></li>
+<li><code><a title="szyfrow.bifid.wcat" href="#szyfrow.bifid.wcat">wcat</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

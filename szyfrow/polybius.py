@@ -1,3 +1,7 @@
+"""Simple digraph substitution cipher, using the 
+[Polybius square](https://en.wikipedia.org/wiki/Polybius_square). Enciphering
+and deciphering, and a couple of ways to break these ciphers.
+"""
 import multiprocessing 
 from szyfrow.support.utilities import *
 from szyfrow.support.language_models import *
@@ -59,7 +63,6 @@ def polybius_encipher(message, keyword, column_order, row_order,
                       letters_to_merge=None, wrap_alphabet=KeywordWrapAlphabet.from_a): 
     """Encipher a message with Polybius cipher, using a keyword to rearrange
     the alphabet
-
 
     >>> polybius_encipher('this is a test message for the ' \
           'polybius decipherment', 'elephant', \

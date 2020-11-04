@@ -1,0 +1,996 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>szyfrow.keyword_cipher API documentation</title>
+<meta name="description" content="Monoalphabetic substitution ciphers, mainly done by keyword. Enciphering
+and deciphering, and a couple of ways to break these ciphers." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>szyfrow.keyword_cipher</code></h1>
+</header>
+<section id="section-intro">
+<p>Monoalphabetic substitution ciphers, mainly done by keyword. Enciphering
+and deciphering, and a couple of ways to break these ciphers.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Monoalphabetic substitution ciphers, mainly done by keyword. Enciphering
+and deciphering, and a couple of ways to break these ciphers.
+&#34;&#34;&#34;
+from enum import Enum
+import multiprocessing
+import math
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
+
+
+class KeywordWrapAlphabet(Enum):
+    &#34;&#34;&#34;Ways to list the rest of the alphabet after use of a keyword.
+
+    * `from_a` : continue the alphabet from &#39;a&#39;: `bayescdfg...`
+    * `from_last`: continue from the last letter of the keyword: 
+        `bayestuvwxyzcdf...`
+    * `from_largest`: continue from the &#34;largest&#34; letter of the keyword:
+        `bayeszcdfg...`
+    &#34;&#34;&#34;
+    from_a = 1
+    from_last = 2
+    from_largest = 3
+
+
+def keyword_cipher_alphabet_of(keyword, wrap_alphabet=KeywordWrapAlphabet.from_a):
+    &#34;&#34;&#34;Find the cipher alphabet given a keyword.
+
+    [`wrap_alphabet`](#szyfrow.keyword_cipher.KeywordWrapAlphabet) controls 
+    how the rest of the alphabet is added after the keyword.
+
+    &gt;&gt;&gt; keyword_cipher_alphabet_of(&#39;bayes&#39;)
+    &#39;bayescdfghijklmnopqrtuvwxz&#39;
+    &gt;&gt;&gt; keyword_cipher_alphabet_of(&#39;bayes&#39;, KeywordWrapAlphabet.from_a)
+    &#39;bayescdfghijklmnopqrtuvwxz&#39;
+    &gt;&gt;&gt; keyword_cipher_alphabet_of(&#39;bayes&#39;, KeywordWrapAlphabet.from_last)
+    &#39;bayestuvwxzcdfghijklmnopqr&#39;
+    &gt;&gt;&gt; keyword_cipher_alphabet_of(&#39;bayes&#39;, KeywordWrapAlphabet.from_largest)
+    &#39;bayeszcdfghijklmnopqrtuvwx&#39;
+    &#34;&#34;&#34;
+    if wrap_alphabet == KeywordWrapAlphabet.from_a:
+        cipher_alphabet = cat(deduplicate(sanitise(keyword) + 
+                                              string.ascii_lowercase))
+    else:
+        if wrap_alphabet == KeywordWrapAlphabet.from_last:
+            last_keyword_letter = deduplicate(sanitise(keyword))[-1]
+        else:
+            last_keyword_letter = sorted(sanitise(keyword))[-1]
+        last_keyword_position = string.ascii_lowercase.find(
+            last_keyword_letter) + 1
+        cipher_alphabet = cat(
+            deduplicate(sanitise(keyword) + 
+                        string.ascii_lowercase[last_keyword_position:] + 
+                        string.ascii_lowercase))
+    return cipher_alphabet
+
+
+def keyword_encipher(message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a):
+    &#34;&#34;&#34;Enciphers a message with a keyword substitution cipher.
+    wrap_alphabet controls how the rest of the alphabet is added
+    after the keyword.
+    0 : from &#39;a&#39;
+    1 : from the last letter in the sanitised keyword
+    2 : from the largest letter in the sanitised keyword
+
+    &gt;&gt;&gt; keyword_encipher(&#39;test message&#39;, &#39;bayes&#39;)
+    &#39;rsqr ksqqbds&#39;
+    &gt;&gt;&gt; keyword_encipher(&#39;test message&#39;, &#39;bayes&#39;, KeywordWrapAlphabet.from_a)
+    &#39;rsqr ksqqbds&#39;
+    &gt;&gt;&gt; keyword_encipher(&#39;test message&#39;, &#39;bayes&#39;, KeywordWrapAlphabet.from_last)
+    &#39;lskl dskkbus&#39;
+    &gt;&gt;&gt; keyword_encipher(&#39;test message&#39;, &#39;bayes&#39;, KeywordWrapAlphabet.from_largest)
+    &#39;qspq jsppbcs&#39;
+    &#34;&#34;&#34;
+    cipher_alphabet = keyword_cipher_alphabet_of(keyword, wrap_alphabet)
+    cipher_translation = &#39;&#39;.maketrans(string.ascii_lowercase, cipher_alphabet)
+    return unaccent(message).lower().translate(cipher_translation)
+
+def keyword_decipher(message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a):
+    &#34;&#34;&#34;Deciphers a message with a keyword substitution cipher.
+    wrap_alphabet controls how the rest of the alphabet is added
+    after the keyword.
+    0 : from &#39;a&#39;
+    1 : from the last letter in the sanitised keyword
+    2 : from the largest letter in the sanitised keyword
+    
+    &gt;&gt;&gt; keyword_decipher(&#39;rsqr ksqqbds&#39;, &#39;bayes&#39;)
+    &#39;test message&#39;
+    &gt;&gt;&gt; keyword_decipher(&#39;rsqr ksqqbds&#39;, &#39;bayes&#39;, KeywordWrapAlphabet.from_a)
+    &#39;test message&#39;
+    &gt;&gt;&gt; keyword_decipher(&#39;lskl dskkbus&#39;, &#39;bayes&#39;, KeywordWrapAlphabet.from_last)
+    &#39;test message&#39;
+    &gt;&gt;&gt; keyword_decipher(&#39;qspq jsppbcs&#39;, &#39;bayes&#39;, KeywordWrapAlphabet.from_largest)
+    &#39;test message&#39;
+    &#34;&#34;&#34;
+    cipher_alphabet = keyword_cipher_alphabet_of(keyword, wrap_alphabet)
+    cipher_translation = &#39;&#39;.maketrans(cipher_alphabet, string.ascii_lowercase)
+    return message.lower().translate(cipher_translation)
+
+
+def keyword_break_single_thread(message, wordlist=None, fitness=Pletters):
+    &#34;&#34;&#34;Breaks a keyword substitution cipher using a dictionary and
+    frequency analysis.
+
+    If `wordlist` is not specified, use 
+    [`szyfrow.support.langauge_models.keywords`](support/language_models.html#szyfrow.support.language_models.keywords).
+
+    &gt;&gt;&gt; keyword_break(keyword_encipher(&#39;this is a test message for the &#39; \
+          &#39;keyword decipherment&#39;, &#39;elephant&#39;, KeywordWrapAlphabet.from_last), \
+          wordlist=[&#39;cat&#39;, &#39;elephant&#39;, &#39;kangaroo&#39;]) # doctest: +ELLIPSIS
+    ((&#39;elephant&#39;, &lt;KeywordWrapAlphabet.from_last: 2&gt;), -52.834575011...)
+    &#34;&#34;&#34;
+    if wordlist is None:
+      wordlist = keywords
+
+    best_keyword = &#39;&#39;
+    best_wrap_alphabet = True
+    best_fit = float(&#34;-inf&#34;)
+    for wrap_alphabet in KeywordWrapAlphabet:
+        for keyword in wordlist:
+            plaintext = keyword_decipher(message, keyword, wrap_alphabet)
+            fit = fitness(plaintext)
+            if fit &gt; best_fit:
+                best_fit = fit
+                best_keyword = keyword
+                best_wrap_alphabet = wrap_alphabet
+    return (best_keyword, best_wrap_alphabet), best_fit
+
+def keyword_break(message, wordlist=None, fitness=Pletters,
+                     number_of_solutions=1, chunksize=500):
+    &#34;&#34;&#34;Breaks a keyword substitution cipher using a dictionary and
+    frequency analysis.
+
+    If `wordlist` is not specified, use 
+    [`szyfrow.support.langauge_models.keywords`](support/language_models.html#szyfrow.support.language_models.keywords).
+
+
+    &gt;&gt;&gt; keyword_break_mp(keyword_encipher(&#39;this is a test message for the &#39; \
+          &#39;keyword decipherment&#39;, &#39;elephant&#39;, KeywordWrapAlphabet.from_last), \
+          wordlist=[&#39;cat&#39;, &#39;elephant&#39;, &#39;kangaroo&#39;]) # doctest: +ELLIPSIS
+    ((&#39;elephant&#39;, &lt;KeywordWrapAlphabet.from_last: 2&gt;), -52.834575011...)
+    &gt;&gt;&gt; keyword_break_mp(keyword_encipher(&#39;this is a test message for the &#39; \
+          &#39;keyword decipherment&#39;, &#39;elephant&#39;, KeywordWrapAlphabet.from_last), \
+          wordlist=[&#39;cat&#39;, &#39;elephant&#39;, &#39;kangaroo&#39;], \
+          number_of_solutions=2) # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
+    [((&#39;elephant&#39;, &lt;KeywordWrapAlphabet.from_last: 2&gt;), -52.834575011...), 
+    ((&#39;elephant&#39;, &lt;KeywordWrapAlphabet.from_largest: 3&gt;), -52.834575011...)]
+    &#34;&#34;&#34;
+    if wordlist is None:
+        wordlist = keywords
+
+    with multiprocessing.Pool() as pool:
+        helper_args = [(message, word, wrap, fitness)
+                       for word in wordlist
+                       for wrap in KeywordWrapAlphabet]
+        # Gotcha: the helper function here needs to be defined at the top level
+        #   (limitation of Pool.starmap)
+        breaks = pool.starmap(keyword_break_worker, helper_args, chunksize)
+        if number_of_solutions == 1:
+            return max(breaks, key=lambda k: k[1])
+        else:
+            return sorted(breaks, key=lambda k: k[1], reverse=True)[:number_of_solutions]
+
+def keyword_break_worker(message, keyword, wrap_alphabet, fitness):
+    plaintext = keyword_decipher(message, keyword, wrap_alphabet)
+    fit = fitness(plaintext)
+    return (keyword, wrap_alphabet), fit
+
+
+def monoalphabetic_break_hillclimbing_single(message, 
+                              max_iterations=20000,
+                              plain_alphabet=None, 
+                              cipher_alphabet=None, 
+                              swap_index_finder=None,
+                              fitness=Pletters, chunksize=1):
+    &#34;&#34;&#34;Break a monalphabetic substitution cipher using hillclimbing to
+    guess the keyword. Hillclimbing is done by using the simulated annealing
+    approach with a temperature of zero.
+
+    This version uses a single worker.
+    &#34;&#34;&#34;
+    return monoalphabetic_sa_break(message, 
+                              workers=1, 
+                              initial_temperature=0,
+                              max_iterations=max_iterations,
+                              plain_alphabet=plain_alphabet, 
+                              cipher_alphabet=cipher_alphabet, 
+                              swap_index_finder=swap_index_finder,
+                              fitness=fitness, chunksize=chunksize)
+
+
+def monoalphabetic_break_hillclimbing(message, 
+                              workers=10, 
+                              max_iterations=20000,
+                              plain_alphabet=None, 
+                              cipher_alphabet=None, 
+                              swap_index_finder=None,
+                              fitness=Pletters, chunksize=1):
+    &#34;&#34;&#34;Break a monalphabetic substitution cipher using hillclimbing to
+    guess the keyword. Hillclimbing is done by using the simulated annealing
+    approach with a temperature of zero.
+
+    This version uses a several workers.
+    &#34;&#34;&#34;
+    return monoalphabetic_sa_break(message, 
+                              workers=workers, 
+                              initial_temperature=0,
+                              max_iterations=max_iterations,
+                              plain_alphabet=plain_alphabet, 
+                              cipher_alphabet=cipher_alphabet, 
+                              swap_index_finder=swap_index_finder,
+                              fitness=fitness, chunksize=chunksize)
+
+
+def gaussian_swap_index(a):
+    &#34;&#34;&#34;Return an index to use as the partner of `a` in a swap. The partners
+    are drawn from a Gaussian distribution.
+    &#34;&#34;&#34;
+    return (a + int(random.gauss(0, 4))) % 26
+
+def uniform_swap_index(a):
+    &#34;&#34;&#34;Return an index to use as the partner of `a` in a swap. The partners
+    are drawn from a uniform distribution.
+    &#34;&#34;&#34;
+    return random.randrange(26)
+
+def monoalphabetic_sa_break(message, workers=10, 
+                              initial_temperature=200,
+                              max_iterations=20000,
+                              plain_alphabet=None, 
+                              cipher_alphabet=None, 
+                              swap_index_finder=None,
+                              fitness=Ptrigrams, chunksize=1):
+    &#34;&#34;&#34;Break a monalphabetic substitution cipher using simulated annealing to
+    guess the keyword. This function just sets up a stable of workers who
+    do the actual work, implemented as 
+    `szyfrow.keyword_cipher.monoalphabetic_sa_break_worker`.
+
+    See a [post on simulated annealing](https://work.njae.me.uk/2019/07/08/simulated-annealing-and-breaking-substitution-ciphers/)
+    for detail on how this works.
+    &#34;&#34;&#34;
+    worker_args = []
+    ciphertext = sanitise(message)
+    if swap_index_finder is None:
+        swap_index_finder = gaussian_swap_index
+        
+    for i in range(workers):
+        if plain_alphabet is None:
+            used_plain_alphabet = string.ascii_lowercase
+        else:
+            used_plain_alphabet = plain_alphabet
+        if cipher_alphabet is None:
+            used_cipher_alphabet = list(string.ascii_lowercase)
+            random.shuffle(used_cipher_alphabet)
+            used_cipher_alphabet = cat(used_cipher_alphabet)
+        else:
+            used_cipher_alphabet = cipher_alphabet
+        # if not plain_alphabet:
+        #     plain_alphabet = string.ascii_lowercase
+        # if not cipher_alphabet:
+        #     cipher_alphabet = list(string.ascii_lowercase)
+        #     random.shuffle(cipher_alphabet)
+        #     cipher_alphabet = cat(cipher_alphabet)
+        worker_args.append((ciphertext, used_plain_alphabet, used_cipher_alphabet, 
+                            swap_index_finder,
+                            initial_temperature, max_iterations, fitness,
+                            i))
+    with multiprocessing.Pool() as pool:
+        breaks = pool.starmap(monoalphabetic_sa_break_worker,
+                              worker_args, chunksize)
+    return max(breaks, key=lambda k: k[1])
+
+
+def monoalphabetic_sa_break_worker(message, plain_alphabet, cipher_alphabet, 
+                                     swap_index_finder,
+                                     t0, max_iterations, fitness,
+                                     logID):
+    &#34;&#34;&#34;One thread of a simulated annealing run. 
+    See a [post on simulated annealing](https://work.njae.me.uk/2019/07/08/simulated-annealing-and-breaking-substitution-ciphers/)
+    for detail on how this works.
+    &#34;&#34;&#34;
+    def swap(letters, i, j):
+        if i &gt; j:
+            i, j = j, i
+        if i == j:
+            return letters
+        else:
+            return (letters[:i] + letters[j] + letters[i+1:j] + letters[i] +
+                    letters[j+1:])
+    
+    temperature = t0
+
+    dt = t0 / (0.9 * max_iterations)
+    
+    current_alphabet = cipher_alphabet
+    alphabet = current_alphabet
+    cipher_translation = &#39;&#39;.maketrans(current_alphabet, plain_alphabet)
+    plaintext = message.translate(cipher_translation)
+    current_fitness = fitness(plaintext)
+
+    best_alphabet = current_alphabet
+    best_fitness = current_fitness
+    best_plaintext = plaintext
+    
+    # print(&#39;starting for&#39;, max_iterations)
+    for i in range(max_iterations):
+        swap_a = random.randrange(26)
+        # swap_b = (swap_a + int(random.gauss(0, 4))) % 26
+        swap_b = swap_index_finder(swap_a)
+        alphabet = swap(current_alphabet, swap_a, swap_b)
+        cipher_translation = &#39;&#39;.maketrans(alphabet, plain_alphabet)
+        plaintext = message.translate(cipher_translation)
+        new_fitness = fitness(plaintext)
+        try:
+            sa_chance = math.exp((new_fitness - current_fitness) / temperature)
+        except (OverflowError, ZeroDivisionError):
+            # print(&#39;exception triggered: new_fit {}, current_fit {}, temp {}&#39;.format(new_fitness, current_fitness, temperature))
+            sa_chance = 0
+        if (new_fitness &gt; current_fitness or random.random() &lt; sa_chance):
+            current_fitness = new_fitness
+            current_alphabet = alphabet
+            
+        if current_fitness &gt; best_fitness:
+            best_alphabet = current_alphabet
+            best_fitness = current_fitness
+            best_plaintext = plaintext
+
+        temperature = max(temperature - dt, 0.001)
+
+    return best_alphabet, best_fitness # current_alphabet, current_fitness
+
+if __name__ == &#34;__main__&#34;:
+    import doctest</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="szyfrow.keyword_cipher.cat"><code class="name flex">
+<span>def <span class="ident">cat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+<dt id="szyfrow.keyword_cipher.gaussian_swap_index"><code class="name flex">
+<span>def <span class="ident">gaussian_swap_index</span></span>(<span>a)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return an index to use as the partner of <code>a</code> in a swap. The partners
+are drawn from a Gaussian distribution.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gaussian_swap_index(a):
+    &#34;&#34;&#34;Return an index to use as the partner of `a` in a swap. The partners
+    are drawn from a Gaussian distribution.
+    &#34;&#34;&#34;
+    return (a + int(random.gauss(0, 4))) % 26</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.keyword_cipher.keyword_break"><code class="name flex">
+<span>def <span class="ident">keyword_break</span></span>(<span>message, wordlist=None, fitness=&lt;function Pletters&gt;, number_of_solutions=1, chunksize=500)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Breaks a keyword substitution cipher using a dictionary and
+frequency analysis.</p>
+<p>If <code>wordlist</code> is not specified, use
+<a href="support/language_models.html#szyfrow.support.language_models.keywords"><code>szyfrow.support.langauge_models.keywords</code></a>.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; keyword_break_mp(keyword_encipher('this is a test message for the '           'keyword decipherment', 'elephant', KeywordWrapAlphabet.from_last),           wordlist=['cat', 'elephant', 'kangaroo']) # doctest: +ELLIPSIS
+(('elephant', &lt;KeywordWrapAlphabet.from_last: 2&gt;), -52.834575011...)
+&gt;&gt;&gt; keyword_break_mp(keyword_encipher('this is a test message for the '           'keyword decipherment', 'elephant', KeywordWrapAlphabet.from_last),           wordlist=['cat', 'elephant', 'kangaroo'],           number_of_solutions=2) # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
+[(('elephant', &lt;KeywordWrapAlphabet.from_last: 2&gt;), -52.834575011...), 
+(('elephant', &lt;KeywordWrapAlphabet.from_largest: 3&gt;), -52.834575011...)]
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def keyword_break(message, wordlist=None, fitness=Pletters,
+                     number_of_solutions=1, chunksize=500):
+    &#34;&#34;&#34;Breaks a keyword substitution cipher using a dictionary and
+    frequency analysis.
+
+    If `wordlist` is not specified, use 
+    [`szyfrow.support.langauge_models.keywords`](support/language_models.html#szyfrow.support.language_models.keywords).
+
+
+    &gt;&gt;&gt; keyword_break_mp(keyword_encipher(&#39;this is a test message for the &#39; \
+          &#39;keyword decipherment&#39;, &#39;elephant&#39;, KeywordWrapAlphabet.from_last), \
+          wordlist=[&#39;cat&#39;, &#39;elephant&#39;, &#39;kangaroo&#39;]) # doctest: +ELLIPSIS
+    ((&#39;elephant&#39;, &lt;KeywordWrapAlphabet.from_last: 2&gt;), -52.834575011...)
+    &gt;&gt;&gt; keyword_break_mp(keyword_encipher(&#39;this is a test message for the &#39; \
+          &#39;keyword decipherment&#39;, &#39;elephant&#39;, KeywordWrapAlphabet.from_last), \
+          wordlist=[&#39;cat&#39;, &#39;elephant&#39;, &#39;kangaroo&#39;], \
+          number_of_solutions=2) # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
+    [((&#39;elephant&#39;, &lt;KeywordWrapAlphabet.from_last: 2&gt;), -52.834575011...), 
+    ((&#39;elephant&#39;, &lt;KeywordWrapAlphabet.from_largest: 3&gt;), -52.834575011...)]
+    &#34;&#34;&#34;
+    if wordlist is None:
+        wordlist = keywords
+
+    with multiprocessing.Pool() as pool:
+        helper_args = [(message, word, wrap, fitness)
+                       for word in wordlist
+                       for wrap in KeywordWrapAlphabet]
+        # Gotcha: the helper function here needs to be defined at the top level
+        #   (limitation of Pool.starmap)
+        breaks = pool.starmap(keyword_break_worker, helper_args, chunksize)
+        if number_of_solutions == 1:
+            return max(breaks, key=lambda k: k[1])
+        else:
+            return sorted(breaks, key=lambda k: k[1], reverse=True)[:number_of_solutions]</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.keyword_cipher.keyword_break_single_thread"><code class="name flex">
+<span>def <span class="ident">keyword_break_single_thread</span></span>(<span>message, wordlist=None, fitness=&lt;function Pletters&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Breaks a keyword substitution cipher using a dictionary and
+frequency analysis.</p>
+<p>If <code>wordlist</code> is not specified, use
+<a href="support/language_models.html#szyfrow.support.language_models.keywords"><code>szyfrow.support.langauge_models.keywords</code></a>.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; keyword_break(keyword_encipher('this is a test message for the '           'keyword decipherment', 'elephant', KeywordWrapAlphabet.from_last),           wordlist=['cat', 'elephant', 'kangaroo']) # doctest: +ELLIPSIS
+(('elephant', &lt;KeywordWrapAlphabet.from_last: 2&gt;), -52.834575011...)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def keyword_break_single_thread(message, wordlist=None, fitness=Pletters):
+    &#34;&#34;&#34;Breaks a keyword substitution cipher using a dictionary and
+    frequency analysis.
+
+    If `wordlist` is not specified, use 
+    [`szyfrow.support.langauge_models.keywords`](support/language_models.html#szyfrow.support.language_models.keywords).
+
+    &gt;&gt;&gt; keyword_break(keyword_encipher(&#39;this is a test message for the &#39; \
+          &#39;keyword decipherment&#39;, &#39;elephant&#39;, KeywordWrapAlphabet.from_last), \
+          wordlist=[&#39;cat&#39;, &#39;elephant&#39;, &#39;kangaroo&#39;]) # doctest: +ELLIPSIS
+    ((&#39;elephant&#39;, &lt;KeywordWrapAlphabet.from_last: 2&gt;), -52.834575011...)
+    &#34;&#34;&#34;
+    if wordlist is None:
+      wordlist = keywords
+
+    best_keyword = &#39;&#39;
+    best_wrap_alphabet = True
+    best_fit = float(&#34;-inf&#34;)
+    for wrap_alphabet in KeywordWrapAlphabet:
+        for keyword in wordlist:
+            plaintext = keyword_decipher(message, keyword, wrap_alphabet)
+            fit = fitness(plaintext)
+            if fit &gt; best_fit:
+                best_fit = fit
+                best_keyword = keyword
+                best_wrap_alphabet = wrap_alphabet
+    return (best_keyword, best_wrap_alphabet), best_fit</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.keyword_cipher.keyword_break_worker"><code class="name flex">
+<span>def <span class="ident">keyword_break_worker</span></span>(<span>message, keyword, wrap_alphabet, fitness)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def keyword_break_worker(message, keyword, wrap_alphabet, fitness):
+    plaintext = keyword_decipher(message, keyword, wrap_alphabet)
+    fit = fitness(plaintext)
+    return (keyword, wrap_alphabet), fit</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.keyword_cipher.keyword_cipher_alphabet_of"><code class="name flex">
+<span>def <span class="ident">keyword_cipher_alphabet_of</span></span>(<span>keyword, wrap_alphabet=KeywordWrapAlphabet.from_a)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Find the cipher alphabet given a keyword.</p>
+<p><a href="#szyfrow.keyword_cipher.KeywordWrapAlphabet"><code>wrap_alphabet</code></a> controls
+how the rest of the alphabet is added after the keyword.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; keyword_cipher_alphabet_of('bayes')
+'bayescdfghijklmnopqrtuvwxz'
+&gt;&gt;&gt; keyword_cipher_alphabet_of('bayes', KeywordWrapAlphabet.from_a)
+'bayescdfghijklmnopqrtuvwxz'
+&gt;&gt;&gt; keyword_cipher_alphabet_of('bayes', KeywordWrapAlphabet.from_last)
+'bayestuvwxzcdfghijklmnopqr'
+&gt;&gt;&gt; keyword_cipher_alphabet_of('bayes', KeywordWrapAlphabet.from_largest)
+'bayeszcdfghijklmnopqrtuvwx'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def keyword_cipher_alphabet_of(keyword, wrap_alphabet=KeywordWrapAlphabet.from_a):
+    &#34;&#34;&#34;Find the cipher alphabet given a keyword.
+
+    [`wrap_alphabet`](#szyfrow.keyword_cipher.KeywordWrapAlphabet) controls 
+    how the rest of the alphabet is added after the keyword.
+
+    &gt;&gt;&gt; keyword_cipher_alphabet_of(&#39;bayes&#39;)
+    &#39;bayescdfghijklmnopqrtuvwxz&#39;
+    &gt;&gt;&gt; keyword_cipher_alphabet_of(&#39;bayes&#39;, KeywordWrapAlphabet.from_a)
+    &#39;bayescdfghijklmnopqrtuvwxz&#39;
+    &gt;&gt;&gt; keyword_cipher_alphabet_of(&#39;bayes&#39;, KeywordWrapAlphabet.from_last)
+    &#39;bayestuvwxzcdfghijklmnopqr&#39;
+    &gt;&gt;&gt; keyword_cipher_alphabet_of(&#39;bayes&#39;, KeywordWrapAlphabet.from_largest)
+    &#39;bayeszcdfghijklmnopqrtuvwx&#39;
+    &#34;&#34;&#34;
+    if wrap_alphabet == KeywordWrapAlphabet.from_a:
+        cipher_alphabet = cat(deduplicate(sanitise(keyword) + 
+                                              string.ascii_lowercase))
+    else:
+        if wrap_alphabet == KeywordWrapAlphabet.from_last:
+            last_keyword_letter = deduplicate(sanitise(keyword))[-1]
+        else:
+            last_keyword_letter = sorted(sanitise(keyword))[-1]
+        last_keyword_position = string.ascii_lowercase.find(
+            last_keyword_letter) + 1
+        cipher_alphabet = cat(
+            deduplicate(sanitise(keyword) + 
+                        string.ascii_lowercase[last_keyword_position:] + 
+                        string.ascii_lowercase))
+    return cipher_alphabet</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.keyword_cipher.keyword_decipher"><code class="name flex">
+<span>def <span class="ident">keyword_decipher</span></span>(<span>message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deciphers a message with a keyword substitution cipher.
+wrap_alphabet controls how the rest of the alphabet is added
+after the keyword.
+0 : from 'a'
+1 : from the last letter in the sanitised keyword
+2 : from the largest letter in the sanitised keyword</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; keyword_decipher('rsqr ksqqbds', 'bayes')
+'test message'
+&gt;&gt;&gt; keyword_decipher('rsqr ksqqbds', 'bayes', KeywordWrapAlphabet.from_a)
+'test message'
+&gt;&gt;&gt; keyword_decipher('lskl dskkbus', 'bayes', KeywordWrapAlphabet.from_last)
+'test message'
+&gt;&gt;&gt; keyword_decipher('qspq jsppbcs', 'bayes', KeywordWrapAlphabet.from_largest)
+'test message'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def keyword_decipher(message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a):
+    &#34;&#34;&#34;Deciphers a message with a keyword substitution cipher.
+    wrap_alphabet controls how the rest of the alphabet is added
+    after the keyword.
+    0 : from &#39;a&#39;
+    1 : from the last letter in the sanitised keyword
+    2 : from the largest letter in the sanitised keyword
+    
+    &gt;&gt;&gt; keyword_decipher(&#39;rsqr ksqqbds&#39;, &#39;bayes&#39;)
+    &#39;test message&#39;
+    &gt;&gt;&gt; keyword_decipher(&#39;rsqr ksqqbds&#39;, &#39;bayes&#39;, KeywordWrapAlphabet.from_a)
+    &#39;test message&#39;
+    &gt;&gt;&gt; keyword_decipher(&#39;lskl dskkbus&#39;, &#39;bayes&#39;, KeywordWrapAlphabet.from_last)
+    &#39;test message&#39;
+    &gt;&gt;&gt; keyword_decipher(&#39;qspq jsppbcs&#39;, &#39;bayes&#39;, KeywordWrapAlphabet.from_largest)
+    &#39;test message&#39;
+    &#34;&#34;&#34;
+    cipher_alphabet = keyword_cipher_alphabet_of(keyword, wrap_alphabet)
+    cipher_translation = &#39;&#39;.maketrans(cipher_alphabet, string.ascii_lowercase)
+    return message.lower().translate(cipher_translation)</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.keyword_cipher.keyword_encipher"><code class="name flex">
+<span>def <span class="ident">keyword_encipher</span></span>(<span>message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enciphers a message with a keyword substitution cipher.
+wrap_alphabet controls how the rest of the alphabet is added
+after the keyword.
+0 : from 'a'
+1 : from the last letter in the sanitised keyword
+2 : from the largest letter in the sanitised keyword</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; keyword_encipher('test message', 'bayes')
+'rsqr ksqqbds'
+&gt;&gt;&gt; keyword_encipher('test message', 'bayes', KeywordWrapAlphabet.from_a)
+'rsqr ksqqbds'
+&gt;&gt;&gt; keyword_encipher('test message', 'bayes', KeywordWrapAlphabet.from_last)
+'lskl dskkbus'
+&gt;&gt;&gt; keyword_encipher('test message', 'bayes', KeywordWrapAlphabet.from_largest)
+'qspq jsppbcs'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def keyword_encipher(message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a):
+    &#34;&#34;&#34;Enciphers a message with a keyword substitution cipher.
+    wrap_alphabet controls how the rest of the alphabet is added
+    after the keyword.
+    0 : from &#39;a&#39;
+    1 : from the last letter in the sanitised keyword
+    2 : from the largest letter in the sanitised keyword
+
+    &gt;&gt;&gt; keyword_encipher(&#39;test message&#39;, &#39;bayes&#39;)
+    &#39;rsqr ksqqbds&#39;
+    &gt;&gt;&gt; keyword_encipher(&#39;test message&#39;, &#39;bayes&#39;, KeywordWrapAlphabet.from_a)
+    &#39;rsqr ksqqbds&#39;
+    &gt;&gt;&gt; keyword_encipher(&#39;test message&#39;, &#39;bayes&#39;, KeywordWrapAlphabet.from_last)
+    &#39;lskl dskkbus&#39;
+    &gt;&gt;&gt; keyword_encipher(&#39;test message&#39;, &#39;bayes&#39;, KeywordWrapAlphabet.from_largest)
+    &#39;qspq jsppbcs&#39;
+    &#34;&#34;&#34;
+    cipher_alphabet = keyword_cipher_alphabet_of(keyword, wrap_alphabet)
+    cipher_translation = &#39;&#39;.maketrans(string.ascii_lowercase, cipher_alphabet)
+    return unaccent(message).lower().translate(cipher_translation)</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.keyword_cipher.lcat"><code class="name flex">
+<span>def <span class="ident">lcat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+<dt id="szyfrow.keyword_cipher.monoalphabetic_break_hillclimbing"><code class="name flex">
+<span>def <span class="ident">monoalphabetic_break_hillclimbing</span></span>(<span>message, workers=10, max_iterations=20000, plain_alphabet=None, cipher_alphabet=None, swap_index_finder=None, fitness=&lt;function Pletters&gt;, chunksize=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Break a monalphabetic substitution cipher using hillclimbing to
+guess the keyword. Hillclimbing is done by using the simulated annealing
+approach with a temperature of zero.</p>
+<p>This version uses a several workers.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def monoalphabetic_break_hillclimbing(message, 
+                              workers=10, 
+                              max_iterations=20000,
+                              plain_alphabet=None, 
+                              cipher_alphabet=None, 
+                              swap_index_finder=None,
+                              fitness=Pletters, chunksize=1):
+    &#34;&#34;&#34;Break a monalphabetic substitution cipher using hillclimbing to
+    guess the keyword. Hillclimbing is done by using the simulated annealing
+    approach with a temperature of zero.
+
+    This version uses a several workers.
+    &#34;&#34;&#34;
+    return monoalphabetic_sa_break(message, 
+                              workers=workers, 
+                              initial_temperature=0,
+                              max_iterations=max_iterations,
+                              plain_alphabet=plain_alphabet, 
+                              cipher_alphabet=cipher_alphabet, 
+                              swap_index_finder=swap_index_finder,
+                              fitness=fitness, chunksize=chunksize)</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.keyword_cipher.monoalphabetic_break_hillclimbing_single"><code class="name flex">
+<span>def <span class="ident">monoalphabetic_break_hillclimbing_single</span></span>(<span>message, max_iterations=20000, plain_alphabet=None, cipher_alphabet=None, swap_index_finder=None, fitness=&lt;function Pletters&gt;, chunksize=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Break a monalphabetic substitution cipher using hillclimbing to
+guess the keyword. Hillclimbing is done by using the simulated annealing
+approach with a temperature of zero.</p>
+<p>This version uses a single worker.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def monoalphabetic_break_hillclimbing_single(message, 
+                              max_iterations=20000,
+                              plain_alphabet=None, 
+                              cipher_alphabet=None, 
+                              swap_index_finder=None,
+                              fitness=Pletters, chunksize=1):
+    &#34;&#34;&#34;Break a monalphabetic substitution cipher using hillclimbing to
+    guess the keyword. Hillclimbing is done by using the simulated annealing
+    approach with a temperature of zero.
+
+    This version uses a single worker.
+    &#34;&#34;&#34;
+    return monoalphabetic_sa_break(message, 
+                              workers=1, 
+                              initial_temperature=0,
+                              max_iterations=max_iterations,
+                              plain_alphabet=plain_alphabet, 
+                              cipher_alphabet=cipher_alphabet, 
+                              swap_index_finder=swap_index_finder,
+                              fitness=fitness, chunksize=chunksize)</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.keyword_cipher.monoalphabetic_sa_break"><code class="name flex">
+<span>def <span class="ident">monoalphabetic_sa_break</span></span>(<span>message, workers=10, initial_temperature=200, max_iterations=20000, plain_alphabet=None, cipher_alphabet=None, swap_index_finder=None, fitness=&lt;function Ptrigrams&gt;, chunksize=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Break a monalphabetic substitution cipher using simulated annealing to
+guess the keyword. This function just sets up a stable of workers who
+do the actual work, implemented as
+<code><a title="szyfrow.keyword_cipher.monoalphabetic_sa_break_worker" href="#szyfrow.keyword_cipher.monoalphabetic_sa_break_worker">monoalphabetic_sa_break_worker()</a></code>.</p>
+<p>See a <a href="https://work.njae.me.uk/2019/07/08/simulated-annealing-and-breaking-substitution-ciphers/">post on simulated annealing</a>
+for detail on how this works.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def monoalphabetic_sa_break(message, workers=10, 
+                              initial_temperature=200,
+                              max_iterations=20000,
+                              plain_alphabet=None, 
+                              cipher_alphabet=None, 
+                              swap_index_finder=None,
+                              fitness=Ptrigrams, chunksize=1):
+    &#34;&#34;&#34;Break a monalphabetic substitution cipher using simulated annealing to
+    guess the keyword. This function just sets up a stable of workers who
+    do the actual work, implemented as 
+    `szyfrow.keyword_cipher.monoalphabetic_sa_break_worker`.
+
+    See a [post on simulated annealing](https://work.njae.me.uk/2019/07/08/simulated-annealing-and-breaking-substitution-ciphers/)
+    for detail on how this works.
+    &#34;&#34;&#34;
+    worker_args = []
+    ciphertext = sanitise(message)
+    if swap_index_finder is None:
+        swap_index_finder = gaussian_swap_index
+        
+    for i in range(workers):
+        if plain_alphabet is None:
+            used_plain_alphabet = string.ascii_lowercase
+        else:
+            used_plain_alphabet = plain_alphabet
+        if cipher_alphabet is None:
+            used_cipher_alphabet = list(string.ascii_lowercase)
+            random.shuffle(used_cipher_alphabet)
+            used_cipher_alphabet = cat(used_cipher_alphabet)
+        else:
+            used_cipher_alphabet = cipher_alphabet
+        # if not plain_alphabet:
+        #     plain_alphabet = string.ascii_lowercase
+        # if not cipher_alphabet:
+        #     cipher_alphabet = list(string.ascii_lowercase)
+        #     random.shuffle(cipher_alphabet)
+        #     cipher_alphabet = cat(cipher_alphabet)
+        worker_args.append((ciphertext, used_plain_alphabet, used_cipher_alphabet, 
+                            swap_index_finder,
+                            initial_temperature, max_iterations, fitness,
+                            i))
+    with multiprocessing.Pool() as pool:
+        breaks = pool.starmap(monoalphabetic_sa_break_worker,
+                              worker_args, chunksize)
+    return max(breaks, key=lambda k: k[1])</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.keyword_cipher.monoalphabetic_sa_break_worker"><code class="name flex">
+<span>def <span class="ident">monoalphabetic_sa_break_worker</span></span>(<span>message, plain_alphabet, cipher_alphabet, swap_index_finder, t0, max_iterations, fitness, logID)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>One thread of a simulated annealing run.
+See a <a href="https://work.njae.me.uk/2019/07/08/simulated-annealing-and-breaking-substitution-ciphers/">post on simulated annealing</a>
+for detail on how this works.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def monoalphabetic_sa_break_worker(message, plain_alphabet, cipher_alphabet, 
+                                     swap_index_finder,
+                                     t0, max_iterations, fitness,
+                                     logID):
+    &#34;&#34;&#34;One thread of a simulated annealing run. 
+    See a [post on simulated annealing](https://work.njae.me.uk/2019/07/08/simulated-annealing-and-breaking-substitution-ciphers/)
+    for detail on how this works.
+    &#34;&#34;&#34;
+    def swap(letters, i, j):
+        if i &gt; j:
+            i, j = j, i
+        if i == j:
+            return letters
+        else:
+            return (letters[:i] + letters[j] + letters[i+1:j] + letters[i] +
+                    letters[j+1:])
+    
+    temperature = t0
+
+    dt = t0 / (0.9 * max_iterations)
+    
+    current_alphabet = cipher_alphabet
+    alphabet = current_alphabet
+    cipher_translation = &#39;&#39;.maketrans(current_alphabet, plain_alphabet)
+    plaintext = message.translate(cipher_translation)
+    current_fitness = fitness(plaintext)
+
+    best_alphabet = current_alphabet
+    best_fitness = current_fitness
+    best_plaintext = plaintext
+    
+    # print(&#39;starting for&#39;, max_iterations)
+    for i in range(max_iterations):
+        swap_a = random.randrange(26)
+        # swap_b = (swap_a + int(random.gauss(0, 4))) % 26
+        swap_b = swap_index_finder(swap_a)
+        alphabet = swap(current_alphabet, swap_a, swap_b)
+        cipher_translation = &#39;&#39;.maketrans(alphabet, plain_alphabet)
+        plaintext = message.translate(cipher_translation)
+        new_fitness = fitness(plaintext)
+        try:
+            sa_chance = math.exp((new_fitness - current_fitness) / temperature)
+        except (OverflowError, ZeroDivisionError):
+            # print(&#39;exception triggered: new_fit {}, current_fit {}, temp {}&#39;.format(new_fitness, current_fitness, temperature))
+            sa_chance = 0
+        if (new_fitness &gt; current_fitness or random.random() &lt; sa_chance):
+            current_fitness = new_fitness
+            current_alphabet = alphabet
+            
+        if current_fitness &gt; best_fitness:
+            best_alphabet = current_alphabet
+            best_fitness = current_fitness
+            best_plaintext = plaintext
+
+        temperature = max(temperature - dt, 0.001)
+
+    return best_alphabet, best_fitness # current_alphabet, current_fitness</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.keyword_cipher.uniform_swap_index"><code class="name flex">
+<span>def <span class="ident">uniform_swap_index</span></span>(<span>a)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return an index to use as the partner of <code>a</code> in a swap. The partners
+are drawn from a uniform distribution.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def uniform_swap_index(a):
+    &#34;&#34;&#34;Return an index to use as the partner of `a` in a swap. The partners
+    are drawn from a uniform distribution.
+    &#34;&#34;&#34;
+    return random.randrange(26)</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.keyword_cipher.wcat"><code class="name flex">
+<span>def <span class="ident">wcat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="szyfrow.keyword_cipher.KeywordWrapAlphabet"><code class="flex name class">
+<span>class <span class="ident">KeywordWrapAlphabet</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ways to list the rest of the alphabet after use of a keyword.</p>
+<ul>
+<li><code>from_a</code> : continue the alphabet from 'a': <code>bayescdfg&hellip;</code></li>
+<li><code>from_last</code>: continue from the last letter of the keyword:
+<code>bayestuvwxyzcdf&hellip;</code></li>
+<li><code>from_largest</code>: continue from the "largest" letter of the keyword:
+<code>bayeszcdfg&hellip;</code></li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class KeywordWrapAlphabet(Enum):
+    &#34;&#34;&#34;Ways to list the rest of the alphabet after use of a keyword.
+
+    * `from_a` : continue the alphabet from &#39;a&#39;: `bayescdfg...`
+    * `from_last`: continue from the last letter of the keyword: 
+        `bayestuvwxyzcdf...`
+    * `from_largest`: continue from the &#34;largest&#34; letter of the keyword:
+        `bayeszcdfg...`
+    &#34;&#34;&#34;
+    from_a = 1
+    from_last = 2
+    from_largest = 3</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="szyfrow.keyword_cipher.KeywordWrapAlphabet.from_a"><code class="name">var <span class="ident">from_a</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="szyfrow.keyword_cipher.KeywordWrapAlphabet.from_largest"><code class="name">var <span class="ident">from_largest</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="szyfrow.keyword_cipher.KeywordWrapAlphabet.from_last"><code class="name">var <span class="ident">from_last</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="szyfrow" href="index.html">szyfrow</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="szyfrow.keyword_cipher.cat" href="#szyfrow.keyword_cipher.cat">cat</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.gaussian_swap_index" href="#szyfrow.keyword_cipher.gaussian_swap_index">gaussian_swap_index</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.keyword_break" href="#szyfrow.keyword_cipher.keyword_break">keyword_break</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.keyword_break_single_thread" href="#szyfrow.keyword_cipher.keyword_break_single_thread">keyword_break_single_thread</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.keyword_break_worker" href="#szyfrow.keyword_cipher.keyword_break_worker">keyword_break_worker</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.keyword_cipher_alphabet_of" href="#szyfrow.keyword_cipher.keyword_cipher_alphabet_of">keyword_cipher_alphabet_of</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.keyword_decipher" href="#szyfrow.keyword_cipher.keyword_decipher">keyword_decipher</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.keyword_encipher" href="#szyfrow.keyword_cipher.keyword_encipher">keyword_encipher</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.lcat" href="#szyfrow.keyword_cipher.lcat">lcat</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.monoalphabetic_break_hillclimbing" href="#szyfrow.keyword_cipher.monoalphabetic_break_hillclimbing">monoalphabetic_break_hillclimbing</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.monoalphabetic_break_hillclimbing_single" href="#szyfrow.keyword_cipher.monoalphabetic_break_hillclimbing_single">monoalphabetic_break_hillclimbing_single</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.monoalphabetic_sa_break" href="#szyfrow.keyword_cipher.monoalphabetic_sa_break">monoalphabetic_sa_break</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.monoalphabetic_sa_break_worker" href="#szyfrow.keyword_cipher.monoalphabetic_sa_break_worker">monoalphabetic_sa_break_worker</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.uniform_swap_index" href="#szyfrow.keyword_cipher.uniform_swap_index">uniform_swap_index</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.wcat" href="#szyfrow.keyword_cipher.wcat">wcat</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="szyfrow.keyword_cipher.KeywordWrapAlphabet" href="#szyfrow.keyword_cipher.KeywordWrapAlphabet">KeywordWrapAlphabet</a></code></h4>
+<ul class="">
+<li><code><a title="szyfrow.keyword_cipher.KeywordWrapAlphabet.from_a" href="#szyfrow.keyword_cipher.KeywordWrapAlphabet.from_a">from_a</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.KeywordWrapAlphabet.from_largest" href="#szyfrow.keyword_cipher.KeywordWrapAlphabet.from_largest">from_largest</a></code></li>
+<li><code><a title="szyfrow.keyword_cipher.KeywordWrapAlphabet.from_last" href="#szyfrow.keyword_cipher.KeywordWrapAlphabet.from_last">from_last</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

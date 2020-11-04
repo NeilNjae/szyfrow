@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>szyfrow.column_transposition API documentation</title>
+<meta name="description" content="Enciphering and deciphering using the [Column transposition cipher](https://en.wikipedia.org/wiki/Bifid_cipher).
+Also attempts to break messages that …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>szyfrow.column_transposition</code></h1>
+</header>
+<section id="section-intro">
+<p>Enciphering and deciphering using the <a href="https://en.wikipedia.org/wiki/Bifid_cipher">Column transposition cipher</a>.
+Also attempts to break messages that use a column transpositon cipher.</p>
+<p>A grid is layed out, with one column for each distinct letter in the keyword.
+The grid is filled by the plaintext, one letter per cell, either in rows or
+columns. The columns are rearranged so the keyword's letters are in alphabetical
+order, then the ciphertext is read from the rearranged grid, either in rows
+or columns. </p>
+<p>The Scytale cipher is a column cipher with an identity transposition, where the
+message is written in rows and read in columns. </p>
+<p>Messages that do not fill the grid are padded with fillvalue. Note that
+<code><a title="szyfrow.support.utilities.pad" href="support/utilities.html#szyfrow.support.utilities.pad">pad()</a></code> allows a callable, so that the message can be
+padded by random letters, for instance by calling
+<code><a title="szyfrow.support.language_models.random_english_letter" href="support/language_models.html#szyfrow.support.language_models.random_english_letter">random_english_letter()</a></code>.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Enciphering and deciphering using the [Column transposition cipher](https://en.wikipedia.org/wiki/Bifid_cipher). 
+Also attempts to break messages that use a column transpositon cipher.
+
+A grid is layed out, with one column for each distinct letter in the keyword.
+The grid is filled by the plaintext, one letter per cell, either in rows or
+columns. The columns are rearranged so the keyword&#39;s letters are in alphabetical
+order, then the ciphertext is read from the rearranged grid, either in rows
+or columns. 
+
+The Scytale cipher is a column cipher with an identity transposition, where the 
+message is written in rows and read in columns. 
+
+Messages that do not fill the grid are padded with fillvalue. Note that 
+`szyfrow.support.utilities.pad` allows a callable, so that the message can be 
+padded by random letters, for instance by calling 
+`szyfrow.support.language_models.random_english_letter`.
+&#34;&#34;&#34;
+
+import math
+import multiprocessing 
+from itertools import chain
+from szyfrow.support.utilities import *
+from szyfrow.support.language_models import *
+
+def column_transposition_encipher(message, keyword, fillvalue=&#39; &#39;, 
+      fillcolumnwise=False,
+      emptycolumnwise=False):
+    &#34;&#34;&#34;Enciphers using the column transposition cipher.
+    Message is padded to allow all rows to be the same length.
+
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcdef&#39;, fillcolumnwise=True)
+    &#39;hlohr eltee &#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcdef&#39;, fillcolumnwise=True, emptycolumnwise=True)
+    &#39;hellothere  &#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcdef&#39;)
+    &#39;hellothere  &#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcde&#39;)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcde&#39;, fillcolumnwise=True, emptycolumnwise=True)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcde&#39;, fillcolumnwise=True, emptycolumnwise=False)
+    &#39;hlohreltee&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcde&#39;, fillcolumnwise=False, emptycolumnwise=True)
+    &#39;htehlelroe&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcde&#39;, fillcolumnwise=False, emptycolumnwise=False)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;clever&#39;, fillcolumnwise=True, emptycolumnwise=True)
+    &#39;heotllrehe&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;clever&#39;, fillcolumnwise=True, emptycolumnwise=False)
+    &#39;holrhetlee&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;clever&#39;, fillcolumnwise=False, emptycolumnwise=True)
+    &#39;htleehoelr&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;clever&#39;, fillcolumnwise=False, emptycolumnwise=False)
+    &#39;hleolteher&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;cleverly&#39;)
+    &#39;hleolthre e &#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;cleverly&#39;, fillvalue=&#39;!&#39;)
+    &#39;hleolthre!e!&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;cleverly&#39;, fillvalue=lambda: &#39;*&#39;)
+    &#39;hleolthre*e*&#39;
+    &#34;&#34;&#34;
+    transpositions = transpositions_of(keyword)
+    message += pad(len(message), len(transpositions), fillvalue)
+    if fillcolumnwise:
+        rows = every_nth(message, len(message) // len(transpositions))
+    else:
+        rows = chunks(message, len(transpositions))
+    transposed = [transpose(r, transpositions) for r in rows]
+    if emptycolumnwise:
+        return combine_every_nth(transposed)
+    else:
+        return cat(chain(*transposed))
+
+def column_transposition_decipher(message, keyword, fillvalue=&#39; &#39;, 
+      fillcolumnwise=False,
+      emptycolumnwise=False):
+    &#34;&#34;&#34;Deciphers using the column transposition cipher.
+    Message is padded to allow all rows to be the same length.
+
+    Note that `fillcolumnwise` and `emptycolumnwise` refer to how the message
+    is enciphered. To decipher a message, the operations are performed as an 
+    inverse-empty, then inverse-transposition, then inverse-fill.
+
+    &gt;&gt;&gt; column_transposition_decipher(&#39;hellothere&#39;, &#39;abcde&#39;, fillcolumnwise=True, emptycolumnwise=True)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_decipher(&#39;hlohreltee&#39;, &#39;abcde&#39;, fillcolumnwise=True, emptycolumnwise=False)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_decipher(&#39;htehlelroe&#39;, &#39;abcde&#39;, fillcolumnwise=False, emptycolumnwise=True)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_decipher(&#39;hellothere&#39;, &#39;abcde&#39;, fillcolumnwise=False, emptycolumnwise=False)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_decipher(&#39;heotllrehe&#39;, &#39;clever&#39;, fillcolumnwise=True, emptycolumnwise=True)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_decipher(&#39;holrhetlee&#39;, &#39;clever&#39;, fillcolumnwise=True, emptycolumnwise=False)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_decipher(&#39;htleehoelr&#39;, &#39;clever&#39;, fillcolumnwise=False, emptycolumnwise=True)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_decipher(&#39;hleolteher&#39;, &#39;clever&#39;, fillcolumnwise=False, emptycolumnwise=False)
+    &#39;hellothere&#39;
+    &#34;&#34;&#34;
+    transpositions = transpositions_of(keyword)
+    message += pad(len(message), len(transpositions), fillvalue)
+    if emptycolumnwise:
+        rows = every_nth(message, len(message) // len(transpositions))
+    else:
+        rows = chunks(message, len(transpositions))
+    untransposed = [untranspose(r, transpositions) for r in rows]
+    if fillcolumnwise:
+        return combine_every_nth(untransposed)
+    else:
+        return cat(chain(*untransposed))
+
+def scytale_encipher(message, rows, fillvalue=&#39; &#39;):
+    &#34;&#34;&#34;Enciphers using the scytale transposition cipher. `rows` is the 
+    circumference of the rod. The message is fitted inot columns so that
+    all rows are used.
+    
+    Message is padded with spaces to allow all rows to be the same length.
+
+    For ease of implementation, the cipher is performed on the transpose
+    of the grid
+
+    &gt;&gt;&gt; scytale_encipher(&#39;thequickbrownfox&#39;, 3)
+    &#39;tcnhkfeboqrxuo iw &#39;
+    &gt;&gt;&gt; scytale_encipher(&#39;thequickbrownfox&#39;, 4)
+    &#39;tubnhirfecooqkwx&#39;
+    &gt;&gt;&gt; scytale_encipher(&#39;thequickbrownfox&#39;, 5)
+    &#39;tubn hirf ecoo qkwx &#39;
+    &gt;&gt;&gt; scytale_encipher(&#39;thequickbrownfox&#39;, 6)
+    &#39;tqcrnxhukof eibwo &#39;
+    &gt;&gt;&gt; scytale_encipher(&#39;thequickbrownfox&#39;, 7)
+    &#39;tqcrnx hukof  eibwo  &#39;
+    &#34;&#34;&#34;
+    # transpositions = [i for i in range(math.ceil(len(message) / rows))]
+    # return column_transposition_encipher(message, transpositions, 
+    #     fillvalue=fillvalue, fillcolumnwise=False, emptycolumnwise=True)
+    transpositions = (i for i in range(rows))
+    return column_transposition_encipher(message, transpositions, 
+        fillvalue=fillvalue, fillcolumnwise=True, emptycolumnwise=False)
+
+def scytale_decipher(message, rows):
+    &#34;&#34;&#34;Deciphers using the scytale transposition cipher.
+    Assumes the message is padded so that all rows are the same length.
+    
+    &gt;&gt;&gt; scytale_decipher(&#39;tcnhkfeboqrxuo iw &#39;, 3)
+    &#39;thequickbrownfox  &#39;
+    &gt;&gt;&gt; scytale_decipher(&#39;tubnhirfecooqkwx&#39;, 4)
+    &#39;thequickbrownfox&#39;
+    &gt;&gt;&gt; scytale_decipher(&#39;tubn hirf ecoo qkwx &#39;, 5)
+    &#39;thequickbrownfox    &#39;
+    &gt;&gt;&gt; scytale_decipher(&#39;tqcrnxhukof eibwo &#39;, 6)
+    &#39;thequickbrownfox  &#39;
+    &gt;&gt;&gt; scytale_decipher(&#39;tqcrnx hukof  eibwo  &#39;, 7)
+    &#39;thequickbrownfox     &#39;
+    &#34;&#34;&#34;
+    # transpositions = [i for i in range(math.ceil(len(message) / rows))]
+    # return column_transposition_decipher(message, transpositions, 
+    #     fillcolumnwise=False, emptycolumnwise=True)
+    transpositions = [i for i in range(rows)]
+    return column_transposition_decipher(message, transpositions, 
+        fillcolumnwise=True, emptycolumnwise=False)
+
+
+def column_transposition_break(message, translist=None,
+                                  fitness=Pbigrams, chunksize=500):
+    &#34;&#34;&#34;Breaks a column transposition cipher using a dictionary and
+    n-gram frequency analysis
+
+    If `translist` is not specified, use 
+    [`szyfrow.support.langauge_models.transpositions`](support/language_models.html#szyfrow.support.language_models.transpositions).
+
+    &gt;&gt;&gt; len(keywords)
+    20
+
+    &gt;&gt;&gt; column_transposition_break(column_transposition_encipher(sanitise( \
+            &#34;It is a truth universally acknowledged, that a single man in \
+             possession of a good fortune, must be in want of a wife. However \
+             little known the feelings or views of such a man may be on his \
+             first entering a neighbourhood, this truth is so well fixed in \
+             the minds of the surrounding families, that he is considered the \
+             rightful property of some one or other of their daughters.&#34;), \
+        &#39;encipher&#39;), \
+        translist={(2, 0, 5, 3, 1, 4, 6): [&#39;encipher&#39;], \
+                   (5, 0, 6, 1, 3, 4, 2): [&#39;fourteen&#39;], \
+                   (6, 1, 0, 4, 5, 3, 2): [&#39;keyword&#39;]}) # doctest: +ELLIPSIS
+    (((2, 0, 5, 3, 1, 4, 6), False, False), -709.4646722...)
+    &gt;&gt;&gt; column_transposition_break(column_transposition_encipher(sanitise( \
+            &#34;It is a truth universally acknowledged, that a single man in \
+             possession of a good fortune, must be in want of a wife. However \
+             little known the feelings or views of such a man may be on his \
+             first entering a neighbourhood, this truth is so well fixed in \
+             the minds of the surrounding families, that he is considered the \
+             rightful property of some one or other of their daughters.&#34;), \
+        &#39;encipher&#39;), \
+        translist={(2, 0, 5, 3, 1, 4, 6): [&#39;encipher&#39;], \
+                   (5, 0, 6, 1, 3, 4, 2): [&#39;fourteen&#39;], \
+                   (6, 1, 0, 4, 5, 3, 2): [&#39;keyword&#39;]}, \
+        fitness=Ptrigrams) # doctest: +ELLIPSIS
+    (((2, 0, 5, 3, 1, 4, 6), False, False), -997.0129085...)
+    &#34;&#34;&#34;
+    if translist is None:
+        translist = transpositions
+
+    with multiprocessing.Pool() as pool:
+        helper_args = [(message, trans, fillcolumnwise, emptycolumnwise,
+                        fitness)
+                       for trans in translist
+                       for fillcolumnwise in [True, False]
+                       for emptycolumnwise in [True, False]]
+        # Gotcha: the helper function here needs to be defined at the top level
+        #   (limitation of Pool.starmap)
+        breaks = pool.starmap(column_transposition_break_worker,
+                              helper_args, chunksize) 
+        return max(breaks, key=lambda k: k[1])
+
+def column_transposition_break_worker(message, transposition,
+        fillcolumnwise, emptycolumnwise, fitness):
+    plaintext = column_transposition_decipher(message, transposition,
+        fillcolumnwise=fillcolumnwise, emptycolumnwise=emptycolumnwise)
+    fit = fitness(sanitise(plaintext))
+    return (transposition, fillcolumnwise, emptycolumnwise), fit
+
+
+def scytale_break(message, max_key_length=20,
+                     fitness=Pbigrams, chunksize=500):
+    &#34;&#34;&#34;Breaks a scytale cipher using a range of lengths and
+    n-gram frequency analysis
+
+    &gt;&gt;&gt; scytale_break(scytale_encipher(sanitise( \
+            &#34;It is a truth universally acknowledged, that a single man in \
+             possession of a good fortune, must be in want of a wife. However \
+             little known the feelings or views of such a man may be on his \
+             first entering a neighbourhood, this truth is so well fixed in \
+             the minds of the surrounding families, that he is considered the \
+             rightful property of some one or other of their daughters.&#34;), \
+        5)) # doctest: +ELLIPSIS
+    (5, -709.4646722...)
+    &gt;&gt;&gt; scytale_break(scytale_encipher(sanitise( \
+            &#34;It is a truth universally acknowledged, that a single man in \
+             possession of a good fortune, must be in want of a wife. However \
+             little known the feelings or views of such a man may be on his \
+             first entering a neighbourhood, this truth is so well fixed in \
+             the minds of the surrounding families, that he is considered the \
+             rightful property of some one or other of their daughters.&#34;), \
+        5), \
+        fitness=Ptrigrams) # doctest: +ELLIPSIS
+    (5, -997.0129085...)
+    &#34;&#34;&#34;
+    with multiprocessing.Pool() as pool:
+        helper_args = [(message, trans, False, True, fitness)
+            for trans in
+                [[col for col in range(math.ceil(len(message)/rows))]
+                    for rows in range(1,max_key_length+1)]]
+        # Gotcha: the helper function here needs to be defined at the top level
+        #   (limitation of Pool.starmap)
+        breaks = pool.starmap(column_transposition_break_worker,
+                              helper_args, chunksize)
+        best = max(breaks, key=lambda k: k[1])
+        return math.trunc(len(message) / len(best[0][0])), best[1]
+
+if __name__ == &#34;__main__&#34;:
+    import doctest</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="szyfrow.column_transposition.cat"><code class="name flex">
+<span>def <span class="ident">cat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+<dt id="szyfrow.column_transposition.column_transposition_break"><code class="name flex">
+<span>def <span class="ident">column_transposition_break</span></span>(<span>message, translist=None, fitness=&lt;function Pbigrams&gt;, chunksize=500)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Breaks a column transposition cipher using a dictionary and
+n-gram frequency analysis</p>
+<p>If <code>translist</code> is not specified, use
+<a href="support/language_models.html#szyfrow.support.language_models.transpositions"><code>szyfrow.support.langauge_models.transpositions</code></a>.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; len(keywords)
+20
+</code></pre>
+<pre><code class="language-python-repl">&gt;&gt;&gt; column_transposition_break(column_transposition_encipher(sanitise(             &quot;It is a truth universally acknowledged, that a single man in              possession of a good fortune, must be in want of a wife. However              little known the feelings or views of such a man may be on his              first entering a neighbourhood, this truth is so well fixed in              the minds of the surrounding families, that he is considered the              rightful property of some one or other of their daughters.&quot;),         'encipher'),         translist={(2, 0, 5, 3, 1, 4, 6): ['encipher'],                    (5, 0, 6, 1, 3, 4, 2): ['fourteen'],                    (6, 1, 0, 4, 5, 3, 2): ['keyword']}) # doctest: +ELLIPSIS
+(((2, 0, 5, 3, 1, 4, 6), False, False), -709.4646722...)
+&gt;&gt;&gt; column_transposition_break(column_transposition_encipher(sanitise(             &quot;It is a truth universally acknowledged, that a single man in              possession of a good fortune, must be in want of a wife. However              little known the feelings or views of such a man may be on his              first entering a neighbourhood, this truth is so well fixed in              the minds of the surrounding families, that he is considered the              rightful property of some one or other of their daughters.&quot;),         'encipher'),         translist={(2, 0, 5, 3, 1, 4, 6): ['encipher'],                    (5, 0, 6, 1, 3, 4, 2): ['fourteen'],                    (6, 1, 0, 4, 5, 3, 2): ['keyword']},         fitness=Ptrigrams) # doctest: +ELLIPSIS
+(((2, 0, 5, 3, 1, 4, 6), False, False), -997.0129085...)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def column_transposition_break(message, translist=None,
+                                  fitness=Pbigrams, chunksize=500):
+    &#34;&#34;&#34;Breaks a column transposition cipher using a dictionary and
+    n-gram frequency analysis
+
+    If `translist` is not specified, use 
+    [`szyfrow.support.langauge_models.transpositions`](support/language_models.html#szyfrow.support.language_models.transpositions).
+
+    &gt;&gt;&gt; len(keywords)
+    20
+
+    &gt;&gt;&gt; column_transposition_break(column_transposition_encipher(sanitise( \
+            &#34;It is a truth universally acknowledged, that a single man in \
+             possession of a good fortune, must be in want of a wife. However \
+             little known the feelings or views of such a man may be on his \
+             first entering a neighbourhood, this truth is so well fixed in \
+             the minds of the surrounding families, that he is considered the \
+             rightful property of some one or other of their daughters.&#34;), \
+        &#39;encipher&#39;), \
+        translist={(2, 0, 5, 3, 1, 4, 6): [&#39;encipher&#39;], \
+                   (5, 0, 6, 1, 3, 4, 2): [&#39;fourteen&#39;], \
+                   (6, 1, 0, 4, 5, 3, 2): [&#39;keyword&#39;]}) # doctest: +ELLIPSIS
+    (((2, 0, 5, 3, 1, 4, 6), False, False), -709.4646722...)
+    &gt;&gt;&gt; column_transposition_break(column_transposition_encipher(sanitise( \
+            &#34;It is a truth universally acknowledged, that a single man in \
+             possession of a good fortune, must be in want of a wife. However \
+             little known the feelings or views of such a man may be on his \
+             first entering a neighbourhood, this truth is so well fixed in \
+             the minds of the surrounding families, that he is considered the \
+             rightful property of some one or other of their daughters.&#34;), \
+        &#39;encipher&#39;), \
+        translist={(2, 0, 5, 3, 1, 4, 6): [&#39;encipher&#39;], \
+                   (5, 0, 6, 1, 3, 4, 2): [&#39;fourteen&#39;], \
+                   (6, 1, 0, 4, 5, 3, 2): [&#39;keyword&#39;]}, \
+        fitness=Ptrigrams) # doctest: +ELLIPSIS
+    (((2, 0, 5, 3, 1, 4, 6), False, False), -997.0129085...)
+    &#34;&#34;&#34;
+    if translist is None:
+        translist = transpositions
+
+    with multiprocessing.Pool() as pool:
+        helper_args = [(message, trans, fillcolumnwise, emptycolumnwise,
+                        fitness)
+                       for trans in translist
+                       for fillcolumnwise in [True, False]
+                       for emptycolumnwise in [True, False]]
+        # Gotcha: the helper function here needs to be defined at the top level
+        #   (limitation of Pool.starmap)
+        breaks = pool.starmap(column_transposition_break_worker,
+                              helper_args, chunksize) 
+        return max(breaks, key=lambda k: k[1])</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.column_transposition.column_transposition_break_worker"><code class="name flex">
+<span>def <span class="ident">column_transposition_break_worker</span></span>(<span>message, transposition, fillcolumnwise, emptycolumnwise, fitness)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def column_transposition_break_worker(message, transposition,
+        fillcolumnwise, emptycolumnwise, fitness):
+    plaintext = column_transposition_decipher(message, transposition,
+        fillcolumnwise=fillcolumnwise, emptycolumnwise=emptycolumnwise)
+    fit = fitness(sanitise(plaintext))
+    return (transposition, fillcolumnwise, emptycolumnwise), fit</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.column_transposition.column_transposition_decipher"><code class="name flex">
+<span>def <span class="ident">column_transposition_decipher</span></span>(<span>message, keyword, fillvalue=' ', fillcolumnwise=False, emptycolumnwise=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deciphers using the column transposition cipher.
+Message is padded to allow all rows to be the same length.</p>
+<p>Note that <code>fillcolumnwise</code> and <code>emptycolumnwise</code> refer to how the message
+is enciphered. To decipher a message, the operations are performed as an
+inverse-empty, then inverse-transposition, then inverse-fill.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; column_transposition_decipher('hellothere', 'abcde', fillcolumnwise=True, emptycolumnwise=True)
+'hellothere'
+&gt;&gt;&gt; column_transposition_decipher('hlohreltee', 'abcde', fillcolumnwise=True, emptycolumnwise=False)
+'hellothere'
+&gt;&gt;&gt; column_transposition_decipher('htehlelroe', 'abcde', fillcolumnwise=False, emptycolumnwise=True)
+'hellothere'
+&gt;&gt;&gt; column_transposition_decipher('hellothere', 'abcde', fillcolumnwise=False, emptycolumnwise=False)
+'hellothere'
+&gt;&gt;&gt; column_transposition_decipher('heotllrehe', 'clever', fillcolumnwise=True, emptycolumnwise=True)
+'hellothere'
+&gt;&gt;&gt; column_transposition_decipher('holrhetlee', 'clever', fillcolumnwise=True, emptycolumnwise=False)
+'hellothere'
+&gt;&gt;&gt; column_transposition_decipher('htleehoelr', 'clever', fillcolumnwise=False, emptycolumnwise=True)
+'hellothere'
+&gt;&gt;&gt; column_transposition_decipher('hleolteher', 'clever', fillcolumnwise=False, emptycolumnwise=False)
+'hellothere'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def column_transposition_decipher(message, keyword, fillvalue=&#39; &#39;, 
+      fillcolumnwise=False,
+      emptycolumnwise=False):
+    &#34;&#34;&#34;Deciphers using the column transposition cipher.
+    Message is padded to allow all rows to be the same length.
+
+    Note that `fillcolumnwise` and `emptycolumnwise` refer to how the message
+    is enciphered. To decipher a message, the operations are performed as an 
+    inverse-empty, then inverse-transposition, then inverse-fill.
+
+    &gt;&gt;&gt; column_transposition_decipher(&#39;hellothere&#39;, &#39;abcde&#39;, fillcolumnwise=True, emptycolumnwise=True)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_decipher(&#39;hlohreltee&#39;, &#39;abcde&#39;, fillcolumnwise=True, emptycolumnwise=False)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_decipher(&#39;htehlelroe&#39;, &#39;abcde&#39;, fillcolumnwise=False, emptycolumnwise=True)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_decipher(&#39;hellothere&#39;, &#39;abcde&#39;, fillcolumnwise=False, emptycolumnwise=False)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_decipher(&#39;heotllrehe&#39;, &#39;clever&#39;, fillcolumnwise=True, emptycolumnwise=True)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_decipher(&#39;holrhetlee&#39;, &#39;clever&#39;, fillcolumnwise=True, emptycolumnwise=False)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_decipher(&#39;htleehoelr&#39;, &#39;clever&#39;, fillcolumnwise=False, emptycolumnwise=True)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_decipher(&#39;hleolteher&#39;, &#39;clever&#39;, fillcolumnwise=False, emptycolumnwise=False)
+    &#39;hellothere&#39;
+    &#34;&#34;&#34;
+    transpositions = transpositions_of(keyword)
+    message += pad(len(message), len(transpositions), fillvalue)
+    if emptycolumnwise:
+        rows = every_nth(message, len(message) // len(transpositions))
+    else:
+        rows = chunks(message, len(transpositions))
+    untransposed = [untranspose(r, transpositions) for r in rows]
+    if fillcolumnwise:
+        return combine_every_nth(untransposed)
+    else:
+        return cat(chain(*untransposed))</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.column_transposition.column_transposition_encipher"><code class="name flex">
+<span>def <span class="ident">column_transposition_encipher</span></span>(<span>message, keyword, fillvalue=' ', fillcolumnwise=False, emptycolumnwise=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enciphers using the column transposition cipher.
+Message is padded to allow all rows to be the same length.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; column_transposition_encipher('hellothere', 'abcdef', fillcolumnwise=True)
+'hlohr eltee '
+&gt;&gt;&gt; column_transposition_encipher('hellothere', 'abcdef', fillcolumnwise=True, emptycolumnwise=True)
+'hellothere  '
+&gt;&gt;&gt; column_transposition_encipher('hellothere', 'abcdef')
+'hellothere  '
+&gt;&gt;&gt; column_transposition_encipher('hellothere', 'abcde')
+'hellothere'
+&gt;&gt;&gt; column_transposition_encipher('hellothere', 'abcde', fillcolumnwise=True, emptycolumnwise=True)
+'hellothere'
+&gt;&gt;&gt; column_transposition_encipher('hellothere', 'abcde', fillcolumnwise=True, emptycolumnwise=False)
+'hlohreltee'
+&gt;&gt;&gt; column_transposition_encipher('hellothere', 'abcde', fillcolumnwise=False, emptycolumnwise=True)
+'htehlelroe'
+&gt;&gt;&gt; column_transposition_encipher('hellothere', 'abcde', fillcolumnwise=False, emptycolumnwise=False)
+'hellothere'
+&gt;&gt;&gt; column_transposition_encipher('hellothere', 'clever', fillcolumnwise=True, emptycolumnwise=True)
+'heotllrehe'
+&gt;&gt;&gt; column_transposition_encipher('hellothere', 'clever', fillcolumnwise=True, emptycolumnwise=False)
+'holrhetlee'
+&gt;&gt;&gt; column_transposition_encipher('hellothere', 'clever', fillcolumnwise=False, emptycolumnwise=True)
+'htleehoelr'
+&gt;&gt;&gt; column_transposition_encipher('hellothere', 'clever', fillcolumnwise=False, emptycolumnwise=False)
+'hleolteher'
+&gt;&gt;&gt; column_transposition_encipher('hellothere', 'cleverly')
+'hleolthre e '
+&gt;&gt;&gt; column_transposition_encipher('hellothere', 'cleverly', fillvalue='!')
+'hleolthre!e!'
+&gt;&gt;&gt; column_transposition_encipher('hellothere', 'cleverly', fillvalue=lambda: '*')
+'hleolthre*e*'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def column_transposition_encipher(message, keyword, fillvalue=&#39; &#39;, 
+      fillcolumnwise=False,
+      emptycolumnwise=False):
+    &#34;&#34;&#34;Enciphers using the column transposition cipher.
+    Message is padded to allow all rows to be the same length.
+
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcdef&#39;, fillcolumnwise=True)
+    &#39;hlohr eltee &#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcdef&#39;, fillcolumnwise=True, emptycolumnwise=True)
+    &#39;hellothere  &#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcdef&#39;)
+    &#39;hellothere  &#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcde&#39;)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcde&#39;, fillcolumnwise=True, emptycolumnwise=True)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcde&#39;, fillcolumnwise=True, emptycolumnwise=False)
+    &#39;hlohreltee&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcde&#39;, fillcolumnwise=False, emptycolumnwise=True)
+    &#39;htehlelroe&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;abcde&#39;, fillcolumnwise=False, emptycolumnwise=False)
+    &#39;hellothere&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;clever&#39;, fillcolumnwise=True, emptycolumnwise=True)
+    &#39;heotllrehe&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;clever&#39;, fillcolumnwise=True, emptycolumnwise=False)
+    &#39;holrhetlee&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;clever&#39;, fillcolumnwise=False, emptycolumnwise=True)
+    &#39;htleehoelr&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;clever&#39;, fillcolumnwise=False, emptycolumnwise=False)
+    &#39;hleolteher&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;cleverly&#39;)
+    &#39;hleolthre e &#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;cleverly&#39;, fillvalue=&#39;!&#39;)
+    &#39;hleolthre!e!&#39;
+    &gt;&gt;&gt; column_transposition_encipher(&#39;hellothere&#39;, &#39;cleverly&#39;, fillvalue=lambda: &#39;*&#39;)
+    &#39;hleolthre*e*&#39;
+    &#34;&#34;&#34;
+    transpositions = transpositions_of(keyword)
+    message += pad(len(message), len(transpositions), fillvalue)
+    if fillcolumnwise:
+        rows = every_nth(message, len(message) // len(transpositions))
+    else:
+        rows = chunks(message, len(transpositions))
+    transposed = [transpose(r, transpositions) for r in rows]
+    if emptycolumnwise:
+        return combine_every_nth(transposed)
+    else:
+        return cat(chain(*transposed))</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.column_transposition.lcat"><code class="name flex">
+<span>def <span class="ident">lcat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+<dt id="szyfrow.column_transposition.scytale_break"><code class="name flex">
+<span>def <span class="ident">scytale_break</span></span>(<span>message, max_key_length=20, fitness=&lt;function Pbigrams&gt;, chunksize=500)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Breaks a scytale cipher using a range of lengths and
+n-gram frequency analysis</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; scytale_break(scytale_encipher(sanitise(             &quot;It is a truth universally acknowledged, that a single man in              possession of a good fortune, must be in want of a wife. However              little known the feelings or views of such a man may be on his              first entering a neighbourhood, this truth is so well fixed in              the minds of the surrounding families, that he is considered the              rightful property of some one or other of their daughters.&quot;),         5)) # doctest: +ELLIPSIS
+(5, -709.4646722...)
+&gt;&gt;&gt; scytale_break(scytale_encipher(sanitise(             &quot;It is a truth universally acknowledged, that a single man in              possession of a good fortune, must be in want of a wife. However              little known the feelings or views of such a man may be on his              first entering a neighbourhood, this truth is so well fixed in              the minds of the surrounding families, that he is considered the              rightful property of some one or other of their daughters.&quot;),         5),         fitness=Ptrigrams) # doctest: +ELLIPSIS
+(5, -997.0129085...)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def scytale_break(message, max_key_length=20,
+                     fitness=Pbigrams, chunksize=500):
+    &#34;&#34;&#34;Breaks a scytale cipher using a range of lengths and
+    n-gram frequency analysis
+
+    &gt;&gt;&gt; scytale_break(scytale_encipher(sanitise( \
+            &#34;It is a truth universally acknowledged, that a single man in \
+             possession of a good fortune, must be in want of a wife. However \
+             little known the feelings or views of such a man may be on his \
+             first entering a neighbourhood, this truth is so well fixed in \
+             the minds of the surrounding families, that he is considered the \
+             rightful property of some one or other of their daughters.&#34;), \
+        5)) # doctest: +ELLIPSIS
+    (5, -709.4646722...)
+    &gt;&gt;&gt; scytale_break(scytale_encipher(sanitise( \
+            &#34;It is a truth universally acknowledged, that a single man in \
+             possession of a good fortune, must be in want of a wife. However \
+             little known the feelings or views of such a man may be on his \
+             first entering a neighbourhood, this truth is so well fixed in \
+             the minds of the surrounding families, that he is considered the \
+             rightful property of some one or other of their daughters.&#34;), \
+        5), \
+        fitness=Ptrigrams) # doctest: +ELLIPSIS
+    (5, -997.0129085...)
+    &#34;&#34;&#34;
+    with multiprocessing.Pool() as pool:
+        helper_args = [(message, trans, False, True, fitness)
+            for trans in
+                [[col for col in range(math.ceil(len(message)/rows))]
+                    for rows in range(1,max_key_length+1)]]
+        # Gotcha: the helper function here needs to be defined at the top level
+        #   (limitation of Pool.starmap)
+        breaks = pool.starmap(column_transposition_break_worker,
+                              helper_args, chunksize)
+        best = max(breaks, key=lambda k: k[1])
+        return math.trunc(len(message) / len(best[0][0])), best[1]</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.column_transposition.scytale_decipher"><code class="name flex">
+<span>def <span class="ident">scytale_decipher</span></span>(<span>message, rows)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deciphers using the scytale transposition cipher.
+Assumes the message is padded so that all rows are the same length.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; scytale_decipher('tcnhkfeboqrxuo iw ', 3)
+'thequickbrownfox  '
+&gt;&gt;&gt; scytale_decipher('tubnhirfecooqkwx', 4)
+'thequickbrownfox'
+&gt;&gt;&gt; scytale_decipher('tubn hirf ecoo qkwx ', 5)
+'thequickbrownfox    '
+&gt;&gt;&gt; scytale_decipher('tqcrnxhukof eibwo ', 6)
+'thequickbrownfox  '
+&gt;&gt;&gt; scytale_decipher('tqcrnx hukof  eibwo  ', 7)
+'thequickbrownfox     '
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def scytale_decipher(message, rows):
+    &#34;&#34;&#34;Deciphers using the scytale transposition cipher.
+    Assumes the message is padded so that all rows are the same length.
+    
+    &gt;&gt;&gt; scytale_decipher(&#39;tcnhkfeboqrxuo iw &#39;, 3)
+    &#39;thequickbrownfox  &#39;
+    &gt;&gt;&gt; scytale_decipher(&#39;tubnhirfecooqkwx&#39;, 4)
+    &#39;thequickbrownfox&#39;
+    &gt;&gt;&gt; scytale_decipher(&#39;tubn hirf ecoo qkwx &#39;, 5)
+    &#39;thequickbrownfox    &#39;
+    &gt;&gt;&gt; scytale_decipher(&#39;tqcrnxhukof eibwo &#39;, 6)
+    &#39;thequickbrownfox  &#39;
+    &gt;&gt;&gt; scytale_decipher(&#39;tqcrnx hukof  eibwo  &#39;, 7)
+    &#39;thequickbrownfox     &#39;
+    &#34;&#34;&#34;
+    # transpositions = [i for i in range(math.ceil(len(message) / rows))]
+    # return column_transposition_decipher(message, transpositions, 
+    #     fillcolumnwise=False, emptycolumnwise=True)
+    transpositions = [i for i in range(rows)]
+    return column_transposition_decipher(message, transpositions, 
+        fillcolumnwise=True, emptycolumnwise=False)</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.column_transposition.scytale_encipher"><code class="name flex">
+<span>def <span class="ident">scytale_encipher</span></span>(<span>message, rows, fillvalue=' ')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enciphers using the scytale transposition cipher. <code>rows</code> is the
+circumference of the rod. The message is fitted inot columns so that
+all rows are used.</p>
+<p>Message is padded with spaces to allow all rows to be the same length.</p>
+<p>For ease of implementation, the cipher is performed on the transpose
+of the grid</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; scytale_encipher('thequickbrownfox', 3)
+'tcnhkfeboqrxuo iw '
+&gt;&gt;&gt; scytale_encipher('thequickbrownfox', 4)
+'tubnhirfecooqkwx'
+&gt;&gt;&gt; scytale_encipher('thequickbrownfox', 5)
+'tubn hirf ecoo qkwx '
+&gt;&gt;&gt; scytale_encipher('thequickbrownfox', 6)
+'tqcrnxhukof eibwo '
+&gt;&gt;&gt; scytale_encipher('thequickbrownfox', 7)
+'tqcrnx hukof  eibwo  '
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def scytale_encipher(message, rows, fillvalue=&#39; &#39;):
+    &#34;&#34;&#34;Enciphers using the scytale transposition cipher. `rows` is the 
+    circumference of the rod. The message is fitted inot columns so that
+    all rows are used.
+    
+    Message is padded with spaces to allow all rows to be the same length.
+
+    For ease of implementation, the cipher is performed on the transpose
+    of the grid
+
+    &gt;&gt;&gt; scytale_encipher(&#39;thequickbrownfox&#39;, 3)
+    &#39;tcnhkfeboqrxuo iw &#39;
+    &gt;&gt;&gt; scytale_encipher(&#39;thequickbrownfox&#39;, 4)
+    &#39;tubnhirfecooqkwx&#39;
+    &gt;&gt;&gt; scytale_encipher(&#39;thequickbrownfox&#39;, 5)
+    &#39;tubn hirf ecoo qkwx &#39;
+    &gt;&gt;&gt; scytale_encipher(&#39;thequickbrownfox&#39;, 6)
+    &#39;tqcrnxhukof eibwo &#39;
+    &gt;&gt;&gt; scytale_encipher(&#39;thequickbrownfox&#39;, 7)
+    &#39;tqcrnx hukof  eibwo  &#39;
+    &#34;&#34;&#34;
+    # transpositions = [i for i in range(math.ceil(len(message) / rows))]
+    # return column_transposition_encipher(message, transpositions, 
+    #     fillvalue=fillvalue, fillcolumnwise=False, emptycolumnwise=True)
+    transpositions = (i for i in range(rows))
+    return column_transposition_encipher(message, transpositions, 
+        fillvalue=fillvalue, fillcolumnwise=True, emptycolumnwise=False)</code></pre>
+</details>
+</dd>
+<dt id="szyfrow.column_transposition.wcat"><code class="name flex">
+<span>def <span class="ident">wcat</span></span>(<span>iterable, /)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="szyfrow" href="index.html">szyfrow</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="szyfrow.column_transposition.cat" href="#szyfrow.column_transposition.cat">cat</a></code></li>
+<li><code><a title="szyfrow.column_transposition.column_transposition_break" href="#szyfrow.column_transposition.column_transposition_break">column_transposition_break</a></code></li>
+<li><code><a title="szyfrow.column_transposition.column_transposition_break_worker" href="#szyfrow.column_transposition.column_transposition_break_worker">column_transposition_break_worker</a></code></li>
+<li><code><a title="szyfrow.column_transposition.column_transposition_decipher" href="#szyfrow.column_transposition.column_transposition_decipher">column_transposition_decipher</a></code></li>
+<li><code><a title="szyfrow.column_transposition.column_transposition_encipher" href="#szyfrow.column_transposition.column_transposition_encipher">column_transposition_encipher</a></code></li>
+<li><code><a title="szyfrow.column_transposition.lcat" href="#szyfrow.column_transposition.lcat">lcat</a></code></li>
+<li><code><a title="szyfrow.column_transposition.scytale_break" href="#szyfrow.column_transposition.scytale_break">scytale_break</a></code></li>
+<li><code><a title="szyfrow.column_transposition.scytale_decipher" href="#szyfrow.column_transposition.scytale_decipher">scytale_decipher</a></code></li>
+<li><code><a title="szyfrow.column_transposition.scytale_encipher" href="#szyfrow.column_transposition.scytale_encipher">scytale_encipher</a></code></li>
+<li><code><a title="szyfrow.column_transposition.wcat" href="#szyfrow.column_transposition.wcat">wcat</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

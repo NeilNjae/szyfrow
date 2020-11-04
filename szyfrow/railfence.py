@@ -1,3 +1,19 @@
+"""[Railfence transposition cipher](https://en.wikipedia.org/wiki/Rail_fence_cipher).
+
+Works by splitting the text into sections, then reading across them to
+generate the rows in the cipher. The rows are then combined to form the
+ciphertext.
+
+Example: the plaintext "hellotherefriends", with a height of four, written 
+out in the railfence as 
+   h h i
+   etere*
+   lorfns
+   l e d
+(with the * showing the one character to finish the last section). 
+Each 'section' is two columns, but unfolded. In the example, the first
+section is 'hellot'.
+"""
 import math
 from enum import Enum
 from itertools import starmap, zip_longest

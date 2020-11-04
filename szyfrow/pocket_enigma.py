@@ -1,3 +1,8 @@
+"""The Pocket Enigma machine, a simple example that illustrates the mechanisms
+of the Enigma machine. See [a review](http://www.savory.de/pocket_enigma.htm)
+for more information about the machine.
+"""
+
 from szyfrow.support.utilities import *
 from szyfrow.support.language_models import *
 

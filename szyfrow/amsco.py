@@ -1,17 +1,55 @@
+"""Enciphering and deciphering using the [Amsco cipher](http://ericbrandel.com/2016/10/09/the-amsco-cipher/). 
+Also attempts to break messages that use an Amsco cipher.
+
+The Amsco cipher is a column transpositoin cipher. The plaintext is laid out, 
+row by row, into columns. However, different numbers of letters are laid out
+in each cell, typically in a 1-2 pattern.
+
+It's clearer with an example. Consider we're using the keyword "perceptive", 
+which turns into "perctiv". The text ""It is a truth universally 
+acknowledged, that a single man in, possession of a good fortune, must be in 
+want of a wife." is laid out in seven columns like this:
+
+    p  e  r  c  t  i  v
+    --------------------
+    i  ti s  at r  ut h 
+    un i  ve r  sa l  ly 
+    a  ck n  ow l  ed g 
+    ed t  ha t  as i  ng 
+    l  em a  ni n  po s 
+    se s  si o  no f  ag 
+    o  od f  or t  un e 
+    mu s  tb e  in w  an 
+    t  of a  wi f  e
+
+The ciphertext is read out in columns, according to the order of the keyword.
+In this example, the "c" column is read first, then the "e" column, and so on.
+That gives the ciphertext of "atrowtnioorewi tiicktemsodsof utledipofunwe 
+iunaedlseomut svenhaasiftba rsalasnnotinf hlygngsagean".
+"""
+
 from enum import Enum
 import multiprocessing 
 import itertools
 
 from szyfrow.support.utilities import *
 from szyfrow.support.language_models import *
-# from szyfrow.column_transposition import transpositions, transpositions_of
 
-# Where each piece of text ends up in the AMSCO transpositon cipher.
-# 'index' shows where the slice appears in the plaintext, with the slice
-# from 'start' to 'end'
+__pdoc__ = {}
+
 AmscoSlice = collections.namedtuple('AmscoSlice', ['index', 'start', 'end'])
+__pdoc__['AmscoSlice'] = """Where each piece of plainatext ends up in the AMSCO 
+transpositon cipher."""
+__pdoc__['AmscoSlice.index'] = """Where the slice appears in the plaintext"""
+__pdoc__['AmscoSlice.start'] = """Where the slice starts in the plaintext"""
+__pdoc__['AmscoSlice.end'] = """Where the slice ends in the plaintext"""
 
 class AmscoFillStyle(Enum):
+    """Different methods of filling the grid.
+    * `continuous`: continue the fillpattern unbroken by row boundaries
+    * `same_each_row`: each row has the same fillpattern
+    * `reverse_each_row`: each row has the reversed fillpattern to the row above
+    """
     continuous = 1
     same_each_row = 2
     reverse_each_row = 3
@@ -140,14 +178,17 @@ def amsco_decipher(message, keyword,
     return cat(plaintext_list)
 
 
-def amsco_break(message, translist=transpositions, patterns = [(1, 2), (2, 1)],
+def amsco_break(message, translist=None, patterns = [(1, 2), (2, 1)],
                                   fillstyles = [AmscoFillStyle.continuous, 
                                                 AmscoFillStyle.same_each_row, 
                                                 AmscoFillStyle.reverse_each_row],
                                   fitness=Pbigrams, 
                                   chunksize=500):
     """Breaks an AMSCO transposition cipher using a dictionary and
-    n-gram frequency analysis
+    n-gram frequency analysis.
+
+    If `translist` is not specified, use 
+    [`szyfrow.support.langauge_models.transpositions`](support/language_models.html#szyfrow.support.language_models.transpositions).
 
     >>> amsco_break(amsco_encipher(sanitise( \
             "It is a truth universally acknowledged, that a single man in \
@@ -176,6 +217,9 @@ def amsco_break(message, translist=transpositions, patterns = [(1, 2), (2, 1)],
         patterns=[(1, 2), (2, 1)], fitness=Ptrigrams) # doctest: +ELLIPSIS
     (((2, 0, 5, 3, 1, 4, 6), (2, 1), <AmscoFillStyle.continuous: 1>), -997.0129085...)
     """
+    if translist is None:
+        translist = transpositions
+    
     with multiprocessing.Pool() as pool:
         helper_args = [(message, trans, pattern, fillstyle, fitness)
                        for trans in translist
