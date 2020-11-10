@@ -4,44 +4,51 @@ from itertools import chain
 from szyfrow.support.utilities import *
 from szyfrow.support.language_models import *
 
-def transpositions_of(keyword):
-    """Finds the transpostions given by a keyword. For instance, the keyword
-    'clever' rearranges to 'celrv', so the first column (0) stays first, the
-    second column (1) moves to third, the third column (2) moves to second, 
-    and so on.
+# def transpositions_of(keyword):
+#     """Finds the transpostions given by a keyword. For instance, the keyword
+#     'clever' rearranges to 'celrv', so the first column (0) stays first, the
+#     second column (1) moves to third, the third column (2) moves to second, 
+#     and so on.
 
-    If passed a tuple, assume it's already a transposition and just return it.
+#     If passed a tuple, assume it's already a transposition and just return it.
 
-    >>> transpositions_of('clever')
-    (0, 2, 1, 4, 3)
-    >>> transpositions_of('fred')
-    (3, 2, 0, 1)
-    >>> transpositions_of((3, 2, 0, 1))
-    (3, 2, 0, 1)
-    """
-    if isinstance(keyword, tuple):
-        return keyword
-    else:
-        key = deduplicate(keyword)
-        transpositions = tuple(key.index(l) for l in sorted(key))
-        return transpositions
-
-
-transpositions = collections.defaultdict(list)
-for word in keywords:
-    transpositions[transpositions_of(word)] += [word]
+#     >>> transpositions_of('clever')
+#     (0, 2, 1, 4, 3)
+#     >>> transpositions_of('fred')
+#     (3, 2, 0, 1)
+#     >>> transpositions_of((3, 2, 0, 1))
+#     (3, 2, 0, 1)
+#     """
+#     if isinstance(keyword, tuple):
+#         return keyword
+#     else:
+#         key = deduplicate(keyword)
+#         transpositions = tuple(key.index(l) for l in sorted(key))
+#         return transpositions
 
 
-def pad(message_len, group_len, fillvalue):
-    padding_length = group_len - message_len % group_len
-    if padding_length == group_len: padding_length = 0
-    padding = ''
-    for i in range(padding_length):
-        if callable(fillvalue):
-            padding += fillvalue()
-        else:
-            padding += fillvalue
-    return padding
+# transpositions = collections.defaultdict(list)
+# for word in keywords:
+#     transpositions[transpositions_of(word)] += [word]
+
+
+# def pad(message_len, group_len, fillvalue):
+#     """Return the padding needed to extend a message to a multiple of group_len
+#     in length.
+
+#     fillvalue can be a function or a literal value. If a function, it is called
+#     once for each padded character. Use this will fillvalue=random_english_letter
+#     to pad a message with random letters.
+#     """
+#     padding_length = group_len - message_len % group_len
+#     if padding_length == group_len: padding_length = 0
+#     padding = ''
+#     for i in range(padding_length):
+#         if callable(fillvalue):
+#             padding += fillvalue()
+#         else:
+#             padding += fillvalue
+#     return padding
 
 def column_transposition_encipher(message, keyword, fillvalue=' ', 
       fillcolumnwise=False,
@@ -145,7 +152,7 @@ def scytale_encipher(message, rows, fillvalue=' '):
     # transpositions = [i for i in range(math.ceil(len(message) / rows))]
     # return column_transposition_encipher(message, transpositions, 
     #     fillvalue=fillvalue, fillcolumnwise=False, emptycolumnwise=True)
-    transpositions = [i for i in range(rows)]
+    transpositions = (i for i in range(rows))
     return column_transposition_encipher(message, transpositions, 
         fillvalue=fillvalue, fillcolumnwise=True, emptycolumnwise=False)
 
@@ -176,6 +183,9 @@ def column_transposition_break_mp(message, translist=transpositions,
                                   fitness=Pbigrams, chunksize=500):
     """Breaks a column transposition cipher using a dictionary and
     n-gram frequency analysis
+
+    >>> len(keywords)
+    20
 
     >>> column_transposition_break_mp(column_transposition_encipher(sanitise( \
             "It is a truth universally acknowledged, that a single man in \

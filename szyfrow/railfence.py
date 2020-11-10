@@ -129,19 +129,6 @@ def railfence_decipher(message, height, fillvalue=''):
 
 
 def railfence_break(message, max_key_length=20,
-                     fitness=Pletters, chunksize=500):
-    """Breaks a railfence cipher using a matrix of given rank and letter frequencies
-
-    
-    """
-    
-    sanitised_message = sanitise(message)
-    results = starmap(worker, [(sanitised_message, i, fitness)
-                               for i in range(2, max_key_length+1)])
-    return max(results, key=lambda k: k[1])
-
-
-def railfence_break(message, max_key_length=20,
                      fitness=Pbigrams, chunksize=500):
     """Breaks a railfence cipher using a range of lengths and
     n-gram frequency analysis

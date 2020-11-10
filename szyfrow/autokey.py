@@ -61,10 +61,8 @@ def autokey_sa_break( message
 
 
 def autokey_sa_break_worker(message, key, 
-                                     t0, max_iterations, fitness):
-   
+                                     t0, max_iterations, fitness):   
     temperature = t0
-
     dt = t0 / (0.9 * max_iterations)
     
     plaintext = autokey_decipher(message, key)

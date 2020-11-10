@@ -4,13 +4,10 @@ import collections
 import itertools
 from math import log10
 import os 
-
 import importlib.resources as pkg_resources
 
 import szyfrow.support.norms
-from szyfrow.support.utilities import sanitise
-
-
+from szyfrow.support.utilities import sanitise, deduplicate
 from szyfrow import language_model_files
 
 
@@ -34,6 +31,33 @@ normalised_english_trigram_counts = szyfrow.support.norms.normalise(english_trig
 
 with pkg_resources.open_text(language_model_files, 'words.txt') as f:
     keywords = [line.rstrip() for line in f]
+
+
+def transpositions_of(keyword):
+    """Finds the transpostions given by a keyword. For instance, the keyword
+    'clever' rearranges to 'celrv', so the first column (0) stays first, the
+    second column (1) moves to third, the third column (2) moves to second, 
+    and so on.
+
+    If passed a tuple, assume it's already a transposition and just return it.
+
+    >>> transpositions_of('clever')
+    (0, 2, 1, 4, 3)
+    >>> transpositions_of('fred')
+    (3, 2, 0, 1)
+    >>> transpositions_of((3, 2, 0, 1))
+    (3, 2, 0, 1)
+    """
+    if isinstance(keyword, tuple):
+        return keyword
+    else:
+        key = deduplicate(keyword)
+        transpositions = tuple(key.index(l) for l in sorted(key))
+        return transpositions
+
+transpositions = collections.defaultdict(list)
+for word in keywords:
+    transpositions[transpositions_of(word)] += [word]
 
 
 def weighted_choice(d):

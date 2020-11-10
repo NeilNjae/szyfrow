@@ -25,6 +25,24 @@ def unpos(number):
     """Return the letter in the given position in the alphabet (mod 26)"""
     return chr(number % 26 + ord('a'))
 
+def pad(message_len, group_len, fillvalue):
+    """Return the padding needed to extend a message to a multiple of group_len
+    in length.
+
+    fillvalue can be a function or a literal value. If a function, it is called
+    once for each padded character. Use this with fillvalue=random_english_letter
+    to pad a message with random letters.
+    """
+    padding_length = group_len - message_len % group_len
+    if padding_length == group_len: padding_length = 0
+    padding = ''
+    if callable(fillvalue):
+        for i in range(padding_length):
+            padding += fillvalue()
+    else:
+        padding += fillvalue * padding_length
+    return padding
+
 def every_nth(text, n, fillvalue=''):
     """Returns n strings, each of which consists of every nth character, 
     starting with the 0th, 1st, 2nd, ... (n-1)th character
@@ -66,10 +84,12 @@ def chunks(text, n, fillvalue=None):
     ['abcd', 'efgh', 'i!!!']
     """
     if fillvalue:
-        padding = fillvalue[0] * (n - len(text) % n)
+        # padding = fillvalue[0] * (n - len(text) % n)
+        padding = pad(len(text), n, fillvalue)
+        padded_text = text + padding
     else:
-        padding = ''
-    return [(text+padding)[i:i+n] for i in range(0, len(text), n)]
+        padded_text = text
+    return [(padded_text)[i:i+n] for i in range(0, len(text), n)]
 
 def transpose(items, transposition):
     """Moves items around according to the given transposition

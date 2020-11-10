@@ -28,14 +28,24 @@ def bifid_encipher(message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a,
     >>> bifid_encipher("indiacurry", 'iguana', period=4, fillvalue='x')
     'ibnhgaqltzml'
     """
+
+    if period:
+        if not fillvalue:
+            raise ValueError("fillvalue must be given if period is given")
+        else:
+            p_message = message + pad(len(message), period, fillvalue)
+    else:
+        p_message = message
+
     translation, f_grid, r_grid = bifid_grid(keyword, wrap_alphabet, letter_mapping)
     
-    t_message = message.translate(translation)
+    t_message = p_message.translate(translation)
     pairs0 = [f_grid[l] for l in sanitise(t_message)]
     if period:
-        chunked_pairs = [pairs0[i:i+period] for i in range(0, len(pairs0), period)]
-        if len(chunked_pairs[-1]) < period and fillvalue:
-            chunked_pairs[-1] += [f_grid[fillvalue]] * (period - len(chunked_pairs[-1]))
+        # chunked_pairs = [pairs0[i:i+period] for i in range(0, len(pairs0), period)]
+        # if len(chunked_pairs[-1]) < period and fillvalue:
+        #     chunked_pairs[-1] += [f_grid[fillvalue]] * (period - len(chunked_pairs[-1]))
+        chunked_pairs = chunks(pairs0, period, fillvalue=None)
     else:
         chunked_pairs = [pairs0]
     
@@ -59,14 +69,23 @@ def bifid_decipher(message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a,
     >>> bifid_decipher("ibnhgaqltzml", 'iguana', period=4)
     'indiacurryxx'
     """
+    if period:
+        if not fillvalue:
+            raise ValueError("fillvalue must be given if period is given")
+        else:
+            p_message = message + pad(len(message), period, fillvalue)
+    else:
+        p_message = message
+
     translation, f_grid, r_grid = bifid_grid(keyword, wrap_alphabet, letter_mapping)
     
     t_message = message.translate(translation)
     pairs0 = [f_grid[l] for l in sanitise(t_message)]
     if period:
-        chunked_pairs = [pairs0[i:i+period] for i in range(0, len(pairs0), period)]
-        if len(chunked_pairs[-1]) < period and fillvalue:
-            chunked_pairs[-1] += [f_grid[fillvalue]] * (period - len(chunked_pairs[-1]))
+        # chunked_pairs = [pairs0[i:i+period] for i in range(0, len(pairs0), period)]
+        # if len(chunked_pairs[-1]) < period and fillvalue:
+        #     chunked_pairs[-1] += [f_grid[fillvalue]] * (period - len(chunked_pairs[-1]))
+        chunked_pairs = chunks(pairs0, period, fillvalue=None)
     else:
         chunked_pairs = [pairs0]
         
@@ -80,7 +99,7 @@ def bifid_decipher(message, keyword, wrap_alphabet=KeywordWrapAlphabet.from_a,
     return cat(r_grid[p] for p in pairs1) 
 
 
-def bifid_break_mp(message, wordlist=keywords, fitness=Pletters, max_period=10,
+def bifid_break(message, wordlist=keywords, fitness=Pletters, max_period=10,
                      number_of_solutions=1, chunksize=500):
     """Breaks a keyword substitution cipher using a dictionary and
     frequency analysis
@@ -110,7 +129,8 @@ def bifid_break_mp(message, wordlist=keywords, fitness=Pletters, max_period=10,
             return sorted(breaks, key=lambda k: k[1], reverse=True)[:number_of_solutions]
 
 def bifid_break_worker(message, keyword, wrap_alphabet, period, fitness):
-    plaintext = bifid_decipher(message, keyword, wrap_alphabet, period=period)
+    plaintext = bifid_decipher(message, keyword, wrap_alphabet, 
+        period=period, fillvalue='e')
     fit = fitness(plaintext)
     return (keyword, wrap_alphabet, period), fit
 

@@ -4,7 +4,7 @@ import itertools
 
 from szyfrow.support.utilities import *
 from szyfrow.support.language_models import *
-from szyfrow.column_transposition import transpositions, transpositions_of
+# from szyfrow.column_transposition import transpositions, transpositions_of
 
 # Where each piece of text ends up in the AMSCO transpositon cipher.
 # 'index' shows where the slice appears in the plaintext, with the slice
@@ -16,7 +16,7 @@ class AmscoFillStyle(Enum):
     same_each_row = 2
     reverse_each_row = 3
 
-def amsco_transposition_positions(message, keyword, 
+def amsco_positions(message, keyword, 
       fillpattern=(1, 2),
       fillstyle=AmscoFillStyle.continuous,
       fillcolumnwise=False,
@@ -25,7 +25,7 @@ def amsco_transposition_positions(message, keyword,
     grid shows the index of that slice and the start and end positions of the
     plaintext that go to make it up.
 
-    >>> amsco_transposition_positions(string.ascii_lowercase, 'freddy', \
+    >>> amsco_positions(string.ascii_lowercase, 'freddy', \
         fillpattern=(1, 2)) # doctest:  +NORMALIZE_WHITESPACE
     [[AmscoSlice(index=3, start=4, end=6),
      AmscoSlice(index=2, start=3, end=4),
@@ -72,64 +72,64 @@ def amsco_transposition_positions(message, keyword,
             current_fillpattern = list(reversed(current_fillpattern))
     return [transpose(r, transpositions) for r in grid]
 
-def amsco_transposition_encipher(message, keyword, 
+def amsco_encipher(message, keyword, 
     fillpattern=(1,2), fillstyle=AmscoFillStyle.reverse_each_row):
     """AMSCO transposition encipher.
 
-    >>> amsco_transposition_encipher('hellothere', 'abc', fillpattern=(1, 2))
+    >>> amsco_encipher('hellothere', 'abc', fillpattern=(1, 2))
     'hoteelhler'
-    >>> amsco_transposition_encipher('hellothere', 'abc', fillpattern=(2, 1))
+    >>> amsco_encipher('hellothere', 'abc', fillpattern=(2, 1))
     'hetelhelor'
-    >>> amsco_transposition_encipher('hellothere', 'acb', fillpattern=(1, 2))
+    >>> amsco_encipher('hellothere', 'acb', fillpattern=(1, 2))
     'hotelerelh'
-    >>> amsco_transposition_encipher('hellothere', 'acb', fillpattern=(2, 1))
+    >>> amsco_encipher('hellothere', 'acb', fillpattern=(2, 1))
     'hetelorlhe'
-    >>> amsco_transposition_encipher('hereissometexttoencipher', 'encode')
+    >>> amsco_encipher('hereissometexttoencipher', 'encode')
     'etecstthhomoerereenisxip'
-    >>> amsco_transposition_encipher('hereissometexttoencipher', 'cipher', fillpattern=(1, 2))
+    >>> amsco_encipher('hereissometexttoencipher', 'cipher', fillpattern=(1, 2))
     'hetcsoeisterereipexthomn'
-    >>> amsco_transposition_encipher('hereissometexttoencipher', 'cipher', fillpattern=(1, 2), fillstyle=AmscoFillStyle.continuous)
+    >>> amsco_encipher('hereissometexttoencipher', 'cipher', fillpattern=(1, 2), fillstyle=AmscoFillStyle.continuous)
     'hecsoisttererteipexhomen'
-    >>> amsco_transposition_encipher('hereissometexttoencipher', 'cipher', fillpattern=(2, 1))
+    >>> amsco_encipher('hereissometexttoencipher', 'cipher', fillpattern=(2, 1))
     'heecisoosttrrtepeixhemen'
-    >>> amsco_transposition_encipher('hereissometexttoencipher', 'cipher', fillpattern=(1, 3, 2))
+    >>> amsco_encipher('hereissometexttoencipher', 'cipher', fillpattern=(1, 3, 2))
     'hxtomephescieretoeisnter'
-    >>> amsco_transposition_encipher('hereissometexttoencipher', 'cipher', fillpattern=(1, 3, 2), fillstyle=AmscoFillStyle.continuous)
+    >>> amsco_encipher('hereissometexttoencipher', 'cipher', fillpattern=(1, 3, 2), fillstyle=AmscoFillStyle.continuous)
     'hxomeiphscerettoisenteer'
     """
-    grid = amsco_transposition_positions(message, keyword, 
+    grid = amsco_positions(message, keyword, 
         fillpattern=fillpattern, fillstyle=fillstyle)
     ct_as_grid = [[message[s.start:s.end] for s in r] for r in grid]
     return combine_every_nth(ct_as_grid)
 
 
-def amsco_transposition_decipher(message, keyword, 
+def amsco_decipher(message, keyword, 
     fillpattern=(1,2), fillstyle=AmscoFillStyle.reverse_each_row):
     """AMSCO transposition decipher
 
-    >>> amsco_transposition_decipher('hoteelhler', 'abc', fillpattern=(1, 2))
+    >>> amsco_decipher('hoteelhler', 'abc', fillpattern=(1, 2))
     'hellothere'
-    >>> amsco_transposition_decipher('hetelhelor', 'abc', fillpattern=(2, 1))
+    >>> amsco_decipher('hetelhelor', 'abc', fillpattern=(2, 1))
     'hellothere'
-    >>> amsco_transposition_decipher('hotelerelh', 'acb', fillpattern=(1, 2))
+    >>> amsco_decipher('hotelerelh', 'acb', fillpattern=(1, 2))
     'hellothere'
-    >>> amsco_transposition_decipher('hetelorlhe', 'acb', fillpattern=(2, 1))
+    >>> amsco_decipher('hetelorlhe', 'acb', fillpattern=(2, 1))
     'hellothere'
-    >>> amsco_transposition_decipher('etecstthhomoerereenisxip', 'encode')
+    >>> amsco_decipher('etecstthhomoerereenisxip', 'encode')
     'hereissometexttoencipher'
-    >>> amsco_transposition_decipher('hetcsoeisterereipexthomn', 'cipher', fillpattern=(1, 2))
+    >>> amsco_decipher('hetcsoeisterereipexthomn', 'cipher', fillpattern=(1, 2))
     'hereissometexttoencipher'
-    >>> amsco_transposition_decipher('hecsoisttererteipexhomen', 'cipher', fillpattern=(1, 2), fillstyle=AmscoFillStyle.continuous)
+    >>> amsco_decipher('hecsoisttererteipexhomen', 'cipher', fillpattern=(1, 2), fillstyle=AmscoFillStyle.continuous)
     'hereissometexttoencipher'
-    >>> amsco_transposition_decipher('heecisoosttrrtepeixhemen', 'cipher', fillpattern=(2, 1))
+    >>> amsco_decipher('heecisoosttrrtepeixhemen', 'cipher', fillpattern=(2, 1))
     'hereissometexttoencipher'
-    >>> amsco_transposition_decipher('hxtomephescieretoeisnter', 'cipher', fillpattern=(1, 3, 2))
+    >>> amsco_decipher('hxtomephescieretoeisnter', 'cipher', fillpattern=(1, 3, 2))
     'hereissometexttoencipher'
-    >>> amsco_transposition_decipher('hxomeiphscerettoisenteer', 'cipher', fillpattern=(1, 3, 2), fillstyle=AmscoFillStyle.continuous)
+    >>> amsco_decipher('hxomeiphscerettoisenteer', 'cipher', fillpattern=(1, 3, 2), fillstyle=AmscoFillStyle.continuous)
     'hereissometexttoencipher'
     """
 
-    grid = amsco_transposition_positions(message, keyword, 
+    grid = amsco_positions(message, keyword, 
         fillpattern=fillpattern, fillstyle=fillstyle)
     transposed_sections = [s for c in [l for l in zip(*grid)] for s in c]
     plaintext_list = [''] * len(transposed_sections)
@@ -149,7 +149,7 @@ def amsco_break(message, translist=transpositions, patterns = [(1, 2), (2, 1)],
     """Breaks an AMSCO transposition cipher using a dictionary and
     n-gram frequency analysis
 
-    >>> amsco_break(amsco_transposition_encipher(sanitise( \
+    >>> amsco_break(amsco_encipher(sanitise( \
             "It is a truth universally acknowledged, that a single man in \
              possession of a good fortune, must be in want of a wife. However \
              little known the feelings or views of such a man may be on his \
@@ -162,7 +162,7 @@ def amsco_break(message, translist=transpositions, patterns = [(1, 2), (2, 1)],
                    (6, 1, 0, 4, 5, 3, 2): ['keyword']}, \
         patterns=[(1, 2)]) # doctest: +ELLIPSIS
     (((2, 0, 5, 3, 1, 4, 6), (1, 2), <AmscoFillStyle.continuous: 1>), -709.4646722...)
-    >>> amsco_break(amsco_transposition_encipher(sanitise( \
+    >>> amsco_break(amsco_encipher(sanitise( \
             "It is a truth universally acknowledged, that a single man in \
              possession of a good fortune, must be in want of a wife. However \
              little known the feelings or views of such a man may be on his \
@@ -188,7 +188,7 @@ def amsco_break(message, translist=transpositions, patterns = [(1, 2), (2, 1)],
 
 def amsco_break_worker(message, transposition,
         pattern, fillstyle, fitness):
-    plaintext = amsco_transposition_decipher(message, transposition,
+    plaintext = amsco_decipher(message, transposition,
         fillpattern=pattern, fillstyle=fillstyle)
     fit = fitness(sanitise(plaintext))
     return (transposition, pattern, fillstyle), fit

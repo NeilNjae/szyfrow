@@ -148,7 +148,7 @@ def monoalphabetic_break_hillclimbing(message,
                               cipher_alphabet=None, 
                               swap_index_finder=None,
                               fitness=Pletters, chunksize=1):
-    return simulated_annealing_break(message, 
+    return monoalphabetic_sa_break(message, 
                               workers=1, 
                               initial_temperature=0,
                               max_iterations=max_iterations,
@@ -165,7 +165,7 @@ def monoalphabetic_break_hillclimbing_mp(message,
                               cipher_alphabet=None, 
                               swap_index_finder=None,
                               fitness=Pletters, chunksize=1):
-    return simulated_annealing_break(message, 
+    return monoalphabetic_sa_break(message, 
                               workers=workers, 
                               initial_temperature=0,
                               max_iterations=max_iterations,
@@ -181,7 +181,7 @@ def gaussian_swap_index(a):
 def uniform_swap_index(a):
     return random.randrange(26)
 
-def simulated_annealing_break(message, workers=10, 
+def monoalphabetic_sa_break(message, workers=10, 
                               initial_temperature=200,
                               max_iterations=20000,
                               plain_alphabet=None, 
@@ -215,12 +215,12 @@ def simulated_annealing_break(message, workers=10,
                             initial_temperature, max_iterations, fitness,
                             i))
     with multiprocessing.Pool() as pool:
-        breaks = pool.starmap(simulated_annealing_break_worker,
+        breaks = pool.starmap(monoalphabetic_sa_break_worker,
                               worker_args, chunksize)
     return max(breaks, key=lambda k: k[1])
 
 
-def simulated_annealing_break_worker(message, plain_alphabet, cipher_alphabet, 
+def monoalphabetic_sa_break_worker(message, plain_alphabet, cipher_alphabet, 
                                      swap_index_finder,
                                      t0, max_iterations, fitness,
                                      logID):

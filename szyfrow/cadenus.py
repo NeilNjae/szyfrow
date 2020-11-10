@@ -97,7 +97,7 @@ def cadenus_break(message, words=keywords,
     doubled_letters='vw', fitness=Pbigrams):
     c = make_cadenus_keycolumn(reverse=True)
     valid_words = [w for w in words 
-        if max(transpositions_of(w)) <= len(c)]
+        if len(transpositions_of(w)) == len(message) // 25]
     with multiprocessing.Pool() as pool:
         results = pool.starmap(cadenus_break_worker, 
                 [(message, w, 
@@ -107,16 +107,17 @@ def cadenus_break(message, words=keywords,
                 for w in words 
                 for s in string.ascii_lowercase 
                 for r in [True, False]
-                if max(transpositions_of(w)) <= len(
-                    make_cadenus_keycolumn(
-                        doubled_letters=doubled_letters, start=s, reverse=r))
+                # if max(transpositions_of(w)) <= len(
+                #     make_cadenus_keycolumn(
+                #         doubled_letters=doubled_letters, start=s, reverse=r))
                 ])
     # return list(results)
     return max(results, key=lambda k: k[1])
 
 def cadenus_break_worker(message, keyword, keycolumn, fitness):
-    message_chunks = chunks(message, 175)
-    plaintext = ''.join(cadenus_decipher(c, keyword, keycolumn) for c in message_chunks)
+    # message_chunks = chunks(message, 175)
+    # plaintext = ''.join(cadenus_decipher(c, keyword, keycolumn) for c in message_chunks)
+    plaintext = cadenus_decipher(message, keyword, keycolumn)
     fit = fitness(plaintext)
     return (keyword, keycolumn), fit
 
