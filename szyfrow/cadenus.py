@@ -62,13 +62,17 @@ def cadenus_encipher(message, keyword, keycolumn, fillvalue='a'):
                 make_cadenus_keycolumn(doubled_letters='vw', start='a', reverse=True))
     'systretomtattlusoatleeesfiyheasdfnmschbhneuvsnpmtofarenuseieeieltarlmentieetogevesitfaisltngeeuvowul'
     """
-    rows = chunks(message, len(message) // 25, fillvalue=fillvalue)
-    columns = zip(*rows)
-    rotated_columns = [col[start:] + col[:start] for start, col in zip([keycolumn[l] for l in keyword], columns)]    
-    rotated_rows = zip(*rotated_columns)
     transpositions = transpositions_of(keyword)
-    transposed = [transpose(r, transpositions) for r in rotated_rows]
-    return cat(chain(*transposed))
+    enciphered_chunks = []
+    for message_chunk in chunks(message, len(transpositions) * 25, 
+                                fillvalue=fillvalue):
+        rows = chunks(message_chunk, len(transpositions), fillvalue=fillvalue)
+        columns = zip(*rows)
+        rotated_columns = [col[start:] + col[:start] for start, col in zip([keycolumn[l] for l in keyword], columns)]    
+        rotated_rows = zip(*rotated_columns)
+        transposed = [transpose(r, transpositions) for r in rotated_rows]
+        enciphered_chunks.append(cat(chain(*transposed)))
+    return cat(enciphered_chunks)
 
 def cadenus_decipher(message, keyword, keycolumn, fillvalue='a'):
     """
@@ -83,28 +87,32 @@ def cadenus_decipher(message, keyword, keycolumn, fillvalue='a'):
                  make_cadenus_keycolumn(reverse=True))
     'aseverelimitationontheusefulnessofthecadenusisthateverymessagemustbeamultipleoftwentyfiveletterslong'
     """
-    rows = chunks(message, len(message) // 25, fillvalue=fillvalue)
     transpositions = transpositions_of(keyword)
-    untransposed_rows = [untranspose(r, transpositions) for r in rows]
-    columns = zip(*untransposed_rows)
-    rotated_columns = [col[-start:] + col[:-start] for start, col in zip([keycolumn[l] for l in keyword], columns)]    
-    rotated_rows = zip(*rotated_columns)
-    # return rotated_columns
-    return cat(chain(*rotated_rows))
+    deciphered_chunks = []
+    for message_chunk in chunks(message, len(transpositions) * 25, 
+                                fillvalue=fillvalue):
+        rows = chunks(message_chunk, len(transpositions), fillvalue=fillvalue)
+        untransposed_rows = [untranspose(r, transpositions) for r in rows]
+        columns = zip(*untransposed_rows)
+        rotated_columns = [col[-start:] + col[:-start] for start, col in zip([keycolumn[l] for l in keyword], columns)]    
+        rotated_rows = zip(*rotated_columns)
+        deciphered_chunks.append(cat(chain(*rotated_rows)))
+    return cat(deciphered_chunks)
+    
 
 
-def cadenus_break(message, words=keywords, 
+def cadenus_break(message, wordlist=keywords, 
     doubled_letters='vw', fitness=Pbigrams):
-    c = make_cadenus_keycolumn(reverse=True)
-    valid_words = [w for w in words 
-        if len(transpositions_of(w)) == len(message) // 25]
+    # c = make_cadenus_keycolumn(reverse=True)
+    # valid_words = [w for w in wordlist
+    #     if len(transpositions_of(w)) == len(message) // 25]
     with multiprocessing.Pool() as pool:
         results = pool.starmap(cadenus_break_worker, 
                 [(message, w, 
                     make_cadenus_keycolumn(doubled_letters=doubled_letters, 
                         start=s, reverse=r), 
                     fitness)
-                for w in words 
+                for w in wordlist 
                 for s in string.ascii_lowercase 
                 for r in [True, False]
                 # if max(transpositions_of(w)) <= len(

@@ -85,8 +85,9 @@ def playfair_encipher(message, keyword, padding_letter='x',
     grid = polybius_grid(keyword, column_order, row_order,
                         letters_to_merge=letters_to_merge,
                         wrap_alphabet=wrap_alphabet)
-    message_bigrams = playfair_bigrams(sanitise(message), padding_letter=padding_letter, 
-                                       padding_replaces_repeat=padding_replaces_repeat)
+    message_bigrams = playfair_bigrams(
+        sanitise(message), padding_letter=padding_letter, 
+        padding_replaces_repeat=padding_replaces_repeat)
     ciphertext_bigrams = [playfair_encipher_bigram(b, grid, padding_letter=padding_letter) for b in message_bigrams]
     return cat(ciphertext_bigrams)
 
@@ -100,12 +101,13 @@ def playfair_decipher(message, keyword, padding_letter='x',
     grid = polybius_grid(keyword, column_order, row_order,
                         letters_to_merge=letters_to_merge,
                         wrap_alphabet=wrap_alphabet)
-    message_bigrams = playfair_bigrams(sanitise(message), padding_letter=padding_letter, 
-                                       padding_replaces_repeat=padding_replaces_repeat)
+    message_bigrams = playfair_bigrams(
+        sanitise(message), padding_letter=padding_letter, 
+        padding_replaces_repeat=padding_replaces_repeat)
     plaintext_bigrams = [playfair_decipher_bigram(b, grid, padding_letter=padding_letter) for b in message_bigrams]
     return cat(plaintext_bigrams)
 
-def playfair_break_mp(message, 
+def playfair_break(message, 
                       letters_to_merge=None, padding_letter='x',
                       wordlist=keywords, fitness=Pletters,
                       number_of_solutions=1, chunksize=500):

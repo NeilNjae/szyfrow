@@ -23,7 +23,7 @@ setuptools.setup(
         "Topic :: Security :: Cryptography",
     ],
     python_requires='>=3.7',
-    install_requires=['numpy'],
+    install_requires=[],
     include_package_data=True,
     setup_requires=['pytest-runner', 'numpy'],
     tests_require=['pytest'],

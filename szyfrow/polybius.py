@@ -48,7 +48,7 @@ def polybius_reverse_grid(keyword, column_order, row_order, letters_to_merge=Non
 
 
 def polybius_flatten(pair, column_first):
-    """Convert a series of pairs into a single list of characters"""
+    """Convert a pair of characters into a single string."""
     if column_first:
         return str(pair[1]) + str(pair[0])
     else:
@@ -101,13 +101,15 @@ def polybius_decipher(message, keyword, column_order, row_order,
     column_index_type = type(column_order[0])
     row_index_type = type(row_order[0])
     if column_first:
-        pairs = [(column_index_type(p[1]), row_index_type(p[0])) for p in chunks(message, 2)]
+        pairs = [(column_index_type(p[1]), row_index_type(p[0])) 
+          for p in chunks(message, 2)]
     else:
-        pairs = [(row_index_type(p[0]), column_index_type(p[1])) for p in chunks(message, 2)]
+        pairs = [(row_index_type(p[0]), column_index_type(p[1])) 
+          for p in chunks(message, 2)]
     return cat(grid[p] for p in pairs if p in grid)
 
 
-def polybius_break_mp(message, column_labels, row_labels,
+def polybius_break(message, column_labels, row_labels,
                       letters_to_merge=None,
                       wordlist=keywords, fitness=Pletters,
                       number_of_solutions=1, chunksize=500):
