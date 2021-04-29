@@ -1,4 +1,5 @@
-"""Simple ciphers, enciphering, deciphering, and breaking.
+"""Simple (mainly manual) ciphers, and routines for enciphering, deciphering, 
+and breaking messages created with them.
 
 The ciphers implemented here are mostly ones that predate mechanical cipher
 systems. The most complex cipher is the Enigma of World War II.

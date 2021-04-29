@@ -5,13 +5,16 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="szyfrow",
-    version="0.0.6",
+    version="0.0.7",
     author="Neil Smith",
     author_email="neil.szyfrow@njae.me.uk",
     description="Tools for using and breaking simple ciphers",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/NeilNjae/szyfrow",
+    project_urls={
+        "Documentation": "https://neilnjae.github.io/szyfrow/szyfrow/index.html",
+    },
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
